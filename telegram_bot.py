@@ -149,7 +149,8 @@ def main():
     app = Application.builder().token(BOT_TOKEN).build()
     app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, handle_message))
     print("🤖 Bot running (long-polling). Send it a JD URL or pasted JD text on Telegram.")
-    app.run_polling()
+    # app.run_polling(drop_pending_updates=False)  
+    app.run_polling(drop_pending_updates=True)
 
 
 if __name__ == "__main__":
