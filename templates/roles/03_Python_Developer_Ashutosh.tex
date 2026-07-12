@@ -1,0 +1,176 @@
+\documentclass[letterpaper,10pt]{article}
+\usepackage{latexsym}
+\usepackage[empty]{fullpage}
+\usepackage{titlesec}
+\usepackage{marvosym}
+\usepackage[usenames,dvipsnames]{color}
+\usepackage{verbatim}
+\usepackage{enumitem}
+\usepackage[hidelinks]{hyperref}
+\usepackage{fancyhdr}
+\usepackage[english]{babel}
+\usepackage{tabularx}
+\usepackage{xcolor}
+\usepackage{charter}
+\usepackage{fontawesome5}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyfoot{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+\usepackage[left=0.4in,top=0.38in,right=0.4in,bottom=0.38in]{geometry}
+\urlstyle{same}
+\raggedbottom
+\raggedright
+\setlength{\tabcolsep}{0in}
+
+\definecolor{greenTheme}{RGB}{20, 80, 50}
+\definecolor{lightGray}{RGB}{80, 80, 80}
+
+\titleformat{\section}{\vspace{-5pt}\scshape\raggedright\large\color{greenTheme}\bfseries}{}{0em}{}[\color{greenTheme}\titlerule \vspace{-5pt}]
+
+\newcommand{\resumeItem}[1]{\item\small{{#1 \vspace{-2pt}}}}
+\renewcommand\labelitemi{\color{greenTheme}\tiny$\bullet$}
+\newcommand{\resumeSubheading}[4]{
+  \vspace{-1pt}\item
+    \begin{tabular*}{0.97\textwidth}[t]{l@{\extracolsep{\fill}}r}
+      \textbf{#1} & \color{greenTheme}\textbf{#2} \\
+      \textit{\small#3} & \textit{\small\color{lightGray} #4} \\
+    \end{tabular*}\vspace{-6pt}
+}
+\newcommand{\resumeProjectHeading}[2]{
+    \item
+    \begin{tabular*}{0.97\textwidth}{l@{\extracolsep{\fill}}r}
+      \small#1 & \small\color{lightGray}#2 \\
+    \end{tabular*}\vspace{-6pt}
+}
+\newcommand{\resumeSubHeadingListStart}{\begin{itemize}[leftmargin=0.15in, label={}]}
+\newcommand{\resumeSubHeadingListEnd}{\end{itemize}}
+\newcommand{\resumeItemListStart}{\begin{itemize}}
+\newcommand{\resumeItemListEnd}{\end{itemize}\vspace{-5pt}}
+
+\begin{document}
+
+%----------HEADER----------
+\begin{center}
+    {\Huge \scshape \color{greenTheme} Ashutosh Roy} \\[4pt]
+    {\Large \textbf{Software Engineer}} \\[4pt]
+      \small
+    \href{tel:+919810599837}{\faPhone\ +91-9810599837}  \hspace{4pt}$|$\hspace{4pt}
+    \href{mailto:ashu2003roy@gmail.com}{\faEnvelope\ ashu2003roy@gmail.com} \hspace{4pt}$|$\hspace{4pt}
+    \href{https://mitovoid.netlify.app}{\faGlobe\ mitovoid.netlify.app} \hspace{4pt}$|$\hspace{4pt}
+    \href{https://github.com/ashutoshroy02}{\faGithub\ ashutoshroy02} \hspace{4pt}$|$\hspace{4pt}
+    \faMapMarker\ Gurugram, Haryana
+\end{center}
+\vspace{-8pt}
+
+\section{Summary}
+\vspace{2pt}
+\small{
+Software Engineer with \textbf{1+ year of hands-on experience} building scalable backend applications, REST APIs, and AI-powered solutions. Experienced through internships at \textbf{IIT Delhi} and software startups. Skilled in \textbf{Python, FastAPI, SQL, Docker, Git, and Linux}, with experience improving API performance, building production-ready services, and developing reliable software for real-world applications.
+}
+
+\vspace{-4pt}
+
+%-----------EXPERIENCE-----------
+\section{Experience}
+\resumeSubHeadingListStart
+
+\resumeSubheading{Research Intern}{Jan 2025 -- Jun 2025}{Indian Institute of Technology (IIT) Delhi}{New Delhi, India}
+\resumeItemListStart
+\resumeItem{Built and deployed \textbf{FastAPI} REST APIs for search and document retrieval, supporting \textbf{1,000+} daily requests with low response time.}
+\resumeItem{Developed a Python OCR pipeline using Tesseract, Marker, and Gemini OCR to process \textbf{10,000+} documents, reducing manual processing and improving data quality.}
+\resumeItem{Built a hybrid search system using \textbf{FAISS, Pinecone, and Apache Solr}, improving search accuracy by \textbf{35\%}. \href{https://github.com/ashutoshroy02/TIE}{\textit{github.com/ashutoshroy02/TIE}}}
+\resumeItemListEnd
+
+\vspace{4pt}
+
+\resumeSubheading{Software Engineer Intern}{Nov 2024 -- Dec 2024}{LeanTactics Solutions Pvt. Ltd.}{Remote}
+\resumeItemListStart
+\resumeItem{Built backend services using \textbf{Python} and \textbf{FastAPI} for scalable AI applications with reliable performance.}
+\resumeItem{Integrated ML inference APIs into production systems, enabling fast and seamless real-time predictions.}
+\resumeItem{Optimized API performance, reducing response latency by \textbf{30\%} and improving overall system efficiency.}
+\resumeItemListEnd
+
+\vspace{4pt}
+
+\resumeSubheading{AI/ML Engineer Intern}{Oct 2024 -- Nov 2024}{MitoVoid AI}{Remote}
+\resumeItemListStart
+\resumeItem{Fine-tuned Mistral and LLaMA models for healthcare applications, improving medical summarization quality and chatbot performance.}
+\resumeItem{Built an AI chatbot that reduced patient query resolution time by \textbf{40\%}, improved customer experience, and lowered support costs.}
+\resumeItem{Built end-to-end ML pipelines from data preprocessing to API deployment, reducing deployment time and speeding up AI solution delivery.}
+\resumeItemListEnd
+\resumeSubHeadingListEnd
+
+%-----------PROJECTS-----------
+\section{Projects}
+\resumeSubHeadingListStart
+
+\resumeProjectHeading
+{\href{https://github.com/ashutoshroy02/Chota-link}
+{\textbf{URL Shortener}}
+$|$ \emph{Python - FastAPI - PostgreSQL - Redis - Docker}}{2026}
+
+\resumeItemListStart
+\resumeItem{Built a scalable URL shortener with REST APIs, custom short links, and analytics using FastAPI and PostgreSQL.}
+\resumeItem{Integrated Redis caching to reduce response time by \textbf{40\%} and improve system performance.}
+
+\resumeItemListEnd
+
+\vspace{4pt}
+
+\resumeProjectHeading
+{\href{https://github.com/ashutoshroy02/InterviewPrep}
+{\textbf{InterviewPrep Platform}}
+$|$ \emph{Python - FastAPI - Astro Engine - SQLite - Git}}{2025}
+\resumeItemListStart
+\resumeItem{Built a full-stack interview preparation platform with coding questions, quizzes, mock interviews, and progress tracking.}
+\resumeItem{Designed backend APIs to improve performance and deliver a smooth user experience.}
+\resumeItemListEnd
+
+\vspace{4pt}
+
+\resumeProjectHeading
+{\href{https://github.com/ashutoshroy02/Exam-Helper}
+{\textbf{Exam-Helper RAG System}}
+$|$ \emph{Python - LLaMA 3 - FastAPI - LangChain - FAISS - Pinecone}}{Dec 2024 -- Apr 2025}
+\resumeItemListStart
+\resumeItem{Built a RAG-powered question answering system with support for PDFs, images, and YouTube transcripts.}
+\resumeItem{Implemented FAISS and Pinecone retrieval to improve answer accuracy and enable fast semantic search.}
+\resumeItemListEnd
+
+\resumeSubHeadingListEnd
+
+%-----------TECHNICAL SKILLS-----------
+\section{Technical Skills}
+\begin{itemize}[leftmargin=0.15in, label={}]
+\small{\item{
+\textbf{Languages}{: Python, C++, SQL, DSA} \\
+\textbf{Backend Development}{: FastAPI, REST APIs, Authentication, API Integration, Microservices, Multithreading, Linux} \\ \textbf{Databases}{: MySQL, PostgreSQL, Redis, FAISS, Pinecone} \\ \textbf{System Design}{: Object-Oriented Programming (OOP), Low-Level Design (LLD), Caching, Load Balancing, Scalability, Database Design} \\ \textbf{Cloud \& DevOps}{: Docker, GitHub Actions (CI/CD), AWS (EC2, S3)} \\ \textbf{Libraries \& Frameworks}{: Pandas, NumPy, Scikit-learn, PyTorch, Streamlit} \\ \textbf{Tools}{: Git, GitHub, VS Code, Jupyter Notebook, Google Colab, Postman}}
+
+\end{itemize}
+
+
+
+%-----------ACHIEVEMENTS-----------
+\section{Achievements}
+\resumeItemListStart
+\resumeItem{Published \textbf{2 research papers}, including one accepted at \textbf{RECCAP 2026 (IEEE)} and another co-authored with \textbf{IIT Delhi}.}
+\resumeItem{Solved \textbf{150+} DSA problems on LeetCode , strengthening data structures and algorithms.}
+\resumeItem{Won \textbf{2 AI/ML Hackathons}, building innovative AI solutions under time constraints.}
+\resumeItem{Made contributions to \textbf{open-source AI/ML projects} on GitHub and Hugging Face.}
+\resumeItem{Earned certifications in \textbf{Machine Learning, Deep Learning, Generative AI, NLP, and Python}.}
+\resumeItemListEnd
+\vspace{-3pt}
+
+%-----------EDUCATION-----------
+\section{Education}
+\resumeSubHeadingListStart
+\resumeSubheading{Chhattisgarh Swami Vivekananda Technical University (CSVTU)}{2022 -- 2026}{B.Tech (Hons) in Computer Science and Engineering (Artificial Intelligence)}{Bhilai, Chhattisgarh}
+\resumeSubHeadingListEnd
+
+\resumeSubHeadingListStart
+\resumeSubheading{St. Columbus School}{2020 -- 2021}{Higher Secondary (Class XII - Science PCMB) - 87\%}{Faridabad, Haryana}
+\resumeSubHeadingListEnd
+
+\end{document}

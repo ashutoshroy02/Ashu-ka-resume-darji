@@ -1,0 +1,288 @@
+# Career-Ops Profile Configuration
+# Copy this file to config/profile.yml and fill in your details.
+# This is the single source of truth for your personal data across all modes.
+
+candidate:
+  full_name: "Ashutosh Roy"
+  email: "ashu2003roy@gmail.com"
+  phone: "+91-9810599837"
+  location: "Gurugram, Haryana"
+  linkedin: "linkedin.com/in/ashutosh-roy-02"
+  portfolio_url: "https://mitovoid.netlify.app/"
+  github: "github.com/ashutoshroy02"
+  twitter: "x.com/ashutoshroy02"
+
+target_roles:
+  # Your North Star roles — what you're optimizing for
+  primary:
+    - "AI/ML Engineer"
+    - "AI Agents & Generative AI Engineer"
+    - "Deep Learning Researcher"
+    - "Full Stack Developer"
+    - "Data Scientist"
+    - "Software Engineer"
+  # Archetypes help the evaluation system score fit
+  archetypes:
+    - name: "AI/ML Engineer"
+      level: "Junior/Mid"
+      fit: "primary"        # primary = dream role, secondary = good fit, adjacent = stretch
+    - name: "AI Agents & Generative AI Engineer"
+      level: "Junior/Mid"
+      fit: "primary"
+    - name: "Deep Learning Researcher"
+      level: "Junior"
+      fit: "primary"
+    - name: "Full Stack Developer"
+      level: "Junior"
+      fit: "secondary"
+    - name: "Data Scientist"
+      level: "Junior"
+      fit: "secondary"
+    - name: "Software Engineer"
+      level: "Junior"
+      fit: "adjacent"
+    - name: "Python Developer"
+      level: "Junior"
+      fit: "adjacent"
+
+narrative:
+  # Your professional headline (1 line)
+  headline: "AI/ML Engineer & Deep Learning Researcher | LLMs | RAG | AI Agents | Full Stack"
+  # Your exit story — what makes you unique
+  exit_story: "Published researcher (RECCAP 2026, first author) with production experience fine-tuning LLMs, building hybrid RAG pipelines, multi-agent systems (LangGraph/MCP), and shipping full-stack AI products end-to-end."
+  # Your top 3-5 superpowers
+  superpowers:
+    - "Fine-tuning LLMs (Mistral/LLaMA) via QLoRA/LoRA"
+    - "Designing hybrid RAG pipelines (FAISS/Pinecone + Apache Solr)"
+    - "Building autonomous multi-agent systems (LangGraph, MCP)"
+    - "Audio/Speech AI & Affective Computing (Wav2Vec2, BiLSTM)"
+    - "End-to-end full-stack delivery (React/Next.js + FastAPI + Docker)"
+  # Proof points — projects, articles, case studies with measurable impact
+  proof_points:
+    - name: "RECCAP 2026 Paper (Speech Emotion & Stress Detection)"
+      url: "https://github.com/ashutoshroy02/EchoEmotion"
+      hero_metric: "85.9% accuracy, 0.856 F1, 0.1268 RMSE — first-author, IEEE-accepted"
+    - name: "Shopping Assistant Agent"
+      url: "https://github.com/ashutoshroy02/shopping-assistant-agent-"
+      hero_metric: "Multi-agent coordination via LangGraph & MCP, -35% response time"
+    - name: "Skills-for-Agents Framework"
+      url: "https://github.com/ashutoshroy02/skills-for-agents"
+      hero_metric: "Open-source SIP protocol, -60% prompt duplication"
+    - name: "Exam-Helper Agentic RAG"
+      url: "https://github.com/ashutoshroy02/Exam-Helper"
+      hero_metric: "-40% hallucinations via hybrid FAISS/Pinecone retrieval"
+    - name: "SARCH: Multimodal Search for Archaeological Archives (IIT Delhi)"
+      url: "https://arxiv.org/abs/2511.05667"
+      hero_metric: "+35% retrieval accuracy across 10,000+ archival documents"
+  # Optional: dashboard/demo URL with credentials
+  dashboard:
+    url: "https://mitovoid.netlify.app"
+    # password: "demo-2026"
+
+experience:
+  - title: "Research Intern"
+    company: "Indian Institute of Technology (IIT) Delhi"
+    location: "New Delhi, India"
+    start_date: "2025-01"
+    end_date: "2025-06"
+    highlights:
+      - "Built hybrid RAG pipelines (FAISS/Pinecone + Apache Solr), improving retrieval accuracy by 35% across 10,000+ archaeological documents"
+      - "Deployed FastAPI services for real-time LLM inference, reducing latency by 35%"
+      - "Co-authored SARCH: Multimodal Search for Archaeological Archives (arxiv.org/abs/2511.05667)"
+  - title: "AI/ML Engineer Intern"
+    company: "MitoVoid AI"
+    location: "Remote"
+    start_date: "2024-10"
+    end_date: "2024-11"
+    highlights:
+      - "Fine-tuned Mistral/LLaMA via QLoRA for healthcare conversational AI"
+      - "Built FastAPI chatbot backend, reducing patient query resolution time by ~40%"
+      - "Delivered full-stack healthcare UI (React, Next.js, TypeScript, Tailwind CSS)"
+
+publications:
+  - title: "Multitask Speech Emotion & Stress Detection (Wav2Vec2-BiLSTM)"
+    venue: "RECCAP 2026, IIT Palakkad (IEEE)"
+    role: "First author"
+    coauthors: ["Sejal Sahu", "Dr. Toran Verma"]
+    paper_id: "723"
+    date: "2026-05"
+    metrics: "85.9% accuracy, 0.856 F1-score, 0.1268 RMSE"
+  - title: "SARCH: Multimodal Search for Archaeological Archives"
+    venue: "Submitted for peer review"
+    role: "Co-author"
+    institution: "IIT Delhi"
+    date: "2025-11"
+    url: "https://arxiv.org/abs/2511.05667"
+
+projects:
+  - name: "Archaeological Full-Stack Search Engine"
+    url: "https://github.com/ashutoshroy02/IITDTIE"
+    stack: ["Python", "Surya OCR", "Apache Solr", "FAISS", "FastAPI", "C++", "NLP"]
+    date: "2025-01 to 2025-06"
+  - name: "Shopping Assistant Agent"
+    url: "https://github.com/ashutoshroy02/shopping-assistant-agent-"
+    stack: ["Python", "LangGraph", "MCP", "Claude 3.5", "FastAPI"]
+    date: "2026-02 to 2026-05"
+  - name: "Skills-for-Agents Framework"
+    url: "https://github.com/ashutoshroy02/skills-for-agents"
+    stack: ["Python", "LangGraph", "MCP", "AI Agents"]
+    date: "2026-04 to 2026-05"
+  - name: "Speech Emotion & Stress Detection"
+    url: "https://github.com/ashutoshroy02/EchoEmotion"
+    alt_url: "https://github.com/ashutoshroy02/emotion-stress-ml"
+    stack: ["PyTorch", "Wav2Vec2", "BiLSTM", "Hugging Face", "Python"]
+    date: "2026-01 to 2026-05"
+  - name: "Exam-Helper Agentic RAG System"
+    url: "https://github.com/ashutoshroy02/Exam-Helper"
+    stack: ["Python", "LLaMA 3", "LangGraph", "LangChain", "FAISS", "Pinecone", "FastAPI", "Streamlit"]
+    date: "2024-12 to 2025-04"
+  - name: "Resumora — AI Resume Builder"
+    url: null
+    stack: ["Next.js", "React", "FastAPI", "PostgreSQL", "Astro"]
+    date: "2026-04 to present"
+  - name: "InterviewPrep"
+    url: "https://github.com/ashutoshroy02/InterviewPrep"
+    stack: ["Next.js", "React", "TypeScript", "Tailwind CSS", "Firebase", "Astro"]
+    date: "2026-05 to 2026-06"
+  - name: "Industrial Defect Detection & Quality Inspection System"
+    url: "https://github.com/ashutoshroy02/Industrial-Defect-Detection-System"
+    stack: ["YOLOv8", "PyTorch", "OpenCV", "CUDA", "Python"]
+    date: "2025-02 to 2025-04"
+  - name: "Medical Chatbot & LLM Fine-Tuning"
+    url: "https://github.com/ashutoshroy02/Medical-chatbot"
+    stack: ["Mistral 7B", "QLoRA", "Transformers", "Tesseract OCR", "Python"]
+    date: "2024-03 to 2024-04"
+  - name: "Music Identification App (BeatBubble)"
+    url: "https://github.com/ashutoshroy02/Beat-Bubble"
+    stack: ["Streamlit", "Python", "Flutter", "Firebase", "ACRCloud API"]
+    date: "2024-06 to 2024-12"
+  - name: "URL Shortener (Chota-link)"
+    url: "https://github.com/ashutoshroy02/Chota-link"
+    stack: ["Python", "FastAPI", "PostgreSQL", "Redis", "Docker"]
+    date: "2026"
+  - name: "Netflix Data Analysis"
+    url: "https://github.com/ashutoshroy02/Netflix-Data-Analysis"
+    stack: ["Python", "Pandas", "NumPy", "Matplotlib", "Seaborn", "Jupyter"]
+    date: "2026-06"
+  - name: "BulkyMail"
+    url: "https://github.com/ashutoshroy02/BULK-MAIL"
+    stack: ["Python", "Streamlit", "SMTP/API"]
+    date: "2024-12"
+
+achievements:
+  - "Published 2 research papers, including first-author acceptance at RECCAP 2026 (IEEE) and co-authored work with IIT Delhi"
+  - "Solved 150+ DSA problems on LeetCode"
+  - "Won 2 AI/ML Hackathons"
+  - "Open-source contributor on GitHub and Hugging Face"
+  - "Certifications: Machine Learning, Deep Learning, Generative AI, NLP, Python"
+
+skills:
+  ai_ml_research:
+    - "LLMs" 
+    - "GenAI"
+    - "RAG"
+    - "AI Agents (LangGraph, MCP, Agentic AI)"
+    - "Transformer Fine-Tuning (QLoRA/LoRA)"
+    - "Self-Supervised Learning"
+    - "Deep Learning"
+    - "NLP"
+    - "Multimodal AI"
+    - "Speech/Audio Processing"
+    - "Computer Vision (YOLOv8, OpenCV, OCR)"
+    - "Dense Retrieval"
+    - "Prompt Engineering"
+    - "Function/Tool Calling"
+  frontend:
+    - "React.js"
+    - "Next.js"
+    - "Astro"
+    - "TypeScript"
+    - "JavaScript (ES6+)"
+    - "HTML5/CSS3"
+    - "Tailwind CSS"
+  backend_apis:
+    - "Python"
+    - "FastAPI"
+    - "Node.js"
+    - "Express.js"
+    - "REST API Design"
+    - "Authentication (JWT/OAuth)"
+    - "Streamlit"
+  libraries_frameworks:
+    - "PyTorch"
+    - "TensorFlow"
+    - "Hugging Face Transformers"
+    - "LangChain"
+    - "LangGraph"
+    - "Scikit-learn"
+    - "Pandas"
+    - "NumPy"
+    - "OpenCV"
+  databases_vector_stores:
+    - "FAISS"
+    - "Pinecone"
+    - "Apache Solr"
+    - "PostgreSQL"
+    - "MySQL"
+    - "MongoDB"
+    - "Firebase"
+    - "Supabase"
+    - "Redis"
+  data_science:
+    - "EDA"
+    - "Statistical Analysis"
+    - "Feature Engineering"
+    - "Regression/Classification/Clustering"
+    - "Time Series Analysis"
+    - "Power BI"
+    - "Tableau"
+  languages:
+    - "Python"
+    - "C++"
+    - "SQL"
+    - "JavaScript"
+  cloud_tools_devops:
+    - "Git"
+    - "GitHub Actions (CI/CD)"
+    - "Docker"
+    - "Linux"
+    - "Vercel"
+    - "Netlify"
+    - "AWS (EC2, S3)"
+    - "Jupyter"
+    - "Google Colab"
+    - "Postman"
+
+compensation:
+  target_range: "8,00,000"     # User should update this
+  currency: "INR"
+  minimum: "3,00,000"               # User should update this
+  location_flexibility: "Remote preferred, open to relocation"
+
+location:
+  country: "India"
+  city: "Gurugram"
+  timezone: "IST"
+  visa_status: "Citizen"
+  policy: "Only India (Onsite/Hybrid) or Global Remote. No non-India Onsite."
+  priority_order: ["Gurugram", "Delhi", "Noida", "Pune", "Bangalore", "Hyderabad", "Raipur"]
+  remote_preference: "High"
+
+education:
+  - institution: "Chhattisgarh Swami Vivekananda Technical University (CSVTU)"
+    location: "Bhilai, Chhattisgarh"
+    degree: "B.Tech (Hons) in Computer Science and Engineering (Artificial Intelligence)"
+    start_date: "2022"
+    end_date: "2026"
+  - institution: "St. Columbus School"
+    location: "Faridabad, Haryana"
+    degree: "Higher Secondary (Class XII - Science PCMB) - 87%"
+    start_date: "2020"
+    end_date: "2021"
+
+cv:
+  output_format: "latex" # "html" (default) or "latex"
+  # (Optional) Canva resume design ID for visual CV generation via /career-ops pdf.
+  # Find it in your Canva design URL: https://www.canva.com/design/DAxxxxxxx/...
+  # The ID starts with "D" and is 11 characters long.
+  # canva_resume_design_id: "DAxxxxxxxxx"

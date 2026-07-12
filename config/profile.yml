@@ -1,0 +1,82 @@
+# Career-Ops Profile Configuration
+# Copy this file to config/profile.yml and fill in your details.
+# This is the single source of truth for your personal data across all modes.
+
+candidate:
+  full_name: "Ashutosh Roy"
+  email: "ashu2003roy@gmail.com"
+  phone: "+91-9810599837"
+  location: "Gurugram, Haryana"
+  linkedin: "linkedin.com/in/ashutosh-roy-02" # Assumed based on CV
+  portfolio_url: "https://mitovoid.netlify.app/"
+  github: "github.com/ashutoshroy02"
+  twitter: "x.com/ashutoshroy02"
+
+target_roles:
+  # Your North Star roles — what you're optimizing for
+  primary:
+    - "AI/ML Engineer"
+    - "Deep Learning Researcher"
+    - "Computer Vision Engineer"
+    - "Data Scientist"
+    - "Data Analyst"
+  # Archetypes help the evaluation system score fit
+  archetypes:
+    - name: "AI/ML Engineer"
+      level: "Junior/Mid"
+      fit: "primary"        # primary = dream role, secondary = good fit, adjacent = stretch
+    - name: "Deep Learning Researcher"
+      level: "Junior"
+      fit: "primary"
+    - name: "Data Scientist"
+      level: "Junior"
+      fit: "secondary"
+    - name: "Python Developer"
+      level: "Junior"
+      fit: "adjacent"
+
+narrative:
+  # Your professional headline (1 line)
+  headline: "AI Engineer & Deep Learning Researcher | LLMs | RAG | Audio AI"
+  # Your exit story — what makes you unique
+  exit_story: "Published researcher (RECCAP 2026) with expertise in fine-tuning LLMs, designing hybrid retrieval pipelines (RAG), and speech processing."
+  # Your top 3-5 superpowers
+  superpowers:
+    - "Fine-tuning LLMs (Mistral/LLaMA) via QLoRA"
+    - "Designing hybrid RAG pipelines (FAISS/Pinecone + Solr)"
+    - "Audio/Speech AI (Wav2Vec2, Affective Computing)"
+    - "Building autonomous AI agents (LangGraph, MCP)"
+  # Proof points — projects, articles, case studies with measurable impact
+  proof_points:
+    - name: "RECCAP 2026 Paper"
+      url: "https://github.com/ashutoshroy02/EchoEmotion"
+      hero_metric: "85.9% accuracy in Speech Emotion Detection"
+    - name: "Shopping Assistant Agent"
+      url: "https://github.com/ashutoshroy02/Commerce-gpt"
+      hero_metric: "Multi-agent coordination via LangGraph & MCP"
+  # Optional: dashboard/demo URL with credentials
+  # dashboard:
+  #   url: "https://janesmith.dev/demo"
+  #   password: "demo-2026"
+
+compensation:
+  target_range: "Negotiable"     # User should update this
+  currency: "INR"
+  minimum: "Negotiable"               # User should update this
+  location_flexibility: "Remote preferred, open to relocation"
+
+location:
+  country: "India"
+  city: "Gurugram"
+  timezone: "IST"
+  visa_status: "Citizen"
+  policy: "Only India (Onsite/Hybrid) or Global Remote. No non-India Onsite."
+  priority_order: ["Gurugram", "Delhi", "Noida", "Pune", "Bangalore", "Hyderabad", "Raipur"]
+  remote_preference: "High"
+
+cv:
+  output_format: "latex" # "html" (default) or "latex"
+  # (Optional) Canva resume design ID for visual CV generation via /career-ops pdf.
+  # Find it in your Canva design URL: https://www.canva.com/design/DAxxxxxxx/...
+  # The ID starts with "D" and is 11 characters long.
+  # canva_resume_design_id: "DAxxxxxxxxx"

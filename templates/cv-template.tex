@@ -1,0 +1,103 @@
+\documentclass[letterpaper,10.5pt]{article}
+\usepackage{latexsym}
+\usepackage[empty]{fullpage}
+\usepackage{titlesec}
+\usepackage{marvosym}
+\usepackage[usenames,dvipsnames]{color}
+\usepackage{verbatim}
+\usepackage{enumitem}
+\usepackage[hidelinks]{hyperref}
+\usepackage{fancyhdr}
+\usepackage[english]{babel}
+\usepackage{tabularx}
+\usepackage{xcolor}
+\usepackage{charter}
+
+\input{glyphtounicode}
+\pdfgentounicode=1
+\pagestyle{fancy}
+\fancyhf{}
+\fancyfoot{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+\usepackage[left=0.4in,top=0.38in,right=0.4in,bottom=0.38in]{geometry}
+\urlstyle{same}
+\raggedbottom
+\raggedright
+\setlength{\tabcolsep}{0in}
+
+\definecolor{greenTheme}{RGB}{20, 80, 50}
+\definecolor{lightGray}{RGB}{80, 80, 80}
+
+\titleformat{\section}{\vspace{-5pt}\scshape\raggedright\large\color{greenTheme}\bfseries}{}{0em}{}[\color{greenTheme}\titlerule \vspace{-5pt}]
+
+\newcommand{\resumeItem}[1]{\item\small{{#1 \vspace{-2pt}}}}
+\renewcommand\labelitemi{\color{greenTheme}\tiny$\bullet$}
+\newcommand{\resumeSubheading}[4]{
+  \vspace{-1pt}\item
+    \begin{tabular*}{0.97\textwidth}[t]{l@{\extracolsep{\fill}}r}
+      \textbf{#1} & \color{greenTheme}\textbf{#2} \\
+      \textit{\small#3} & \textit{\small\color{lightGray} #4} \\
+    \end{tabular*}\vspace{-6pt}
+}
+\newcommand{\resumeProjectHeading}[2]{
+    \item
+    \begin{tabular*}{0.97\textwidth}{l@{\extracolsep{\fill}}r}
+      \small#1 & \small\color{lightGray}#2 \\
+    \end{tabular*}\vspace{-6pt}
+}
+\newcommand{\resumeSubHeadingListStart}{\begin{itemize}[leftmargin=0.15in, label={}]}
+\newcommand{\resumeSubHeadingListEnd}{\end{itemize}}
+\newcommand{\resumeItemListStart}{\begin{itemize}}
+\newcommand{\resumeItemListEnd}{\end{itemize}\vspace{-5pt}}
+
+\begin{document}
+
+%----------HEADER----------
+\begin{center}
+    {\Huge \scshape \color{greenTheme} {{NAME}}} \\[4pt]
+    {\Large \textbf{{{HEADLINE}}}}} \\[4pt]
+    \small
+    {{CONTACT_LINE}}
+\end{center}
+\vspace{-8pt}
+
+%-----------SUMMARY-----------
+\section{Summary}
+\vspace{2pt}
+\small{{{SUMMARY_TEXT}}}
+\vspace{-4pt}
+
+%-----------EXPERIENCE-----------
+\section{Work Experience}
+\resumeSubHeadingListStart
+{{EXPERIENCE}}
+\resumeSubHeadingListEnd
+
+%-----------PROJECTS-----------
+\section{Personal Projects}
+\resumeSubHeadingListStart
+{{PROJECTS}}
+\resumeSubHeadingListEnd
+
+%-----------PUBLICATIONS-----------
+\section{Publications}
+\resumeSubHeadingListStart
+{{PUBLICATIONS}}
+\resumeSubHeadingListEnd
+
+%-----------TECHNICAL SKILLS-----------
+\section{Technical Skills}
+\begin{itemize}[leftmargin=0.15in, label={}]
+  \small{\item{
+{{SKILLS}}
+  }}
+\end{itemize}
+
+%-----------EDUCATION-----------
+\section{Education}
+\resumeSubHeadingListStart
+{{EDUCATION}}
+\resumeSubHeadingListEnd
+
+\end{document}

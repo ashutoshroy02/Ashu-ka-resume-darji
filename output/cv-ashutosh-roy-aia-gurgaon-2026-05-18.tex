@@ -1,0 +1,154 @@
+\documentclass[a4paper,10pt]{article}
+\usepackage{latexsym}
+\usepackage[empty]{fullpage}
+\usepackage{titlesec}
+\usepackage{marvosym}
+\usepackage[usenames,dvipsnames]{color}
+\usepackage{verbatim}
+\usepackage{enumitem}
+\usepackage[hidelinks]{hyperref}
+\usepackage{fancyhdr}
+\usepackage[english]{babel}
+\usepackage{tabularx}
+\usepackage{xcolor}
+\usepackage{charter}
+
+\input{glyphtounicode}
+\pdfgentounicode=1
+\pagestyle{fancy}
+\fancyhf{}
+\fancyfoot{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+\usepackage[left=0.35in,top=0.3in,right=0.35in,bottom=0.3in]{geometry}
+\urlstyle{same}
+\raggedbottom
+\raggedright
+\setlength{\tabcolsep}{0in}
+
+\definecolor{greenTheme}{RGB}{20, 80, 50}
+\definecolor{lightGray}{RGB}{80, 80, 80}
+
+\titleformat{\section}{\vspace{-6pt}\scshape\raggedright\large\color{greenTheme}\bfseries}{}{0em}{}[\color{greenTheme}\titlerule \vspace{-6pt}]
+
+\newcommand{\resumeItem}[1]{\item\small{{#1 \vspace{-3pt}}}}
+\renewcommand\labelitemi{\color{greenTheme}\tiny$\bullet$}
+\newcommand{\resumeSubheading}[4]{
+  \vspace{-2pt}\item
+    \begin{tabular*}{0.97\textwidth}[t]{l@{\extracolsep{\fill}}r}
+      \textbf{#1} & \color{greenTheme}\textbf{#2} \\
+      \textit{\small#3} & \textit{\small\color{lightGray} #4} \\
+    \end{tabular*}\vspace{-7pt}
+}
+\newcommand{\resumeProjectHeading}[2]{
+    \item
+    \begin{tabular*}{0.97\textwidth}{l@{\extracolsep{\fill}}r}
+      \small#1 & \small\color{lightGray}#2 \\
+    \end{tabular*}\vspace{-7pt}
+}
+\newcommand{\resumeSubHeadingListStart}{\begin{itemize}[leftmargin=0.15in, label={}]}
+\newcommand{\resumeSubHeadingListEnd}{\end{itemize}}
+\newcommand{\resumeItemListStart}{\begin{itemize}}
+\newcommand{\resumeItemListEnd}{\end{itemize}\vspace{-5pt}}
+
+\begin{document}
+
+%----------HEADER----------
+\begin{center}
+    {\Huge \scshape \color{greenTheme} Ashutosh Roy} \\[3pt]
+    {\Large \textbf{Data Scientist | AI/ML}} \\[3pt]
+    \small
+    \href{tel:+919810599837}{+91-9810599837} $|$
+    \href{mailto:ashu2003roy@gmail.com}{ashu2003roy@gmail.com} $|$
+    Gurugram, Haryana $|$
+    \href{https://linkedin.com/in/ashutosh-roy-02}{linkedin.com/in/ashutosh-roy-02} $|$
+    \href{https://github.com/ashutoshroy02}{github.com/ashutoshroy02}
+\end{center}
+\vspace{-10pt}
+
+%-----------SUMMARY-----------
+\section{Summary}
+\vspace{1pt}
+\small{Data Scientist with hands-on experience applying Machine Learning and Deep Learning to solve business challenges using PyTorch and TensorFlow. Published researcher (RECCAP 2026, IIT Palakkad; co-author, IIT Delhi). Built NLP models for text classification, entity recognition, semantic search, and text summarization. Designed computer vision pipelines (OpenCV, OCR) and deployed ML models as REST APIs on cloud. Proficient in Python, SQL, feature engineering, and end-to-end model deployment.}
+\vspace{-6pt}
+
+%-----------EXPERIENCE-----------
+\section{Work Experience}
+\resumeSubHeadingListStart
+
+    \resumeSubheading
+      {Indian Institute of Technology (IIT) Delhi}{Jan 2025 -- Jun 2025}
+      {Research Intern -- Data Science \& ML}{New Delhi}
+      \resumeItemListStart
+        \resumeItem{Designed NLP pipelines for text classification, custom entity recognition, and semantic search over 50K+ records using Spacy, PyTorch, and FAISS/Pinecone vector stores with knowledge graph reasoning.}
+        \resumeItem{Built hybrid retrieval pipelines (FAISS + Apache Solr) optimizing semantic and keyword search, and deployed scalable REST APIs via FastAPI reducing retrieval latency by 35\%.}
+        \resumeItem{Fine-tuned Deep Learning OCR models and engineered computer vision pipelines (OpenCV) to extract structured data from degraded historical documents.}
+      \resumeItemListEnd
+
+    \resumeSubheading
+      {MitoVoid AI}{Oct 2024 -- Nov 2024}
+      {AI/ML Engineer Intern}{Remote}
+      \resumeItemListStart
+        \resumeItem{Fine-tuned transformer models (Mistral/LLaMA) via QLoRA for healthcare NLP: text summarization, entity recognition, and intent classification on clinical data.}
+        \resumeItem{Built end-to-end Python ML pipelines (ingestion $\rightarrow$ feature engineering $\rightarrow$ inference $\rightarrow$ deployment) and deployed a FastAPI backend reducing query resolution time by 40\%.}
+        \resumeItem{Optimized Deep Learning model inference latency by 30\% through batch processing and model quantization for production deployment.}
+      \resumeItemListEnd
+
+    \resumeSubheading
+      {LeanTactics Solutions Pvt. Ltd.}{Nov 2024 -- Dec 2024}
+      {Software Engineer Intern}{Remote}
+      \resumeItemListStart
+        \resumeItem{Engineered Python/FastAPI backend services integrating ML model outputs into production REST APIs with CI/CD pipelines, achieving 25--35\% latency reduction.}
+      \resumeItemListEnd
+
+\resumeSubHeadingListEnd
+
+%-----------PROJECTS-----------
+\section{Projects}
+\resumeSubHeadingListStart
+
+    \resumeProjectHeading{\textbf{\href{https://github.com/ashutoshroy02/EchoEmotion}{Speech Emotion \& Stress Detection}} \emph{$|$ Deep Learning, PyTorch}}{Jan 2026 -- May 2026}
+    \resumeItemListStart
+        \resumeItem{Designed Wav2Vec2 + BiLSTM multitask architecture for 5-class emotion classification and stress regression. Implemented feature engineering (VAD, log-Mel spectrograms), achieving 85.9\% accuracy and 0.1268 RMSE.}
+    \resumeItemListEnd
+
+    \resumeProjectHeading{\textbf{\href{https://github.com/ashutoshroy02/Exam-Helper}{Exam-Helper Agentic RAG}} \emph{$|$ NLP, Semantic Search}}{Dec 2024 -- Apr 2025}
+    \resumeItemListStart
+        \resumeItem{Built LLM-powered QA agent (LLaMA 3) with multimodal ingestion and dense retrieval (FAISS/Pinecone) for text classification, topic modeling, and semantic search over knowledge bases.}
+    \resumeItemListEnd
+
+    \resumeProjectHeading{\textbf{Medical Chatbot} \emph{$|$ LLM Fine-Tuning, Computer Vision}}{Mar 2024 -- Jun 2024}
+    \resumeItemListStart
+        \resumeItem{Fine-tuned Mistral 7B (QLoRA) for medical NLP and built a Tesseract OCR + OpenCV vision pipeline for structured clinical data extraction and downstream inference.}
+    \resumeItemListEnd
+
+\resumeSubHeadingListEnd
+
+%-----------PUBLICATIONS-----------
+\section{Publications}
+\resumeSubHeadingListStart
+    \resumeProjectHeading{\textbf{Speech Emotion \& Stress Detection using Hybrid Architecture} \emph{$|$ First Author, RECCAP 2026, IIT Palakkad}}{May 2026}
+    \resumeProjectHeading{\textbf{\href{https://arxiv.org/abs/2511.05667}{SARCH: Multimodal Search for Archaeological Archives}} \emph{$|$ Co-Author, IIT Delhi}}{Nov 2025}
+\resumeSubHeadingListEnd
+\vspace{-6pt}
+
+%-----------TECHNICAL SKILLS-----------
+\section{Technical Skills}
+\begin{itemize}[leftmargin=0.15in, label={}]
+  \small{\item{
+    \textbf{AI/ML \& Deep Learning}{: Machine Learning, Deep Learning, NLP (Text Classification, NER, Summarization, Topic Modeling, Semantic Search), Computer Vision (Image Recognition, OpenCV), Speech Processing, RAG, AI Agents, Transformer Fine-Tuning (QLoRA)} \\
+    \textbf{Frameworks}{: PyTorch, TensorFlow, Hugging Face, LangChain, Spacy, Scikit-learn, Pandas, NumPy} \\
+    \textbf{Tools \& Deployment}{: Python, SQL, FastAPI, REST APIs, Docker, CI/CD, Git, GitHub Actions, Google Cloud, Linux}
+  }}
+\end{itemize}
+\vspace{-6pt}
+
+%-----------EDUCATION-----------
+\section{Education}
+\resumeSubHeadingListStart
+    \resumeSubheading
+      {Chhattisgarh Swami Vivekananda Technical University (CSVTU)}{2022 -- 2026}
+      {B.Tech (Hons) in CSE -- Artificial Intelligence}{Bhilai, CG}
+\resumeSubHeadingListEnd
+
+\end{document}

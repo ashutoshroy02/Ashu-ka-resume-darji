@@ -1,0 +1,156 @@
+\documentclass[letterpaper,10.5pt]{article}
+\usepackage{latexsym}
+\usepackage[empty]{fullpage}
+\usepackage{titlesec}
+\usepackage{marvosym}
+\usepackage[usenames,dvipsnames]{color}
+\usepackage{verbatim}
+\usepackage{enumitem}
+\usepackage[hidelinks]{hyperref}
+\usepackage{fancyhdr}
+\usepackage[english]{babel}
+\usepackage{tabularx}
+\usepackage{xcolor}
+\usepackage{charter}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyfoot{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+\usepackage[left=0.4in,top=0.38in,right=0.4in,bottom=0.38in]{geometry}
+\urlstyle{same}
+\raggedbottom
+\raggedright
+\setlength{\tabcolsep}{0in}
+
+\definecolor{greenTheme}{RGB}{20, 80, 50}
+\definecolor{lightGray}{RGB}{80, 80, 80}
+
+\titleformat{\section}{\vspace{-5pt}\scshape\raggedright\large\color{greenTheme}\bfseries}{}{0em}{}[\color{greenTheme}\titlerule \vspace{-5pt}]
+
+\newcommand{\resumeItem}[1]{\item\small{{#1 \vspace{-2pt}}}}
+\renewcommand\labelitemi{\color{greenTheme}\tiny$\bullet$}
+\newcommand{\resumeSubheading}[4]{
+  \vspace{-1pt}\item
+    \begin{tabular*}{0.97\textwidth}[t]{l@{\extracolsep{\fill}}r}
+      \textbf{#1} & \color{greenTheme}\textbf{#2} \\
+      \textit{\small#3} & \textit{\small\color{lightGray} #4} \\
+    \end{tabular*}\vspace{-6pt}
+}
+\newcommand{\resumeProjectHeading}[2]{
+    \item
+    \begin{tabular*}{0.97\textwidth}{l@{\extracolsep{\fill}}r}
+      \small#1 & \small\color{lightGray}#2 \\
+    \end{tabular*}\vspace{-6pt}
+}
+\newcommand{\resumeSubHeadingListStart}{\begin{itemize}[leftmargin=0.15in, label={}]}
+\newcommand{\resumeSubHeadingListEnd}{\end{itemize}}
+\newcommand{\resumeItemListStart}{\begin{itemize}}
+\newcommand{\resumeItemListEnd}{\end{itemize}\vspace{-5pt}}
+
+\input{glyphtounicode}
+\pdfgentounicode=1
+
+\begin{document}
+
+%----------HEADER----------
+\begin{center}
+    {\Huge \scshape \color{greenTheme} Ashutosh Roy} \\[4pt]
+    {\Large \textbf{Data Engineer $|$ Python Backend Specialist}} \\[4pt]
+    \small
+    \href{tel:+919810599837}{+91-9810599837}  \hspace{4pt}$|$\hspace{4pt}
+    \href{mailto:ashu2003roy@gmail.com}{ashu2003roy@gmail.com} \hspace{4pt}$|$\hspace{4pt}
+    \href{https://mitovoid.netlify.app}{Portfolio} \hspace{4pt}$|$\hspace{4pt}
+    \href{https://github.com/ashutosh-roy}{Github} \hspace{4pt}$|$\hspace{4pt}
+    Gurugram, Haryana
+\end{center}
+\vspace{-8pt}
+
+%-----------SUMMARY-----------
+\section{Summary}
+\vspace{2pt}
+\small{Data Engineer and former founder with expertise in building scalable ETL/ELT pipelines and semantic data architectures. Skilled in designing multidimensional data models (Star/Snowflake), optimizing SQL performance, and deploying production backend systems via FastAPI. Experienced in extracting structured insights from diverse datasets using OCR and hybrid retrieval systems (FAISS/Pinecone/Solr). Strong foundation in Python and a deep interest in data ontology, knowledge graphs, and enterprise-grade cloud solutions.}
+\vspace{-4pt}
+
+%-----------EXPERIENCE-----------
+\section{Experience}
+\resumeSubHeadingListStart
+
+  \resumeSubheading{Research Intern}{Jan 2025 -- Jun 2025}{Indian Institute of Technology (IIT) Delhi}{New Delhi, India}
+  \resumeItemListStart
+    \resumeItem{Engineered high-performance \textbf{ETL pipelines} for multimodal archaeological datasets; automated document ingestion, semantic extraction (OCR), and structured markdown generation.}
+    \resumeItem{Designed a \textbf{hybrid retrieval architecture} combining dense (FAISS/Pinecone) and sparse (Apache Solr) indices, enabling semantic search and entity resolution across thousands of historical records.}
+    \resumeItem{Deployed scalable \textbf{FastAPI} backend services for real-time inference, ensuring low-latency data access and sub-second retrieval responses for downstream AI agents.}
+    \resumeItem{Co-authored research on multimodal search pipelines for archival digitization — submitted for peer review at top-tier venues (\href{https://arxiv.org/abs/2511.05667}{\textit{arxiv.org/abs/2511.05667}}).}
+  \resumeItemListEnd
+
+  \resumeSubheading{AI/ML Engineer Intern}{Oct 2024 -- Nov 2024}{MitoVoid AI}{Remote}
+  \resumeItemListStart
+    \resumeItem{Built end-to-end \textbf{Python data pipelines}: data ingestion $\rightarrow$ cleaning $\rightarrow$ transformer-based summarization (Mistral/LLaMA) $\rightarrow$ API deployment for healthcare applications.}
+    \resumeItem{Architected intent-routing systems and medical record ontologies to standardize summaries, reducing patient query resolution time by \textbf{\textasciitilde40\%} through automated data flow.}
+    \resumeItem{Implemented robust OCR and data validation modules to extract structured clinical data from messy image/PDF reports with 90\%+ accuracy.}
+  \resumeItemListEnd
+
+  \resumeSubheading{Software Engineer Intern}{Nov 2024 -- Dec 2024}{LeanTactics Solutions Pvt. Ltd.}{Remote}
+  \resumeItemListStart
+    \resumeItem{Engineered high-performance backend services using Python and \textbf{FastAPI}, optimizing data flow between inference layers and production application systems.}
+    \resumeItem{Achieved a \textbf{25--35\% reduction} in response latency under production load by profiling API performance bottlenecks and optimizing SQL/NoSQL data interactions.}
+  \resumeItemListEnd
+
+\resumeSubHeadingListEnd
+
+%-----------PROJECTS-----------
+\section{Projects}
+\resumeSubHeadingListStart
+
+  \resumeProjectHeading
+  {\href{https://github.com/ashutoshroy02/Commerce-gpt}
+  {\textbf{Shopping Assistant Agent (LangGraph \& MCP)}} 
+  $|$ \emph{Python, LangGraph, MCP, API Integration}}{Feb 2026 -- May 2026}
+  \resumeItemListStart
+    \resumeItem{Engineered a multi-agent system coordinating specialized agents for search and comparison; implemented \textbf{Model Context Protocol (MCP)} servers for secure real-time API access to shopping databases.}
+    \resumeItem{Designed the data orchestration layer using LangGraph to manage complex state transitions and tool-calling dependencies across distributed nodes.}
+  \resumeItemListEnd
+
+  \resumeProjectHeading
+  {\href{https://github.com/ashutoshroy02/Exam-Helper}
+  {\textbf{Exam-Helper RAG System}} 
+  $|$ \emph{Python, LLaMA 3, FAISS, Pinecone, Data Ingestion}}{Dec 2024 -- Apr 2025}
+  \resumeItemListStart
+    \resumeItem{Built a multimodal \textbf{data ingestion pipeline} supporting PDFs, images, and YouTube transcripts; implemented semantic chunking and dense retrieval via FAISS/Pinecone for context-accurate QA.}
+    \resumeItem{Optimized retrieval precision by designing efficient metadata schemas and vector index strategies for sub-second similarity search.}
+  \resumeItemListEnd
+
+  \resumeProjectHeading
+  {\href{https://github.com/ashutoshroy02/BULK-MAIL}
+  {\textbf{BulkyMail Automation}} 
+  $|$ \emph{Python, Jinja2, CSV Processing}}{Dec 2024}
+  \resumeItemListStart
+    \resumeItem{Developed a bulk email automation tool using Python and Jinja2 templating; engineered efficient CSV processing and dynamic data injection for large-scale personalized outreach.}
+  \resumeItemListEnd
+
+\resumeSubHeadingListEnd
+
+%-----------TECHNICAL SKILLS-----------
+\section{Technical Skills}
+\begin{itemize}[leftmargin=0.15in, label={}]
+  \small{\item{
+    \textbf{Data Engineering}{: ETL/ELT Pipelines, Data Modeling (Star/Snowflake), Data Ontology, Data Lineage, Master Data Management (MDM), Knowledge Graphs, Semantic Search} \\
+    \textbf{Languages \& DBs}{: Python (Expert), SQL (Advanced), PostgreSQL, MySQL, FAISS, Pinecone, Apache Solr, Neo4j (Basic)} \\
+    \textbf{Orchestration \& Tools}{: FastAPI, Airflow (Conceptual), AWS Glue (Exposure), Docker, Linux, Git, GitHub Actions, Jinja2} \\
+    \textbf{Libraries}{: PyTorch, Hugging Face, LangChain, Apache Spark (Exposure), Pandas, NumPy, Scikit-learn, Tesseract OCR}
+  }}
+\end{itemize}
+
+%-----------EDUCATION-----------
+\section{Education}
+\resumeSubHeadingListStart
+\resumeSubheading{Chhattisgarh Swami Vivekananda Technical University (CSVTU)}{2022 -- 2026}{B.Tech (Hons) in Computer Science and Engineering (Artificial Intelligence)}{Bhilai, Chhattisgarh}
+\resumeSubHeadingListEnd
+
+\resumeSubHeadingListStart
+\resumeSubheading{St. Columbus School}{2020 -- 2021}{Higher Secondary (Class XII - Science PCMB) - 87\%}{Faridabad, Haryana}
+\resumeSubHeadingListEnd
+
+\end{document}

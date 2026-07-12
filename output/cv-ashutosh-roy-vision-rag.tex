@@ -1,0 +1,194 @@
+\documentclass[letterpaper,10.5pt]{article}
+\usepackage{latexsym}
+\usepackage[empty]{fullpage}
+\usepackage{titlesec}
+\usepackage{marvosym}
+\usepackage[usenames,dvipsnames]{color}
+\usepackage{verbatim}
+\usepackage{enumitem}
+\usepackage[hidelinks]{hyperref}
+\usepackage{fancyhdr}
+\usepackage[english]{babel}
+\usepackage{tabularx}
+\usepackage{xcolor}
+\usepackage{charter}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyfoot{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+\usepackage[left=0.4in,top=0.38in,right=0.4in,bottom=0.38in]{geometry}
+\urlstyle{same}
+\raggedbottom
+\raggedright
+\setlength{\tabcolsep}{0in}
+
+\definecolor{greenTheme}{RGB}{20, 80, 50}
+\definecolor{lightGray}{RGB}{80, 80, 80}
+
+\titleformat{\section}{\vspace{-5pt}\scshape\raggedright\large\color{greenTheme}\bfseries}{}{0em}{}[\color{greenTheme}\titlerule \vspace{-5pt}]
+
+\newcommand{\resumeItem}[1]{\item\small{{#1 \vspace{-2pt}}}}
+\renewcommand\labelitemi{\color{greenTheme}\tiny$\bullet$}
+\newcommand{\resumeSubheading}[4]{
+  \vspace{-1pt}\item
+    \begin{tabular*}{0.97\textwidth}[t]{l@{\extracolsep{\fill}}r}
+      \textbf{#1} & \color{greenTheme}\textbf{#2} \\
+      \textit{\small#3} & \textit{\small\color{lightGray} #4} \\
+    \end{tabular*}\vspace{-6pt}
+}
+\newcommand{\resumeProjectHeading}[2]{
+    \item
+    \begin{tabular*}{0.97\textwidth}{l@{\extracolsep{\fill}}r}
+      \small#1 & \small\color{lightGray}#2 \\
+    \end{tabular*}\vspace{-6pt}
+}
+\newcommand{\resumeSubHeadingListStart}{\begin{itemize}[leftmargin=0.15in, label={}]}
+\newcommand{\resumeSubHeadingListEnd}{\end{itemize}}
+\newcommand{\resumeItemListStart}{\begin{itemize}}
+\newcommand{\resumeItemListEnd}{\end{itemize}\vspace{-5pt}}
+\input{glyphtounicode}
+\pdfgentounicode=1
+
+\begin{document}
+
+%----------HEADER----------
+\begin{center}
+    {\Huge \scshape \color{greenTheme} Ashutosh Roy} \\[4pt]
+    {\Large \textbf{AI/ML Specialist — Vision \& RAG}} \\[4pt]
+    \small
+    \href{tel:+919810599837}{+91-9810599837}  \hspace{4pt}$|$\hspace{4pt}
+    \href{mailto:ashu2003roy@gmail.com}{ashu2003roy@gmail.com} \hspace{4pt}$|$\hspace{4pt}
+    \href{https://mitovoid.netlify.app}{Portfolio} \hspace{4pt}$|$\hspace{4pt}
+    \href{https://github.com/ashutosh-roy}{Github} \hspace{4pt}$|$\hspace{4pt}
+    Gurugram, Haryana
+\end{center}
+\vspace{-8pt}
+
+%-----------SUMMARY-----------
+\section{Summary}
+\vspace{2pt}
+\small{AI/ML Specialist specializing in Computer Vision (OCR, detection, classification) and Retrieval-Augmented Generation (RAG) architectures. Published researcher with a track record in building high-accuracy Vision-RAG systems — from benchmarking OCR models at IIT Delhi to architecting multimodal retrieval pipelines. Highly proficient in Python, PyTorch/TensorFlow, and vector databases (FAISS, Pinecone), with a focus on data-driven model evaluation and intelligent search solutions.}
+\vspace{-4pt}
+
+%-----------EXPERIENCE-----------
+\section{Experience}
+\resumeSubHeadingListStart
+
+  \resumeSubheading{Research Intern}{Jan 2025 -- Jun 2025}{Indian Institute of Technology (IIT) Delhi}{New Delhi, India}
+  \resumeItemListStart
+    \resumeItem{Evaluated and benchmarked 3 OCR systems (Tesseract, Marker, Gemini OCR) for image classification and text detection on diverse historical manuscripts, optimizing extraction fidelity.}
+    \resumeItem{Designed a per-class model selection strategy to reduce character error rates, integrating vision-based document parsing into a scalable archival pipeline.}
+    \resumeItem{Built a multimodal RAG retrieval pipeline combining semantic vector search (FAISS/Pinecone) and keyword search (Apache Solr) over thousands of archival images.}
+    \resumeItem{Fine-tuned \textbf{Surya OCR} and engineered custom data preprocessing/annotation pipelines to isolate semantic data from scanned historical books and maps.}
+  \resumeItemListEnd
+\vspace{6pt}
+  \resumeSubheading{AI/ML Engineer Intern}{Oct 2024 -- Nov 2024}{MitoVoid AI}{Remote}
+  \resumeItemListStart
+    \resumeItem{Built an OCR-based analysis module for image detection and text extraction from complex medical reports, ensuring high accuracy via custom OpenCV preprocessing.}
+    \resumeItem{Developed end-to-end Vision-NLP pipelines, integrating Tesseract OCR with LLM architectures for real-time automated data annotation and analysis.}
+    \resumeItem{Optimized model inference latency by 30\% through efficient batch processing and quantization, improving performance of AI-driven healthcare applications.}
+  \resumeItemListEnd
+
+\resumeSubHeadingListEnd
+
+%-----------PROJECTS-----------
+\section{Projects}
+\resumeSubHeadingListStart
+
+  \resumeProjectHeading
+  {\href{https://github.com/ashutoshroy02/EchoEmotion}
+  {\textbf{Speech Emotion \& Stress Detection}} 
+  $|$ \emph{Python, PyTorch, Wav2Vec2, BiLSTM, Hugging Face}}{Jan 2026 -- May 2026}
+  \resumeItemListStart
+    \resumeItem{Engineered a comprehensive audio preprocessing pipeline integrating Voice Activity Detection (VAD), silence removal, log-Mel spectrogram generation, and MFCC extraction.}
+    \resumeItem{Unified and standardized data across 3 distinct emotional speech corpora (RAVDESS, TESS, SAVEE) to create a robust training dataset.}
+    \resumeItem{Developed a novel hybrid \textbf{Wav2Vec2 + BiLSTM} architecture that effectively captures both spatial acoustic features and temporal sequence dependencies.}
+    \resumeItem{Achieved state-of-the-art \textbf{85.9\% accuracy}, \textbf{0.856 F1 score}, and an RMSE of \textbf{0.1268} on continuous stress regression, significantly outperforming traditional SVM, Random Forest, and standalone CNN baselines.}
+  \resumeItemListEnd
+
+  \resumeProjectHeading
+  {\href{https://github.com/ashutoshroy02/Exam-Helper}
+  {\textbf{Exam-Helper RAG System}} 
+  $|$ \emph{Python, LLaMA 3, FAISS, LangChain, Streamlit}}{Dec 2024 -- Apr 2025}
+  \resumeItemListStart
+    \resumeItem{Implemented a robust multimodal document ingestion framework supporting complex scanned PDFs, handwritten notes, and image-based Q\&A workflows.}
+    \resumeItem{Combined advanced vision-based document parsing with dense vector retrieval using FAISS to ensure highly context-accurate and hallucination-free LLM responses.}
+    \resumeItem{Integrated LLaMA 3 via LangChain for nuanced conversational abilities, wrapped in an intuitive Streamlit user interface for seamless student interaction.}
+  \resumeItemListEnd
+
+  \resumeProjectHeading
+  {\href{https://github.com/ashutoshroy02/Beat-Bubble}
+  {\textbf{Music Identification App}} 
+  $|$ \emph{Python, ACRCloud API, Streamlit, NumPy}}{Sep 2024 -- Dec 2024}
+  \resumeItemListStart
+    \resumeItem{Built a real-time audio signal processing pipeline encompassing microphone waveform capture, digital filtering, and localized feature extraction.}
+    \resumeItem{Implemented highly accurate acoustic fingerprinting and metadata retrieval via integration with the ACRCloud API.}
+    \resumeItem{Designed and deployed a responsive, cross-platform user interface using Flutter, emphasizing low-latency interactions and aesthetic visual feedback.}
+  \resumeItemListEnd
+
+  \resumeProjectHeading
+  {\href{https://huggingface.co/fhai50032/BeagleLake-7B}
+  {\textbf{Medical Chatbot with OCR Pipeline}} 
+  $|$ \emph{Python, Mistral 7B, QLoRA, Tesseract, OpenCV}}{Mar 2024 -- Jun 2024}
+  \resumeItemListStart
+    \resumeItem{Architected an advanced document vision pipeline utilizing Tesseract OCR coupled with robust \textbf{OpenCV} preprocessing techniques, including morphological denoising, adaptive binarization, and automated deskewing.}
+    \resumeItem{Extracted and mapped complex structured text from varied clinical report images into standardized JSON formats for downstream processing.}
+    \resumeItem{Applied QLoRA techniques to fine-tune a Mistral 7B model specifically for medical Natural Language Understanding (NLU), resulting in a highly specialized, context-aware healthcare chatbot.}
+  \resumeItemListEnd
+
+\resumeSubHeadingListEnd
+
+%-----------PUBLICATIONS-----------
+\section{Publications}
+\resumeSubHeadingListStart
+
+  \resumeProjectHeading
+  {\href{https://arxiv.org/abs/2511.05667}{\textbf{SARCH: Multimodal Search for Archaeological Archives}} $|$ \emph{Co-author}}{Nov 2025}
+  \resumeItemListStart
+    \resumeItem{Co-authored research detailing a comprehensive multimodal search pipeline for digitizing and indexing extensive historical archives.}
+    \resumeItem{Successfully combined advanced OCR techniques, convolutional image classification, and dense vector hybrid search to enable highly scalable and accurate retrieval of archival data.}
+  \resumeItemListEnd
+
+  \resumeProjectHeading
+  {\textbf{Speech Emotion \& Stress Detection using Hybrid Architecture} $|$ \emph{First Author}}{May 2026}
+  \resumeItemListStart
+    \resumeItem{First-authored paper detailing the design, implementation, and evaluation of a novel Wav2Vec2 + BiLSTM framework for continuous stress regression.}
+    \resumeItem{Demonstrated state-of-the-art performance with an 85.9\% accuracy rate, providing deep insights into feature extraction for affective computing.}
+    \resumeItem{Peer-reviewed and accepted for presentation at the prestigious \textbf{RECCAP 2026} conference hosted at IIT Palakkad.}
+  \resumeItemListEnd
+
+\resumeSubHeadingListEnd
+
+%-----------TECHNICAL SKILLS-----------
+\section{Technical Skills}
+\begin{itemize}[leftmargin=0.15in, label={}]
+  \small{\item{
+    \textbf{Computer Vision}{: OCR (Tesseract, Surya, Gemini OCR), Image Detection/Classification, Document Understanding, Image Preprocessing, OpenCV} \\
+    \textbf{RAG \& LLMs}{: Retrieval-Augmented Generation, Dense Retrieval, Vector Databases (FAISS, Pinecone), Prompt Engineering, Transformer Fine-Tuning} \\
+    \textbf{Machine Learning}{: Python, PyTorch, TensorFlow, Scikit-learn, Hugging Face, Data Annotation, Evaluation \& Benchmarking} \\
+    \textbf{Libraries \& Search}{: Pandas, NumPy, Apache Solr, FastAPI, LangChain, Streamlit} \\
+    \textbf{Tools}{: Git, Docker, Linux, Jupyter Notebook, Google Colab, VS Code}
+  }}
+\end{itemize}
+
+%-----------EDUCATION-----------
+\section{Education}
+\resumeSubHeadingListStart
+\resumeSubheading{Chhattisgarh Swami Vivekananda Technical University (CSVTU)}{2022 -- 2026}{B.Tech (Hons) in Computer Science and Engineering (Artificial Intelligence)}{Bhilai, Chhattisgarh}
+  \resumeItemListStart
+    \resumeItem{Relevant Coursework: Deep Learning, Natural Language Processing, Computer Vision, Data Structures \& Algorithms, Advanced Mathematics for Machine Learning.}
+    \resumeItem{Active participant in AI/ML research groups, consistently leading complex technical projects and academic publications.}
+  \resumeItemListEnd
+\resumeSubHeadingListEnd
+
+\resumeSubHeadingListStart
+\resumeSubheading{St. Columbus School}{2020 -- 2021}{Higher Secondary (Class XII - Science PCMB) - 87\%}{Faridabad, Haryana}
+  \resumeItemListStart
+    \resumeItem{Specialized in Physics, Chemistry, Mathematics, and Biology (PCMB), developing a strong foundational understanding of analytical problem-solving.}
+  \resumeItemListEnd
+\resumeSubHeadingListEnd
+
+
+\end{document}

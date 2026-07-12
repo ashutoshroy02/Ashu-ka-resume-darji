@@ -1,0 +1,183 @@
+\documentclass[letterpaper,10pt]{article}
+\usepackage{latexsym}
+\usepackage[empty]{fullpage}
+\usepackage{titlesec}
+\usepackage{marvosym}
+\usepackage[usenames,dvipsnames]{color}
+\usepackage{verbatim}
+\usepackage{enumitem}
+\usepackage[hidelinks]{hyperref}
+\usepackage{fancyhdr}
+\usepackage[english]{babel}
+\usepackage{tabularx}
+\usepackage{xcolor}
+\usepackage{charter}
+\usepackage{fontawesome5}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyfoot{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+\usepackage[left=0.4in,top=0.38in,right=0.4in,bottom=0.38in]{geometry}
+\urlstyle{same}
+\raggedbottom
+\raggedright
+\setlength{\tabcolsep}{0in}
+
+\definecolor{greenTheme}{RGB}{20, 80, 50}
+\definecolor{lightGray}{RGB}{80, 80, 80}
+
+\titleformat{\section}{\vspace{-5pt}\scshape\raggedright\large\color{greenTheme}\bfseries}{}{0em}{}[\color{greenTheme}\titlerule \vspace{-5pt}]
+
+\newcommand{\resumeItem}[1]{\item\small{{#1 \vspace{-2pt}}}}
+\renewcommand\labelitemi{\color{greenTheme}\tiny$\bullet$}
+\newcommand{\resumeSubheading}[4]{
+  \vspace{-1pt}\item
+    \begin{tabular*}{0.97\textwidth}[t]{l@{\extracolsep{\fill}}r}
+      \textbf{#1} & \color{greenTheme}\textbf{#2} \\
+      \textit{\small#3} & \textit{\small\color{lightGray} #4} \\
+    \end{tabular*}\vspace{-6pt}
+}
+\newcommand{\resumeProjectHeading}[2]{
+    \item
+    \begin{tabular*}{0.97\textwidth}{l@{\extracolsep{\fill}}r}
+      \small#1 & \small\color{lightGray}#2 \\
+    \end{tabular*}\vspace{-6pt}
+}
+\newcommand{\resumeSubHeadingListStart}{\begin{itemize}[leftmargin=0.15in, label={}]}
+\newcommand{\resumeSubHeadingListEnd}{\end{itemize}}
+\newcommand{\resumeItemListStart}{\begin{itemize}}
+\newcommand{\resumeItemListEnd}{\end{itemize}\vspace{-5pt}}
+
+\begin{document}
+
+%----------HEADER----------
+\begin{center}
+    {\Huge \scshape \color{greenTheme} Ashutosh Roy} \\[4pt]
+    {\Large \textbf{Data Scientist}} \\[4pt]
+    \small
+    \href{tel:+919810599837}{\faPhone\ +91-9810599837}  \hspace{4pt}$|$\hspace{4pt}
+    \href{mailto:ashu2003roy@gmail.com}{\faEnvelope\ ashu2003roy@gmail.com} \hspace{4pt}$|$\hspace{4pt}
+    \href{https://mitovoid.netlify.app}{\faGlobe\ mitovoid.netlify.app} \hspace{4pt}$|$\hspace{4pt}
+    \href{https://github.com/ashutoshroy02}{\faGithub\ ashutoshroy02} \hspace{4pt}$|$\hspace{4pt}
+    \faMapMarker\ Gurugram, Haryana
+\end{center}
+\vspace{-8pt}
+
+
+%-----------SUMMARY-----------
+\section{Summary}
+\vspace{2pt}
+\small{
+Data Scientist with \textbf{1+ year of hands-on experience} in Machine Learning, Data Analysis, Statistical Modeling, NLP, and Predictive Analytics. Published researcher at \textbf{RECCAP 2026} with research experience at \textbf{IIT Delhi}. Skilled in \textbf{Python, SQL, Pandas, Scikit-learn, Power BI, Tableau}, and data visualization. Built ML models and data pipelines that improved prediction accuracy, reduced manual effort, and helped turn large datasets into actionable business insights.
+}
+\vspace{-4pt}
+
+
+%-----------EXPERIENCE-----------
+\section{Experience}
+\resumeSubHeadingListStart
+
+\resumeSubheading{Research Intern}{Jan 2025 -- Jun 2025}{Indian Institute of Technology (IIT) Delhi}{New Delhi, India}
+\resumeItemListStart
+\resumeItem{Analyzed and benchmarked \textbf{3} OCR models (Tesseract, Marker, Gemini OCR) on \textbf{10,000+} archaeological documents, improving extraction accuracy by \textbf{22\%} and reducing manual effort.}
+\resumeItem{Built a hybrid search pipeline using \textbf{FAISS, Pinecone, and Apache Solr}, improving retrieval accuracy by \textbf{35\%} across large historical datasets.}
+\resumeItem{Co-authored the research paper \textbf{SARCH: Multimodal Search for Archaeological Archives} with IIT Delhi. \href{https://arxiv.org/abs/2511.05667}{\textit{arxiv.org/abs/2511.05667}}}
+\resumeItemListEnd
+
+\vspace{4pt}
+
+\resumeSubheading{AI/ML Intern}{Oct 2024 -- Nov 2024}{MitoVoid AI}{Remote}
+\resumeItemListStart
+\resumeItem{Built NLP models for healthcare data analysis using feature engineering, improving prediction quality and model performance.}
+\resumeItem{Developed end-to-end data pipelines for data cleaning, preprocessing, feature extraction, and model inference, reducing manual processing time.}
+\resumeItem{Improved patient query resolution time by \textbf{40\%}, increasing support efficiency through better intent classification and response generation.}
+\resumeItemListEnd
+
+\resumeSubHeadingListEnd
+
+
+
+\vspace{-8pt}
+
+%-----------PROJECTS-----------
+\section{Projects}
+\resumeSubHeadingListStart
+
+\resumeProjectHeading
+{\href{https://github.com/ashutoshroy02/EchoEmotion}
+{\textbf{Speech Emotion \& Stress Detection}}
+$|$ \emph{Python, PyTorch, Wav2Vec2, BiLSTM, Hugging Face} $|$
+\textbf{\emph{RECCAP 2026}}}{Jan 2026 -- May 2026}
+\resumeItemListStart
+\resumeItem{Built a deep learning model for speech emotion and stress detection using \textbf{3} public datasets with data cleaning, feature engineering, and preprocessing.}
+\resumeItem{Achieved \textbf{85.9\% accuracy}, \textbf{0.856 F1}, and \textbf{0.1268 RMSE}; improved prediction performance and research accepted at \textbf{RECCAP 2026 (IEEE)}.}
+\resumeItemListEnd
+
+\vspace{4pt}
+
+\resumeProjectHeading
+{\href{https://github.com/ashutoshroy02/Netflix-Data-Analysis-Advanced}
+{\textbf{Netflix Data Analysis}}
+$|$ \emph{Python, Pandas, NumPy, Matplotlib, Seaborn, Jupyter}}{Jun 2026}
+\resumeItemListStart
+\resumeItem{Enhanced an open-source project by cleaning and analyzing data from \textbf{8,000+} Netflix titles using Python, Pandas, and NumPy.}
+\resumeItem{Built visualizations that identified trends in genres, ratings, countries, and release years, helping generate business insights and support data-driven decisions.}
+\resumeItemListEnd
+
+\vspace{4pt}
+
+\resumeProjectHeading
+{\href{https://huggingface.co/fhai50032/BeagleLake-7B}
+{\textbf{Medical Chatbot (LLM Fine-Tuning)}}
+$|$ \emph{Python, Mistral 7B, QLoRA, Tesseract OCR, Transformers}}{Mar 2024 -- Apr 2024}
+\resumeItemListStart
+\resumeItem{Fine-tuned \textbf{Mistral 7B} using QLoRA, reducing GPU memory usage by \textbf{75\%} while maintaining model performance.}
+\resumeItem{Built an OCR pipeline to process \textbf{1,000+} clinical reports, improving data quality and supporting better healthcare predictions.}
+\resumeItemListEnd
+
+\resumeSubHeadingListEnd
+
+
+
+
+%-----------TECHNICAL SKILLS-----------
+\section{Technical Skills}
+\begin{itemize}[leftmargin=0.15in, label={}]
+\small{\item{
+\textbf{Data Science}{: Data Cleaning, Exploratory Data Analysis (EDA), Statistical Analysis, Feature Engineering, Machine Learning, Deep Learning, NLP, Regression, Classification, Clustering, Time Series Analysis} \\
+\textbf{Libraries}{: Pandas, NumPy, Scikit-learn, Matplotlib, Seaborn, TensorFlow, PyTorch, XGBoost, Hugging Face} \\
+\textbf{Visualization}{: Power BI, Tableau, Streamlit, Matplotlib, Seaborn} \\
+\textbf{Databases}{: SQL, MySQL, PostgreSQL} \\
+\textbf{Languages}{: Python, SQL, C++} \\
+\textbf{Tools}{: Jupyter Notebook, Google Colab, Git, Docker, Excel}
+}}
+\end{itemize}
+
+\vspace{-8pt}
+
+%-----------ACHIEVEMENTS-----------
+\section{Achievements}
+\resumeItemListStart
+\resumeItem{Published \textbf{2 research papers}, including one accepted at \textbf{RECCAP 2026 (IEEE)} and another co-authored with \textbf{IIT Delhi}.}
+\resumeItem{Solved \textbf{150+} DSA problems on LeetCode , strengthening data structures and algorithms.}
+\resumeItem{Won \textbf{2 AI/ML Hackathons}, building innovative AI solutions under time constraints.}
+\resumeItem{Made contributions to \textbf{open-source AI/ML projects} on GitHub and Hugging Face.}
+\resumeItem{Earned certifications in \textbf{Machine Learning, Deep Learning, Generative AI, NLP, and Python}.}
+\resumeItemListEnd
+\vspace{-3pt}
+
+
+
+%-----------EDUCATION-----------
+\section{Education}
+\resumeSubHeadingListStart
+\resumeSubheading{Chhattisgarh Swami Vivekananda Technical University (CSVTU)}{2022 -- 2026}{B.Tech (Hons) in Computer Science and Engineering (Artificial Intelligence)}{Bhilai, Chhattisgarh}
+\resumeSubHeadingListEnd
+
+\resumeSubHeadingListStart
+\resumeSubheading{St. Columbus School}{2020 -- 2021}{Higher Secondary (Class XII - Science PCMB) - 87\%}{Faridabad, Haryana}
+\resumeSubHeadingListEnd
+
+\end{document}
+

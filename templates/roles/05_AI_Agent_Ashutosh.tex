@@ -1,0 +1,170 @@
+\documentclass[letterpaper,10.5pt]{article}
+\usepackage{latexsym}
+\usepackage[empty]{fullpage}
+\usepackage{titlesec}
+\usepackage{marvosym}
+\usepackage[usenames,dvipsnames]{color}
+\usepackage{verbatim}
+\usepackage{enumitem}
+\usepackage[hidelinks]{hyperref}
+\usepackage{fancyhdr}
+\usepackage[english]{babel}
+\usepackage{tabularx}
+\usepackage{xcolor}
+\usepackage{charter}
+\usepackage{fontawesome5}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyfoot{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+\usepackage[left=0.4in,top=0.38in,right=0.4in,bottom=0.38in]{geometry}
+\urlstyle{same}
+\raggedbottom
+\raggedright
+\setlength{\tabcolsep}{0in}
+
+\definecolor{greenTheme}{RGB}{20, 80, 50}
+\definecolor{lightGray}{RGB}{80, 80, 80}
+
+\titleformat{\section}{\vspace{-5pt}\scshape\raggedright\large\color{greenTheme}\bfseries}{}{0em}{}[\color{greenTheme}\titlerule \vspace{-5pt}]
+
+\newcommand{\resumeItem}[1]{\item\small{{#1 \vspace{-2pt}}}}
+\renewcommand\labelitemi{\color{greenTheme}\tiny$\bullet$}
+\newcommand{\resumeSubheading}[4]{
+  \vspace{-1pt}\item
+    \begin{tabular*}{0.97\textwidth}[t]{l@{\extracolsep{\fill}}r}
+      \textbf{#1} & \color{greenTheme}\textbf{#2} \\
+      \textit{\small#3} & \textit{\small\color{lightGray} #4} \\
+    \end{tabular*}\vspace{-6pt}
+}
+\newcommand{\resumeProjectHeading}[2]{
+    \item
+    \begin{tabular*}{0.97\textwidth}{l@{\extracolsep{\fill}}r}
+      \small#1 & \small\color{lightGray}#2 \\
+    \end{tabular*}\vspace{-6pt}
+}
+\newcommand{\resumeSubHeadingListStart}{\begin{itemize}[leftmargin=0.15in, label={}]}
+\newcommand{\resumeSubHeadingListEnd}{\end{itemize}}
+\newcommand{\resumeItemListStart}{\begin{itemize}}
+\newcommand{\resumeItemListEnd}{\end{itemize}\vspace{-5pt}}
+
+\begin{document}
+
+%----------HEADER----------
+\begin{center}
+    {\Huge \scshape \color{greenTheme} Ashutosh Roy} \\[4pt]
+    {\Large \textbf{ AI Agents \& Generative AI Engineer}} \\[4pt]
+    \small
+    \href{tel:+919810599837}{\faPhone\ +91-9810599837}  \hspace{4pt}$|$\hspace{4pt}
+    \href{mailto:ashu2003roy@gmail.com}{\faEnvelope\ ashu2003roy@gmail.com} \hspace{4pt}$|$\hspace{4pt}
+    \href{https://mitovoid.netlify.app}{\faGlobe\ mitovoid.netlify.app} \hspace{4pt}$|$\hspace{4pt}
+    \href{https://github.com/ashutoshroy02}{\faGithub\ ashutoshroy02} \hspace{4pt}$|$\hspace{4pt}
+    \faMapMarker\ Gurugram, Haryana
+\end{center}
+\vspace{-8pt}
+
+%-----------SUMMARY-----------
+\section{Summary}
+\vspace{2pt}
+\small{
+AI Agents \& Generative AI Engineer with \textbf{1+ year of hands-on experience} building AI agents, LLM-powered applications, and RAG systems. Experienced in developing multi-agent workflows using \textbf{LangChain, LangGraph, MCP, FastAPI, and vector databases}. Skilled in \textbf{LLM fine-tuning, prompt engineering, AI automation, and deploying production-ready GenAI applications}. Published researcher with experience at \textbf{IIT Delhi}, building scalable AI solutions that improve accuracy, reduce manual effort, and automate complex workflows.
+}
+\vspace{-4pt}
+
+%-----------EXPERIENCE-----------
+\section{Experience}
+\resumeSubHeadingListStart
+
+\resumeSubheading{Research Intern}{Jan 2025 -- Jun 2025}{Indian Institute of Technology (IIT) Delhi}{New Delhi, India}
+\resumeItemListStart
+\resumeItem{Built hybrid RAG pipelines using \textbf{FAISS, Pinecone, and Apache Solr}, improving retrieval accuracy by \textbf{35\%} across \textbf{10,000+} archaeological documents.}
+\resumeItem{Developed and deployed \textbf{FastAPI} services for real-time LLM inference, reducing response latency by \textbf{35\%} and enabling scalable AI agent workflows.}
+\resumeItem{Co-authored the research paper \textbf{SARCH: Multimodal Search for Archaeological Archives} with IIT Delhi. \href{https://arxiv.org/abs/2511.05667}{\textit{arxiv.org/abs/2511.05667}}}
+\resumeItemListEnd
+
+\vspace{4pt}
+
+\resumeSubheading{AI/ML Engineer Intern}{Oct 2024 -- Nov 2024}{MitoVoid AI}{Remote}
+\resumeItemListStart
+\resumeItem{Fine-tuned \textbf{Mistral} and \textbf{LLaMA} models using QLoRA for healthcare AI agents, improving response quality and reducing GPU memory usage.}
+\resumeItem{Built AI-powered healthcare assistants with tool calling, reducing patient query resolution time by \textbf{40\%} through better intent routing and automated responses.}
+\resumeItem{Developed end-to-end GenAI pipelines from data preprocessing and RAG to model deployment using \textbf{FastAPI}, enabling production-ready AI applications.}
+\resumeItemListEnd
+
+\resumeSubHeadingListEnd
+
+%-----------PROJECTS-----------
+\section{Projects}
+\resumeSubHeadingListStart
+
+\resumeProjectHeading
+{\href{https://github.com/ashutoshroy02/skills-for-agents}
+{\textbf{Skills for Agents Framework}}
+$|$ \emph{Python - LangGraph - MCP - AI Agents - Open Source}}{Apr 2026 -- May 2026}
+\resumeItemListStart
+\resumeItem{Built an open-source framework for reusable AI agent skills, enabling multi-agent workflows with shared memory, tool calling, and modular task execution.}
+\resumeItem{Designed the \textbf{Skills Interoperability Protocol (SIP)}, reducing prompt duplication by \textbf{60\%} and improving agent scalability through reusable skill modules.}
+\resumeItemListEnd
+
+\vspace{4}
+
+\resumeProjectHeading
+{\href{https://github.com/ashutoshroy02}
+{\textbf{Shopping Assistant Agent}}
+$|$ \emph{Python - LangGraph - MCP - Claude 3.5 - FastAPI}}{Feb 2026 -- May 2026}
+\resumeItemListStart
+\resumeItem{Built a multi-agent shopping assistant using LangGraph to automate product search, comparison, recommendations, and review summarization.}
+\resumeItem{Developed MCP servers for secure tool calling with product APIs and databases, reducing response time by \textbf{35\%} and improving recommendation quality.}
+\resumeItemListEnd
+
+\vspace{4}
+
+\resumeProjectHeading
+{\href{https://github.com/ashutoshroy02/Exam-Helper}
+{\textbf{Exam-Helper Agentic RAG}}
+$|$ \emph{Python - LLaMA 3 - LangGraph - FastAPI - FAISS - Pinecone}}{Dec 2024 -- Apr 2025}
+\resumeItemListStart
+\resumeItem{Built an Agentic RAG system using LLaMA 3 and LangGraph with support for PDFs, images, and YouTube transcripts.}
+\resumeItem{Implemented semantic retrieval with FAISS and Pinecone, reducing hallucinations by \textbf{40\%} and improving answer accuracy through dynamic context retrieval.}
+\resumeItemListEnd
+
+\resumeSubHeadingListEnd
+
+
+%-----------TECHNICAL SKILLS-----------
+\section{Technical Skills}
+\begin{itemize}[leftmargin=0.15in, label={}]
+\small{\item{
+\textbf{AI Agents \& GenAI}{: LLMs, AI Agents, Agentic AI, Multi-Agent Systems, RAG, Prompt Engineering, Function Calling, Tool Calling, MCP, LangChain, LangGraph, CrewAI, AutoGen, LlamaIndex} \\
+\textbf{Machine Learning}{:Fine-Tuning (QLoRA/LoRA), NLP, Deep Learning, Multimodal AI, Speech Processing, Embeddings, Vector Search} \\
+\textbf{Frameworks \& Libraries}{: PyTorch, Hugging Face Transformers, TensorFlow, Scikit-learn, FastAPI, Streamlit} \\
+\textbf{Vector Databases \& Search}{: FAISS, Pinecone, Qdrant, Apache Solr, MySQL} \\
+\textbf{Languages \& Tools}{: Python, SQL, C++, Git, Docker, Linux, VS Code, Google Colab}
+}}
+\end{itemize}
+\vspace{-6pt}
+
+%-----------ACHIEVEMENTS-----------
+\section{Achievements}
+\resumeItemListStart
+\resumeItem{Published \textbf{2 research papers}, including one accepted at \textbf{RECCAP 2026 (IEEE)} and another co-authored with \textbf{IIT Delhi}.}
+\resumeItem{Solved \textbf{150+} DSA problems on LeetCode , strengthening data structures and algorithms.}
+\resumeItem{Won \textbf{2 AI/ML Hackathons}, building innovative AI solutions under time constraints.}
+\resumeItem{Made contributions to \textbf{open-source AI/ML projects} on GitHub and Hugging Face.}
+\resumeItem{Earned certifications in \textbf{Machine Learning, Deep Learning, Generative AI, NLP, and Python}.}
+\resumeItemListEnd
+\vspace{-3pt}
+
+%-----------EDUCATION-----------
+\section{Education}
+\resumeSubHeadingListStart
+\resumeSubheading{Chhattisgarh Swami Vivekananda Technical University (CSVTU)}{2022 -- 2026}{B.Tech (Hons) in Computer Science and Engineering (Artificial Intelligence)}{Bhilai, Chhattisgarh}
+\resumeSubHeadingListEnd
+
+\resumeSubHeadingListStart
+\resumeSubheading{St. Columbus School}{2020 -- 2021}{Higher Secondary (Class XII - Science PCMB) - 87\%}{Faridabad, Haryana}
+\resumeSubHeadingListEnd
+
+
+\end{document}
