@@ -1,38 +1,29 @@
-# Career-Ops
+# Career-Ops — AI Resume Tailor
 
 [English](README.md) | [Español](README.es.md) | [Português (Brasil)](README.pt-BR.md) | [한국어](README.ko-KR.md) | [日本語](README.ja.md) | [Русский](README.ru.md) | [简体中文](README.cn.md) | [繁體中文](README.zh-TW.md)
 
 <p align="center">
-  <a href="https://github.com/ashutoshroy02"><img src="docs/hero-banner.jpg" alt="Career-Ops — Multi-Agent Job Search System" width="800"></a>
+  <a href="https://github.com/ashutoshroy02"><img src="docs/hero-banner.jpg" alt="Career-Ops — AI Resume Tailor" width="800"></a>
 </p>
 
 <p align="center">
-  <em>I spent months applying to jobs the hard way. So I engineered the system I wish I had.</em><br>
-  Companies use AI to filter candidates. <strong>I just gave candidates AI to <em>choose</em> companies.</strong><br>
-  <em>Now it's open source.</em>
+  <em>Tired of rewriting your resume for every job? I built a pipeline that does it for you.</em><br>
+  Paste a JD or URL → get a keyword-injected, ATS-optimized, 1-page PDF in seconds.<br>
+  <strong>Free. Local. No subscriptions. Open source.</strong>
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/Claude_Code-000?style=flat&logo=anthropic&logoColor=white" alt="Claude Code">
-  <img src="https://img.shields.io/badge/OpenCode-111827?style=flat&logo=terminal&logoColor=white" alt="OpenCode">
-  <img src="https://img.shields.io/badge/Gemini_CLI-4285F4?style=flat&logo=google&logoColor=white" alt="Gemini CLI">
-  <img src="https://img.shields.io/badge/Codex_(soon)-6B7280?style=flat&logo=openai&logoColor=white" alt="Codex">
+  <img src="https://img.shields.io/badge/Built_on-career--ops-black?style=flat" alt="Built on career-ops">
+  <img src="https://img.shields.io/badge/Streamlit-FF4B4B?style=flat&logo=streamlit&logoColor=white" alt="Streamlit">
+  <img src="https://img.shields.io/badge/Python-3776AB?style=flat&logo=python&logoColor=white" alt="Python">
+  <img src="https://img.shields.io/badge/LaTeX-008080?style=flat&logo=latex&logoColor=white" alt="LaTeX">
+  <img src="https://img.shields.io/badge/OpenRouter-000?style=flat" alt="OpenRouter">
   <img src="https://img.shields.io/badge/Node.js-339933?style=flat&logo=node.js&logoColor=white" alt="Node.js">
   <img src="https://img.shields.io/badge/Go-00ADD8?style=flat&logo=go&logoColor=white" alt="Go">
   <img src="https://img.shields.io/badge/Playwright-2EAD33?style=flat&logo=playwright&logoColor=white" alt="Playwright">
   <img src="https://img.shields.io/badge/License-MIT-blue.svg" alt="MIT">
   <a href="TRADEMARK.md"><img src="https://img.shields.io/badge/Trademark-Policy-blue.svg" alt="Trademark Policy"></a>
   <a href="https://discord.gg/8pRpHETxa4"><img src="https://img.shields.io/badge/Discord-5865F2?style=flat&logo=discord&logoColor=white" alt="Discord"></a>
-  <br>
-  <img src="https://img.shields.io/badge/EN-blue?style=flat" alt="EN">
-  <img src="https://img.shields.io/badge/ES-red?style=flat" alt="ES">
-  <img src="https://img.shields.io/badge/DE-grey?style=flat" alt="DE">
-  <img src="https://img.shields.io/badge/FR-blue?style=flat" alt="FR">
-  <img src="https://img.shields.io/badge/PT--BR-green?style=flat" alt="PT-BR">
-  <img src="https://img.shields.io/badge/KO-white?style=flat" alt="KO">
-  <img src="https://img.shields.io/badge/JA-red?style=flat" alt="JA">
-  <img src="https://img.shields.io/badge/ZH--CN-red?style=flat" alt="ZH-CN">
-  <img src="https://img.shields.io/badge/ZH--TW-blue?style=flat" alt="ZH-TW">
 </p>
 
 ---
@@ -41,254 +32,293 @@
   <img src="docs/demo.gif" alt="Career-Ops Demo" width="800">
 </p>
 
-<p align="center"><strong>2 published research papers · 10+ AI/ML projects shipped · 1 focused job search pipeline</strong></p>
+<p align="center"><strong>2 published research papers · 5 role-specific LaTeX templates · 1-click resume tailor</strong></p>
 
 <p align="center"><a href="https://discord.gg/8pRpHETxa4"><img src="https://img.shields.io/badge/Join_the_community-Discord-5865F2?style=for-the-badge&logo=discord&logoColor=white" alt="Discord"></a></p>
 
+---
+
 ## What Is This
 
-Career-Ops turns any AI coding CLI into a full job search command center. Instead of manually tracking applications in a spreadsheet, you get an AI-powered pipeline that:
+This is a **personalized fork** of the open-source [career-ops](https://github.com/ashutoshroy02/career-ops-cli) job search pipeline. On top of the original CLI system, I built:
 
-- **Evaluates offers** with a structured A-F scoring system (10 weighted dimensions)
-- **Generates tailored PDFs** -- ATS-optimized CVs customized per job description
-- **Scans portals** automatically (Greenhouse, Ashby, Lever, company pages)
-- **Processes in batch** -- evaluate 10+ offers in parallel with sub-agents
-- **Tracks everything** in a single source of truth with integrity checks
+- **`tailor.py`** — a fully automated resume tailoring pipeline: reads a JD (URL or plain text), picks the best matching LaTeX template, asks an LLM (via OpenRouter/Gemini) to inject keywords, and compiles a PDF
+- **`app.py`** — a Streamlit web UI wrapping the tailor pipeline, with live log streaming, inline PDF preview, and one-click download
+- **`launch_app.bat`** — a Windows batch file to launch the Streamlit app with a double-click, no terminal needed
+- **5 role-specific LaTeX templates** in `templates/roles/` — one per target archetype, each pre-tuned to a 1-page layout
+- **Personal data files** (`cv.md`, `config/profile.yml`, `modes/_profile.md`) — my own CV and profile, which the pipeline reads at tailoring time
 
-> **Important: This is NOT a spray-and-pray tool.** Career-ops is a filter -- it helps you find the few offers worth your time out of hundreds. The system strongly recommends against applying to anything scoring below 4.0/5. Your time is valuable, and so is the recruiter's. Always review before submitting.
+> This setup is mine. But the system is built so **any new user can clone it, swap in their own data, and get free tailored resumes**. No SaaS, no subscriptions, just your own API key.
 
-Career-ops is agentic: Claude Code navigates career pages with Playwright, evaluates fit by reasoning about your CV vs the job description (not keyword matching), and adapts your resume per listing.
+---
 
-> **Heads up: the first evaluations won't be great.** The system doesn't know you yet. Feed it context -- your CV, your career story, your proof points, your preferences, what you're good at, what you want to avoid. The more you nurture it, the better it gets. Think of it as onboarding a new recruiter: the first week they need to learn about you, then they become invaluable.
+## How I Built This
 
-Built by an AI/ML Engineer and published researcher who uses it to evaluate job listings, generate tailored LaTeX CVs, and run a focused, quality-first job search. [Portfolio →](https://mitovoid.netlify.app/)
+The original `career-ops` is a CLI-first, Claude Code-powered job search automation system. I took it and extended it with a Python-native tailoring layer:
 
-## Features
+```
+You paste a JD (text or URL)
+        │
+        ▼
+┌──────────────────────┐
+│  JD Fetch & Extract  │  Playwright renders JS SPAs; LLM strips nav/footer noise
+└──────────┬───────────┘
+           │
+┌──────────▼───────────┐
+│  Archetype Detection │  Classifies: ML_AI / Data_Scientist / Python_Dev /
+│  + Keyword Extract   │             CV_Researcher / AI_Agent
+└──────────┬───────────┘
+           │
+┌──────────▼───────────┐
+│  Template Selection  │  Picks closest .tex from templates/roles/
+└──────────┬───────────┘
+           │
+┌──────────▼───────────┐
+│  LLM Keyword Inject  │  Gemini rewrites summary + bullets, word-count bounded
+│  (OpenRouter API)    │  to never overflow the 1-page layout
+└──────────┬───────────┘
+           │
+┌──────────▼───────────┐
+│  LaTeX Compile       │  pdflatex / tectonic → 1-page PDF
+└──────────┬───────────┘
+           │
+        PDF out
+```
+
+The Streamlit app wraps this entire pipeline with a browser UI — paste JD, hit button, see live logs, download PDF.
+
+---
+
+## What I Added on Top of career-ops
+
+| What | File(s) | Description |
+|------|---------|-------------|
+| **Resume Tailor CLI** | `tailor.py` | Full pipeline: fetch JD → detect archetype → inject keywords → compile PDF |
+| **Debug Version** | `debug_tailor.py` | Same pipeline with verbose step-by-step logging at every stage |
+| **Streamlit Web UI** | `app.py` | Browser UI with live log streaming, inline PDF preview, download button |
+| **One-click launcher** | `launch_app.bat` | Double-click to start the Streamlit app on Windows, no terminal needed |
+| **LaTeX Templates** | `templates/roles/*.tex` | 5 role-specific 1-page templates with green-header Charter font design |
+| **Personal CV** | `cv.md` | My canonical CV in markdown — the source of truth for all evaluations |
+| **Profile Config** | `config/profile.yml` | My target roles, location policy, narrative, and compensation preferences |
+| **User Data Layer** | `user_data/` | Gitignored folder holding all personal output (PDFs, reports, JDs) |
+
+---
+
+## Role Templates
+
+Five LaTeX templates, each pre-tuned for a different archetype. The tailor auto-selects the best match:
+
+| Template | Best For |
+|----------|----------|
+| `01_ML_AI_Engineer_Ashutosh.tex` | ML Engineer, AI Engineer, LLM, RAG, NLP, fine-tuning |
+| `02_Data_Scientist_Ashutosh.tex` | Data Scientist, Data Analyst, EDA, SQL, Power BI |
+| `03_Python_Developer_Ashutosh.tex` | Python Developer, Backend, FastAPI, SDE |
+| `04_CV_Researcher_Ashutosh.tex` | Computer Vision, OCR, Research, multimodal |
+| `05_AI_Agent_Ashutosh.tex` | AI Agents, LangGraph, MCP, tool-calling, multi-agent |
+
+All templates share the same 1-page layout rules (Charter font, green headers, `top=0.38in, bottom=0.38in`) and compile clean with pdflatex/MiKTeX.
+
+---
+
+## Quick Start (New User)
+
+> **You'll replace my data files with yours. Everything else just works.**
+
+```bash
+# 1. Clone
+git clone https://github.com/ashutoshroy02/career-ops-cli.git
+cd career-ops-cli
+
+# 2. Install Python dependencies
+pip install streamlit requests beautifulsoup4 python-dotenv openai playwright pyyaml
+playwright install chromium   # for JS-rendered job pages
+
+# 3. Install Node dependencies (for the broader career-ops CLI)
+npm install
+
+# 4. Set up your API key
+cp .env.example .env
+# Edit .env → set OPENROUTER_API_KEY=your_key_here
+# Get a free key at https://openrouter.ai  (Gemini Flash is free tier)
+
+# 5. Add YOUR data
+#    Replace cv.md with your own CV in markdown
+#    Edit config/profile.yml with your name, roles, location
+
+# 6. Rename the templates to your name (optional but recommended)
+#    Edit templates/roles/*.tex → change the name/contact header section
+
+# 7. Launch
+#    Option A — double-click launch_app.bat  (Windows)
+#    Option B — terminal: streamlit run app.py
+#    Option C — CLI: python tailor.py --jd "https://company.com/job/..." --company "Acme"
+```
+
+You'll have a working resume tailor running on your machine in under 10 minutes.
+
+---
+
+## Running the Web App
+
+```bash
+streamlit run app.py
+# or on Windows: double-click launch_app.bat
+```
+
+Open `http://localhost:8501`. Paste a JD (or a direct job URL). Optionally enter the company name. Hit **Generate Tailored PDF**.
+
+You'll see live pipeline logs as it runs, then an inline preview and download button when done.
+
+---
+
+## Running via CLI
+
+```bash
+# From a URL
+python tailor.py --jd "https://company.com/job/senior-ml-engineer" --company "Acme"
+
+# From plain text
+python tailor.py --jd "We are hiring a Senior AI Engineer..."
+
+# From a file
+python tailor.py --jd jds/my-job.txt --company "Acme"
+
+# Debug mode (verbose step-by-step logs)
+python debug_tailor.py --jd "..."
+```
+
+Output goes to `user_data/output/cv-{name}-{company}-{date}.pdf`.
+
+---
+
+## Adapting This for Your Own CV
+
+This system is built around my CV and templates, but swapping it out for yours takes about 15 minutes:
+
+1. **Replace `cv.md`** with your CV in clean markdown (Summary, Experience, Projects, Skills, Education)
+2. **Edit `config/profile.yml`** — your name, email, target roles, location policy
+3. **Update the `.tex` templates** in `templates/roles/` — change the name/contact header at the top of each file
+4. **Rename template files** if you want (update the `TEMPLATE_MAP` dict in `tailor.py` / `debug_tailor.py` to match)
+5. That's it. Run the app and paste your first JD.
+
+> If you don't have LaTeX installed, install [MiKTeX](https://miktex.org/download) on Windows. It auto-installs missing packages on first compile.
+
+---
+
+## Original career-ops Features (Still Fully Available)
+
+This is built on top of the full career-ops system. All original features still work via Claude Code / Gemini CLI:
 
 | Feature | Description |
 |---------|-------------|
 | **Auto-Pipeline** | Paste a URL, get a full evaluation + PDF + tracker entry |
 | **6-Block Evaluation** | Role summary, CV match, level strategy, comp research, personalization, interview prep (STAR+R) |
-| **Interview Story Bank** | Accumulates STAR+Reflection stories across evaluations -- 5-10 master stories that answer any behavioral question |
-| **Negotiation Scripts** | Salary negotiation frameworks, geographic discount pushback, competing offer leverage |
-| **ATS PDF Generation** | Keyword-injected CVs with Space Grotesk + DM Sans design |
-| **Portal Scanner** | 45+ companies pre-configured (Anthropic, OpenAI, ElevenLabs, Retool, n8n...) + custom queries across Ashby, Greenhouse, Lever, Wellfound |
+| **Interview Story Bank** | Accumulates STAR+Reflection stories across evaluations |
+| **Negotiation Scripts** | Salary negotiation frameworks, geographic discount pushback |
+| **Portal Scanner** | 45+ companies pre-configured + custom queries across Ashby, Greenhouse, Lever, Wellfound |
 | **Batch Processing** | Parallel evaluation with `claude -p` workers |
-| **Dashboard TUI** | Terminal UI to browse, filter, and sort your pipeline |
-| **Human-in-the-Loop** | AI evaluates and recommends, you decide and act. The system never submits an application -- you always have the final call |
-| **Pipeline Integrity** | Automated merge, dedup, status normalization, health checks |
-
-## Quick Start
+| **Dashboard TUI** | Terminal UI to browse, filter, and sort your pipeline (Go + Bubble Tea) |
+| **Human-in-the-Loop** | AI evaluates and recommends, you decide. Never auto-submits. |
 
 ```bash
-# 1. Clone and install
-git clone https://github.com/ashutoshroy02/career-ops-cli.git
-cd career-ops-cli && npm install
-npx playwright install chromium   # Required for PDF generation
-
-# 2. Check setup
-npm run doctor                     # Validates all prerequisites
-
-# 3. Configure
-cp config/profile.example.yml config/profile.yml  # Edit with your details
-cp templates/portals.example.yml portals.yml       # Customize companies
-
-# 4. Add your CV
-# Create cv.md in the project root with your CV in markdown
-
-# 5. Personalize with Claude
-claude   # Open Claude Code in this directory
-
-# Then ask Claude to adapt the system to you:
-# "Change the archetypes to backend engineering roles"
-# "Translate the modes to English"
-# "Add these 5 companies to portals.yml"
-# "Update my profile with this CV I'm pasting"
-
-# 6. Start using
-# Paste a job URL or run /career-ops
-```
-
-> **The system is designed to be customized by Claude itself.** Modes, archetypes, scoring weights, negotiation scripts -- just ask Claude to change them. It reads the same files it uses, so it knows exactly what to edit.
-
-See [docs/SETUP.md](docs/SETUP.md) for the full setup guide.
-
-## Gemini CLI Integration
-
-Career-ops supports [Gemini CLI](https://github.com/google-gemini/gemini-cli) natively — the same way it supports Claude Code and OpenCode. All 15 slash commands are available, using the same `modes/*.md` evaluation logic.
-
-### Option A — Native Gemini CLI (Recommended)
-
-```bash
-# 1. Install Gemini CLI
-npm install -g @google/gemini-cli
-# or: npx @google/gemini-cli --version
-
-# 2. Authenticate (free — uses your Google account)
-gemini auth
-
-# 3. Run in the career-ops directory
-cd career-ops
-gemini
-
-# 4. Use slash commands just like Claude Code
+# Claude Code (original CLI interface)
+claude
 /career-ops "Senior AI Engineer at Anthropic..."
-/career-ops-evaluate --file ./jds/openai.txt
-/career-ops-scan
-/career-ops-pdf
-/career-ops-tracker
+/career-ops scan
+/career-ops pdf
+/career-ops tracker
 ```
 
-The `GEMINI.md` file is auto-loaded as context. All 15 commands are defined in `.gemini/commands/*.toml`.
-
-### Option B — Standalone API Script (No CLI install needed)
-
-```bash
-# 1. Get a free API key at https://aistudio.google.com/apikey
-cp .env.example .env
-# Edit .env → set GEMINI_API_KEY=your_key_here
-
-# 2. Install dependencies
-npm install
-
-# 3. Evaluate a job description
-node gemini-eval.mjs "We are looking for a Senior AI Engineer..."
-node gemini-eval.mjs --file ./jds/my-job.txt
-npm run gemini:eval -- "JD text here"
-```
-
-> **Free tier:** Both options work without billing. Native CLI uses Google OAuth; the API script uses `gemini-2.0-flash` (15 RPM, 1M tokens/day free).
-
-## Usage
-
-Career-ops is a single slash command with multiple modes:
-
-```
-/career-ops                → Show all available commands
-/career-ops {paste a JD}   → Full auto-pipeline (evaluate + PDF + tracker)
-/career-ops scan           → Scan portals for new offers
-/career-ops pdf            → Generate ATS-optimized CV
-/career-ops batch          → Batch evaluate multiple offers
-/career-ops tracker        → View application status
-/career-ops apply          → Fill application forms with AI
-/career-ops pipeline       → Process pending URLs
-/career-ops contacto       → LinkedIn outreach message
-/career-ops deep           → Deep company research
-/career-ops training       → Evaluate a course/cert
-/career-ops project        → Evaluate a portfolio project
-```
-
-Or just paste a job URL or description directly -- career-ops auto-detects it and runs the full pipeline.
-
-## How It Works
-
-```
-You paste a job URL or description
-        │
-        ▼
-┌──────────────────┐
-│  Archetype       │  Classifies: LLMOps / Agentic / PM / SA / FDE / Transformation
-│  Detection       │
-└────────┬─────────┘
-         │
-┌────────▼─────────┐
-│  A-F Evaluation  │  Match, gaps, comp research, STAR stories
-│  (reads cv.md)   │
-└────────┬─────────┘
-         │
-    ┌────┼────┐
-    ▼    ▼    ▼
- Report  PDF  Tracker
-  .md   .pdf   .tsv
-```
+---
 
 ## Pre-configured Portals
 
-The scanner comes with **45+ companies** ready to scan and **19 search queries** across major job boards. Copy `templates/portals.example.yml` to `portals.yml` and add your own:
+The scanner comes with **45+ companies** and **19 search queries** across major job boards:
 
-**AI Labs:** Anthropic, OpenAI, Mistral, Cohere, LangChain, Pinecone
-**Voice AI:** ElevenLabs, PolyAI, Parloa, Hume AI, Deepgram, Vapi, Bland AI
-**AI Platforms:** Retool, Airtable, Vercel, Temporal, Glean, Arize AI
-**Contact Center:** Ada, LivePerson, Sierra, Decagon, Talkdesk, Genesys
-**Enterprise:** Salesforce, Twilio, Gong, Dialpad
-**LLMOps:** Langfuse, Weights & Biases, Lindy, Cognigy, Speechmatics
-**Automation:** n8n, Zapier, Make.com
-**European:** Factorial, Attio, Tinybird, Clarity AI, Travelperk
+**AI Labs:** Anthropic, OpenAI, Mistral, Cohere, LangChain, Pinecone  
+**Voice AI:** ElevenLabs, PolyAI, Parloa, Hume AI, Deepgram, Vapi, Bland AI  
+**AI Platforms:** Retool, Airtable, Vercel, Temporal, Glean, Arize AI  
+**Contact Center:** Ada, LivePerson, Sierra, Decagon, Talkdesk, Genesys  
+**Enterprise:** Salesforce, Twilio, Gong, Dialpad  
+**LLMOps:** Langfuse, Weights & Biases, Lindy, Cognigy, Speechmatics  
+**Automation:** n8n, Zapier, Make.com  
 
 **Job boards searched:** Ashby, Greenhouse, Lever, Wellfound, Workable, RemoteFront
 
-## Dashboard TUI
-
-The built-in terminal dashboard lets you browse your pipeline visually:
-
-```bash
-cd dashboard
-go build -o career-dashboard .
-./career-dashboard --path ..
-```
-
-Features: 6 filter tabs, 4 sort modes, grouped/flat view, lazy-loaded previews, inline status changes.
+---
 
 ## Project Structure
 
 ```
-career-ops/
+career-ops-cli/
+├── app.py                       # ★ Streamlit web UI (NEW)
+├── tailor.py                    # ★ Resume tailor pipeline (NEW)
+├── debug_tailor.py              # ★ Tailor with verbose debug logging (NEW)
+├── launch_app.bat               # ★ One-click Windows launcher (NEW)
+├── cv.md                        # ★ My CV (replace with yours)
+├── config/profile.yml           # ★ My profile config (replace with yours)
+├── templates/roles/             # ★ 5 role-specific LaTeX templates (NEW)
+│   ├── 01_ML_AI_Engineer_Ashutosh.tex
+│   ├── 02_Data_Scientist_Ashutosh.tex
+│   ├── 03_Python_Developer_Ashutosh.tex
+│   ├── 04_CV_Researcher_Ashutosh.tex
+│   └── 05_AI_Agent_Ashutosh.tex
+├── user_data/                   # ★ Personal output folder (gitignored)
+│   ├── output/                  # Generated PDFs
+│   ├── reports/                 # Evaluation reports
+│   └── jds/                     # Saved job descriptions
 ├── AGENTS.md                    # Canonical agent instructions (all CLIs)
-├── CLAUDE.md                    # Claude Code wrapper (imports AGENTS.md)
-├── cv.md                        # Your CV (create this)
-├── article-digest.md            # Your proof points (optional)
-├── config/
-│   └── profile.example.yml      # Template for your profile
-├── modes/                       # 14 skill modes
-│   ├── _shared.md               # Shared context (customize this)
-│   ├── oferta.md                # Single evaluation
-│   ├── pdf.md                   # PDF generation
-│   ├── scan.md                  # Portal scanner
-│   ├── batch.md                 # Batch processing
-│   └── ...
-├── templates/
-│   ├── cv-template.html         # ATS-optimized CV template
-│   ├── portals.example.yml      # Scanner config template
-│   └── states.yml               # Canonical statuses
-├── batch/
-│   ├── batch-prompt.md          # Self-contained worker prompt
-│   └── batch-runner.sh          # Orchestrator script
+├── CLAUDE.md                    # Claude Code wrapper
+├── modes/                       # 14 original career-ops skill modes
+├── batch/                       # Batch processing scripts
 ├── dashboard/                   # Go TUI pipeline viewer
-├── data/                        # Your tracking data (gitignored)
-├── reports/                     # Evaluation reports (gitignored)
-├── output/                      # Generated PDFs (gitignored)
+├── data/                        # Application tracker (gitignored)
+├── reports/                     # Reports (gitignored)
+├── output/                      # PDFs (gitignored)
 ├── fonts/                       # Space Grotesk + DM Sans
-├── docs/                        # Setup, customization, architecture
-└── examples/                    # Sample CV, report, proof points
+└── docs/                        # Setup, customization, architecture
 ```
+
+Items marked ★ are additions/customizations on top of the original career-ops.
+
+---
 
 ## Tech Stack
 
-![Claude Code](https://img.shields.io/badge/Claude_Code-000?style=flat&logo=anthropic&logoColor=white)
-![Node.js](https://img.shields.io/badge/Node.js-339933?style=flat&logo=node.js&logoColor=white)
+![Streamlit](https://img.shields.io/badge/Streamlit-FF4B4B?style=flat&logo=streamlit&logoColor=white)
+![Python](https://img.shields.io/badge/Python-3776AB?style=flat&logo=python&logoColor=white)
+![LaTeX](https://img.shields.io/badge/LaTeX-008080?style=flat&logo=latex&logoColor=white)
+![OpenRouter](https://img.shields.io/badge/OpenRouter_API-000?style=flat)
 ![Playwright](https://img.shields.io/badge/Playwright-2EAD33?style=flat&logo=playwright&logoColor=white)
+![Node.js](https://img.shields.io/badge/Node.js-339933?style=flat&logo=node.js&logoColor=white)
 ![Go](https://img.shields.io/badge/Go-00ADD8?style=flat&logo=go&logoColor=white)
-![Bubble Tea](https://img.shields.io/badge/Bubble_Tea-FF75B5?style=flat&logo=go&logoColor=white)
 
-- **Agent**: Claude Code with custom skills and modes
-- **PDF**: Playwright/Puppeteer + HTML template
-- **Scanner**: Playwright + Greenhouse API + WebSearch
+- **Tailor pipeline**: Python + OpenRouter API (Gemini 2.5 Flash Lite by default — free tier)
+- **Web UI**: Streamlit with live subprocess log streaming
+- **PDF generation**: pdflatex (MiKTeX) or tectonic
+- **JD scraping**: Playwright (JS-rendered SPAs) + BeautifulSoup fallback
+- **Original CLI**: Claude Code / Gemini CLI with custom skill modes
 - **Dashboard**: Go + Bubble Tea + Lipgloss (Catppuccin Mocha theme)
-- **Data**: Markdown tables + YAML config + TSV batch files
 
-## Also Open Source
+---
 
-- **[skills-for-agents](https://github.com/ashutoshroy02/skills-for-agents)** — An open-source ecosystem of composable, conflict-free instruction sets for multi-task LLM agents, implementing the Skills Interoperability Protocol (SIP). Built and maintained by Ashutosh.
-- **[InterviewPrep](https://github.com/ashutoshroy02/InterviewPrep)** — Full-stack interview prep platform with 700+ curated questions, company tracks (FAANG, OpenAI, NVIDIA), and a 12-week roadmap. Also open source — fork it and make it yours.
+## Also Open Source by Me
 
-## About the Author
+- **[skills-for-agents](https://github.com/ashutoshroy02/skills-for-agents)** — An open-source ecosystem of composable, conflict-free instruction sets for multi-task LLM agents, implementing the Skills Interoperability Protocol (SIP).
+- **[InterviewPrep](https://github.com/ashutoshroy02/InterviewPrep)** — Full-stack interview prep platform with 700+ curated questions, company tracks (FAANG, OpenAI, NVIDIA), and a 12-week roadmap. Fork it and make it yours.
 
-I'm Ashutosh Roy — AI/ML Engineer, Deep Learning Researcher, and Full Stack Developer based in Gurugram. I built my career-ops setup to run a focused, high-quality job search across AI/ML, research, and engineering roles.
+---
 
-I'm a published researcher (first author at RECCAP 2026, IIT Palakkad; co-author with IIT Delhi on multimodal search), with hands-on work in LLM fine-tuning (QLoRA), RAG pipelines, autonomous AI agents (LangGraph, MCP), speech/affective computing, and computer vision.
+## About Me
 
-My portfolio and projects → [mitovoid.netlify.app](https://mitovoid.netlify.app/)
+I'm Ashutosh Roy — AI/ML Engineer, Deep Learning Researcher, and Full Stack Developer based in Gurugram. I built this tailoring layer because I was tired of manually rewriting my resume for every application.
+
+Published researcher (RECCAP 2026, IIT Palakkad — first author; co-author with IIT Delhi on multimodal archaeological search). Work spans LLM fine-tuning (QLoRA), RAG pipelines, autonomous agents (LangGraph, MCP), speech/affective computing, and computer vision.
+
+Portfolio → [mitovoid.netlify.app](https://mitovoid.netlify.app/)  
 GitHub → [github.com/ashutoshroy02](https://github.com/ashutoshroy02)
+
+---
 
 ## Star History
 
@@ -300,16 +330,20 @@ GitHub → [github.com/ashutoshroy02](https://github.com/ashutoshroy02)
  </picture>
 </a>
 
+---
+
 ## Disclaimer
 
 **career-ops is a local, open-source tool — NOT a hosted service.** By using this software, you acknowledge:
 
-1. **You control your data.** Your CV, contact info, and personal data stay on your machine and are sent directly to the AI provider you choose (Anthropic, OpenAI, etc.). We do not collect, store, or have access to any of your data.
-2. **You control the AI.** The default prompts instruct the AI not to auto-submit applications, but AI models can behave unpredictably. If you modify the prompts or use different models, you do so at your own risk. **Always review AI-generated content for accuracy before submitting.**
-3. **You comply with third-party ToS.** You must use this tool in accordance with the Terms of Service of the career portals you interact with (Greenhouse, Lever, Workday, LinkedIn, etc.). Do not use this tool to spam employers or overwhelm ATS systems.
-4. **No guarantees.** Evaluations are recommendations, not truth. AI models may hallucinate skills or experience. The authors are not liable for employment outcomes, rejected applications, account restrictions, or any other consequences.
+1. **You control your data.** Your CV, contact info, and personal data stay on your machine and are sent directly to the AI provider you choose (OpenRouter, Anthropic, Google, etc.). No data is collected or stored by this project.
+2. **You control the AI.** The system never submits applications automatically. AI-generated content may be inaccurate — always review before sending.
+3. **You comply with third-party ToS.** Use in accordance with the Terms of Service of job portals you interact with. Do not use this to spam employers.
+4. **No guarantees.** Evaluations are recommendations, not truth. The authors are not liable for employment outcomes or any other consequences.
 
-See [LEGAL_DISCLAIMER.md](LEGAL_DISCLAIMER.md) for full details. This software is provided under the [MIT License](LICENSE) "as is", without warranty of any kind.
+See [LEGAL_DISCLAIMER.md](LEGAL_DISCLAIMER.md) for full details. Provided under the [MIT License](LICENSE) "as is", without warranty.
+
+---
 
 ## Contributors
 
@@ -319,12 +353,13 @@ See [LEGAL_DISCLAIMER.md](LEGAL_DISCLAIMER.md) for full details. This software i
 
 Got hired using career-ops? [Share your story!](https://github.com/ashutoshroy02/career-ops-cli/issues/new?template=i-got-hired.yml)
 
+---
+
 ## License & Trademark
 
-The code is licensed under [MIT](LICENSE). The "career-ops" name and
-brand are governed by the [Trademark Policy](TRADEMARK.md) — permissive
-for community use, reserved for commercial product naming and
-endorsement.
+The code is licensed under [MIT](LICENSE). The "career-ops" name and brand are governed by the [Trademark Policy](TRADEMARK.md) — permissive for community use, reserved for commercial product naming and endorsement.
+
+---
 
 ## Let's Connect
 
