@@ -12,7 +12,7 @@ from pathlib import Path
 import streamlit as st
 
 ROOT       = Path(__file__).parent
-SCRIPT     = ROOT / "debug_tailor.py"          # <-- was tailor.py
+SCRIPT     = ROOT / "tailor.py"          # <-- was tailor.py
 OUTPUT_DIR = ROOT / "user_data" / "output"
 
 _URL_RE = re.compile(r"^https?://", re.IGNORECASE)
