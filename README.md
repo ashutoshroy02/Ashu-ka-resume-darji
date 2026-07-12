@@ -2,20 +2,20 @@
 
 Tired of rewriting your resume for every job? Paste a JD or URL → get a keyword-injected, ATS-optimized, 1-page PDF in seconds. Free. Local. No subscriptions.
 
-Built on top of the open-source [career-ops](https://github.com/santifer/career-ops) CLI, with a Python tailoring pipeline, a Streamlit web UI, and a one-click Windows launcher added on top.
+Built on top of the open-source [career-ops](https://github.com/santifer/career-ops) CLI, with a Python tailoring pipeline, a Streamlit web UI, a FastAPI backend, Docker support for cloud deployment, and a one-click Windows launcher added on top.
 
 ---
 
 ## What I Built on Top of career-ops
-
-The original career-ops is a Claude Code-powered job search CLI. I extended it with a Python-native resume tailoring layer:
 
 | Addition | File | Description |
 |----------|------|-------------|
 | Resume Tailor CLI | `tailor.py` | Fetch JD → detect archetype → inject keywords via LLM → compile PDF |
 | Debug version | `debug_tailor.py` | Same pipeline with verbose step-by-step logging |
 | Streamlit Web UI | `app.py` | Browser UI: paste JD, see live logs, download PDF |
-| One-click launcher | `launch_app.bat` | Double-click to start the app on Windows, no terminal needed |
+| FastAPI backend | `main.py` | REST API wrapping the tailor pipeline — for headless / cloud use |
+| Docker | `dockerfile` + `requirements.txt` | Containerised deployment with tectonic + Playwright; ready for Render |
+| One-click launcher | `launch_app.bat` | Double-click to start the Streamlit app on Windows |
 | LaTeX templates | `templates/roles/*.tex` | 5 role-specific 1-page templates (Charter font, green headers) |
 | Personal CV | `cv.md` | My canonical CV in markdown — tailor reads this at runtime |
 | Profile config | `config/profile.yml` | Target roles, location policy, narrative, compensation |
@@ -44,7 +44,7 @@ LLM keyword inject →  Gemini rewrites summary + bullets, word-count bounded
 LaTeX compile      →  pdflatex / tectonic → 1-page PDF
 ```
 
-The Streamlit app wraps this entire pipeline in a browser UI with live log streaming.
+The Streamlit app wraps this in a browser UI with live log streaming. The FastAPI backend exposes the same pipeline as a POST `/tailor` endpoint for headless or remote use.
 
 ---
 
@@ -66,7 +66,7 @@ All templates are 1-page, Charter font, green headers, ATS-optimized (`\pdfgento
 
 ## Quick Start (New User)
 
-This system is mine out of the box — my CV, my templates, my profile. To use it for yourself, replace those three things and everything else just works.
+This repo has my CV, my templates, my profile out of the box. Replace those three things and everything else just works.
 
 ```bash
 # 1. Clone
@@ -74,7 +74,7 @@ git clone https://github.com/ashutoshroy02/career-ops-cli.git
 cd career-ops-cli
 
 # 2. Install Python deps
-pip install streamlit requests beautifulsoup4 python-dotenv openai playwright pyyaml
+pip install -r requirements.txt
 playwright install chromium
 
 # 3. Install Node deps (for the broader career-ops CLI features)
@@ -82,8 +82,9 @@ npm install
 
 # 4. Set your API key
 cp .env.example .env
-# Edit .env → set OPENROUTER_API_KEY=your_key_here
-# Free key at https://openrouter.ai  (Gemini Flash is free tier)
+# Edit .env:
+#   OPENROUTER_API_KEY=your_key_here    ← get free key at https://openrouter.ai
+#   TAILOR_API_KEY=any_secret_string    ← protects the /tailor endpoint
 
 # 5. Add your data
 #    - Replace cv.md with your CV in markdown
@@ -94,23 +95,49 @@ cp .env.example .env
 #    Download MiKTeX: https://miktex.org/download
 #    It auto-installs missing packages on first compile
 
-# 7. Launch
-#    Windows: double-click launch_app.bat
-#    Terminal: streamlit run app.py
-#    CLI:      python tailor.py --jd "https://company.com/job/..." --company "Acme"
+# 7. Launch — pick one:
+#    Streamlit UI:   streamlit run app.py
+#    Windows:        double-click launch_app.bat
+#    FastAPI server: uvicorn main:app --reload
+#    CLI:            python tailor.py --jd "https://..." --company "Acme"
 ```
 
 ---
 
-## Running the Web App
+## Running the Streamlit Web App
 
 ```bash
 streamlit run app.py
+# or on Windows: double-click launch_app.bat
 ```
 
-Or on Windows, double-click `launch_app.bat`.
+Open `http://localhost:8501`. Paste a JD (text or URL), optionally enter the company name, hit **Generate Tailored PDF**. Live pipeline logs stream in real time. Download or preview the PDF inline when done.
 
-Open `http://localhost:8501`. Paste a JD (text or URL), optionally enter the company name, hit **Generate Tailored PDF**. Live pipeline logs stream in real time. When done, download or preview the PDF inline.
+---
+
+## Running the FastAPI Backend
+
+```bash
+uvicorn main:app --reload
+```
+
+The API runs on `http://localhost:8000`. Protected by an `X-API-Key` header.
+
+```bash
+# Health check
+curl http://localhost:8000/health
+
+# Tailor a resume
+curl -X POST http://localhost:8000/tailor \
+  -H "X-API-Key: your_secret" \
+  -H "Content-Type: application/json" \
+  -d '{"jd": "https://company.com/job/ai-engineer", "company": "Acme"}' \
+  --output tailored-resume.pdf
+```
+
+Response headers include `X-Page-Count`, `X-Archetype`, and `X-Company` so you can see what the pipeline decided without opening the PDF.
+
+The API has a built-in **one-page retry loop** — if the compiled PDF comes out at 2 pages, it automatically tightens the word budget and re-runs up to 4 times until it fits on one page.
 
 ---
 
@@ -134,14 +161,38 @@ Output goes to `user_data/output/cv-{name}-{company}-{date}.pdf`.
 
 ---
 
+## Docker / Deploy to Cloud
+
+The included `dockerfile` builds a self-contained image with tectonic (LaTeX engine) and Playwright/Chromium baked in. It auto-resolves the latest tectonic release at build time.
+
+```bash
+# Build
+docker build -t career-ops-tailor .
+
+# Run locally
+docker run -p 8000:8000 \
+  -e OPENROUTER_API_KEY=your_key \
+  -e TAILOR_API_KEY=your_secret \
+  -e PORT=8000 \
+  career-ops-tailor
+```
+
+**Deploy to Render:**
+1. Push this repo to GitHub
+2. New Web Service → connect repo → Docker runtime
+3. Set env vars: `OPENROUTER_API_KEY`, `TAILOR_API_KEY`
+4. Render sets `PORT` automatically — the `CMD` in the Dockerfile uses it
+
+---
+
 ## Adapting This for Your Own CV
 
 1. Replace `cv.md` with your CV in markdown (Summary, Experience, Projects, Skills, Education)
 2. Edit `config/profile.yml` — your name, email, target roles, location policy
 3. Update the name/contact header at the top of each `.tex` file in `templates/roles/`
-4. Optionally rename the template files and update the `TEMPLATE_MAP` dict in `tailor.py`
+4. Optionally rename the template files and update the `TEMPLATE_MAP` dict in `tailor.py` and `debug_tailor.py`
 
-That's it. ~15 minutes of setup for free tailored resumes from then on.
+~15 minutes of setup for free tailored resumes from then on.
 
 ---
 
@@ -150,9 +201,12 @@ That's it. ~15 minutes of setup for free tailored resumes from then on.
 ```
 career-ops-cli/
 ├── app.py                        # Streamlit web UI
+├── main.py                       # FastAPI backend (REST API)
 ├── tailor.py                     # Resume tailor pipeline
 ├── debug_tailor.py               # Tailor with verbose debug logging
-├── launch_app.bat                # One-click Windows launcher
+├── dockerfile                    # Docker image (tectonic + Playwright)
+├── requirements.txt              # Python dependencies
+├── launch_app.bat                # One-click Windows launcher (Streamlit)
 ├── cv.md                         # My CV — replace with yours
 ├── config/
 │   ├── profile.yml               # My profile config — replace with yours
@@ -168,7 +222,6 @@ career-ops-cli/
 ├── batch/                        # Batch processing scripts
 ├── dashboard/                    # Go TUI pipeline viewer
 ├── data/                         # Application tracker (gitignored)
-├── output/                       # PDFs (gitignored)
 ├── AGENTS.md                     # Agent instructions (all CLIs)
 └── CLAUDE.md                     # Claude Code wrapper
 ```
@@ -179,8 +232,10 @@ career-ops-cli/
 
 - Tailor pipeline: Python, OpenRouter API (Gemini 2.5 Flash Lite — free tier)
 - Web UI: Streamlit
+- REST API: FastAPI + Uvicorn
+- Containerisation: Docker (tectonic + Playwright/Chromium baked in)
 - JD scraping: Playwright (JS SPAs) + BeautifulSoup fallback
-- PDF: pdflatex (MiKTeX) or tectonic
+- PDF: tectonic (Docker/Linux) or pdflatex/MiKTeX (Windows local)
 - Original CLI: Claude Code / Gemini CLI with custom skill modes
 - Dashboard: Go + Bubble Tea + Lipgloss
 
