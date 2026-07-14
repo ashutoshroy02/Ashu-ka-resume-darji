@@ -19,8 +19,15 @@ from dotenv import load_dotenv
 from openai import OpenAI
 import io
 
-sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
-sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding='utf-8')
+# Rewrap stdout/stderr as UTF-8 with line-buffering so emoji/unicode print()
+# calls show up immediately in a normal console. Guarded because under
+# pythonw.exe (no console window — used for silent/background runs)
+# sys.stdout is None, and a launcher script may have already redirected
+# stdout to a plain file (no .buffer attribute) before importing this module.
+if sys.stdout is not None and hasattr(sys.stdout, "buffer"):
+    sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8', line_buffering=True, write_through=True)
+if sys.stderr is not None and hasattr(sys.stderr, "buffer"):
+    sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding='utf-8', line_buffering=True, write_through=True)
 
 # ─── Paths ─────────────────────────────────────────────────────────────
 ROOT       = Path(__file__).parent
@@ -393,6 +400,24 @@ Job Description:
     new_summary     = result.get("new_summary", "")
     changed_bullets = result.get("bullets", {})
 
+    def _is_effectively_null(v) -> bool:
+        """
+        The model is supposed to return JSON null for 'no change needed',
+        but small/fast models sometimes return the literal STRING "null"
+        (or "none", or an empty string) instead. `v is None` only catches
+        real JSON null — a string slips through and gets inserted as if it
+        were real text (e.g. "- null query resolution time by 40%..."). 
+        Catch that here so it's treated the same as no-change.
+        """
+        return v is None or (isinstance(v, str) and v.strip().lower() in ("null", "none", ""))
+
+    if _is_effectively_null(new_summary):
+        new_summary = ""
+
+    for k in list(changed_bullets.keys()):
+        if _is_effectively_null(changed_bullets[k]):
+            changed_bullets[k] = None
+
     def trim(text: str, limit: int) -> str:
         words = text.split()
         return " ".join(words[:limit]) if len(words) > limit else text
@@ -472,32 +497,32 @@ def apply_changes(tex_content: str, analysis: dict, rewrites: dict) -> str:
         if idx >= len(bullets_latex):
             continue
 
-        orig_latex = bullets_latex[idx].strip()
-        orig_plain = bullets_plain[idx].strip()
-        new_plain  = new_plain.strip()
+        orig_latex_exact = bullets_latex[idx]        # unstripped — must match tex_content exactly
+        orig_plain       = bullets_plain[idx].strip()
+        new_plain        = new_plain.strip()
 
         if not orig_plain or orig_plain == new_plain:
             skipped_same.append(idx)
             continue
 
-        escaped_orig = re.escape(orig_plain[:40])
-        new_latex_bullet = re.sub(
-            escaped_orig,
-            _esc(new_plain[:len(orig_plain)]) if len(new_plain) <= len(orig_plain) + 30
-            else _esc(new_plain),
-            orig_latex, count=1
-        )
-
-        if new_latex_bullet != orig_latex:
-            old_item = f"\\resumeItem{{{orig_latex}}}"
-            new_item = f"\\resumeItem{{{new_latex_bullet}}}"
-            if old_item in tex_content:
-                tex_content = tex_content.replace(old_item, new_item, 1)
-                applied.append(idx)
-            else:
-                skipped_nomatch.append(idx)  # substituted locally but not found in full tex
+        # Replace the ENTIRE original bullet content wholesale, rather than
+        # pattern-matching a prefix of it. The previous approach matched
+        # only the first 40 chars of the original plain text and replaced
+        # just that fragment with the full new sentence — leaving
+        # everything after char 40 of the *original* bullet still present,
+        # glued onto the end of the new one (the duplicated/overlapping
+        # text bug). Since bullets_latex[idx] already IS the exact original
+        # content, there's nothing to pattern-match — just swap it whole.
+        # Uses the UNSTRIPPED original so it matches tex_content byte-for-
+        # byte, including any incidental leading/trailing whitespace inside
+        # the \resumeItem{...} block.
+        old_item = f"\\resumeItem{{{orig_latex_exact}}}"
+        new_item = f"\\resumeItem{{{_esc(new_plain)}}}"
+        if old_item in tex_content:
+            tex_content = tex_content.replace(old_item, new_item, 1)
+            applied.append(idx)
         else:
-            skipped_nomatch.append(idx)  # first-40-chars pattern never matched orig_latex
+            skipped_nomatch.append(idx)
 
     return tex_content
 
@@ -518,10 +543,18 @@ def compile_latex(tex_content: str, output_stem: str) -> tuple[Path, int]:
     tex_path.write_text(tex_content, encoding="utf-8")
     print(f"  📝 LaTeX saved: {tex_path.name}")
 
+    # On Windows, subprocess.run() spawns a visible console window for the
+    # child process by default even when the parent (e.g. pythonw.exe) has
+    # none — with the compile retry loop calling this up to 4x per request,
+    # that shows up as windows rapidly flashing open/closed. Suppress it.
+    _subprocess_kwargs = {}
+    if sys.platform == "win32":
+        _subprocess_kwargs["creationflags"] = subprocess.CREATE_NO_WINDOW
+
     engine = None
     for candidate in ["tectonic", "pdflatex"]:
         try:
-            subprocess.run([candidate, "--version"], capture_output=True, check=True)
+            subprocess.run([candidate, "--version"], capture_output=True, check=True, **_subprocess_kwargs)
             engine = candidate
             break
         except (subprocess.CalledProcessError, FileNotFoundError):
@@ -535,11 +568,11 @@ def compile_latex(tex_content: str, output_stem: str) -> tuple[Path, int]:
         if engine == "pdflatex":
             args = ["pdflatex", "-interaction=nonstopmode",
                     f"-output-directory={OUTPUT_DIR}", str(tex_path)]
-            r1 = subprocess.run(args, capture_output=True, timeout=120)
-            r2 = subprocess.run(args, capture_output=True, timeout=120)
+            r1 = subprocess.run(args, capture_output=True, timeout=120, **_subprocess_kwargs)
+            r2 = subprocess.run(args, capture_output=True, timeout=120, **_subprocess_kwargs)
         else:
             r = subprocess.run(["tectonic", "--outdir", str(OUTPUT_DIR), str(tex_path)],
-                           capture_output=True, timeout=120, check=True)
+                           capture_output=True, timeout=120, check=True, **_subprocess_kwargs)
     except subprocess.TimeoutExpired:
         sys.exit("  ❌ Compilation timed out")
 
