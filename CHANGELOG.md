@@ -1,5 +1,20 @@
 # Changelog
 
+## [1.8.0](https://github.com/ashutoshroy02/Ashu-ka-resume-darji/compare/career-ops-v1.7.0...career-ops-v1.8.0) (2026-07-17)
+
+
+### Features
+
+* add Telegram bot interface and expand documentation ([11a694d](https://github.com/ashutoshroy02/Ashu-ka-resume-darji/commit/11a694de44717d9bac3a8462bbf85d435a23b0a0))
+* **tailor:** refactor JD fetching and parsing pipeline ([ab95d8e](https://github.com/ashutoshroy02/Ashu-ka-resume-darji/commit/ab95d8ee2175e27fd00d10168f3184c6b39d9b20))
+
+
+### Bug Fixes
+
+* **tailor:** improve stdout/stderr handling and bullet replacement logic ([1291086](https://github.com/ashutoshroy02/Ashu-ka-resume-darji/commit/12910867602ede04d8a7c44e9140ce5fa21cad30))
+* **telegram_bot:** handle pending updates on bot startup ([12cd4f4](https://github.com/ashutoshroy02/Ashu-ka-resume-darji/commit/12cd4f4ae9e982b50402ecc7c4fcc6ee27056ece))
+* **telegram_bot:** improve CV output naming and code formatting ([7ba131f](https://github.com/ashutoshroy02/Ashu-ka-resume-darji/commit/7ba131fb7139dcee05698ecfe97d8f561d3c4412))
+
 ## [1.7.0](https://github.com/santifer/career-ops/compare/career-ops-v1.6.0...career-ops-v1.7.0) (2026-05-06)
 
 
