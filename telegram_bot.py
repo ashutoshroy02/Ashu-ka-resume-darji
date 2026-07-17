@@ -86,8 +86,12 @@ def _run_pipeline_sync(jd_input: str, company_override: str | None) -> tuple[Pat
     tex_content = tpl_path.read_text(encoding="utf-8")
 
     from datetime import date
-    today       = date.today().strftime("%Y-%m-%d")
-    output_stem = f"cv-{company_slug}-{today}"
+    today = date.today().strftime("%Y-%m-%d")
+
+    # Derive role title from template filename, e.g.:
+    #   "01_ML_AI_Engineer_Ashutosh.tex" → "ML_AI_Engineer_Ashutosh"
+    role_title  = re.sub(r"^\d+_", "", Path(template_name).stem)  # strip leading "01_"
+    output_stem = f"{role_title}-{today}"
 
     word_buffer = 3
     pdf_path    = None
