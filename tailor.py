@@ -55,7 +55,21 @@ TEMPLATE_MAP = {
     "Python_Dev":     "03_Python_Developer_Ashutosh.tex",
     "CV_Researcher":  "04_CV_Researcher_Ashutosh.tex",
     "AI_Agent":       "05_AI_Agent_Ashutosh.tex",
+    "AI_Builder":     "06_AI_Builder_Ashutosh.tex",
 }
+
+# Human-readable names for the base templates (Telegram buttons, logs).
+BASE_LABELS = {
+    "ML_AI":          "ML / AI Engineer",
+    "Data_Scientist": "Data Scientist",
+    "Python_Dev":     "Python / Backend Dev",
+    "CV_Researcher":  "CV / Researcher",
+    "AI_Agent":       "AI Agent Engineer",
+    "AI_Builder":     "AI-First Builder (Full-Stack)",
+}
+
+PROJECTS_FILE = ROOT / "templates" / "projects.yml"
+MIN_PROJECTS  = 2   # one-page fitting never drops below this many projects
 
 
 # ══════════════════════════════════════════════════════════════════════
@@ -222,7 +236,7 @@ def analyze_jd(jd_text: str) -> dict:
 
 Return ONLY this JSON (no markdown, no explanation):
 {{
-  "role_archetype": "one of: ML_AI | Data_Scientist | Python_Dev | CV_Researcher | AI_Agent",
+  "role_archetype": "one of: ML_AI | Data_Scientist | Python_Dev | CV_Researcher | AI_Agent | AI_Builder",
   "keywords": ["15-20 exact keyword phrases from the JD"],
   "headline": "tailored job title line, max 8 words",
   "archetype_reason": "1 sentence why"
@@ -234,6 +248,7 @@ Archetype guide:
 - Python_Dev: backend, FastAPI, REST API, system design, SWE
 - CV_Researcher: computer vision, OCR, research, multimodal, publications focus
 - AI_Agent: agents, LangGraph, MCP, tool calling, multi-agent
+- AI_Builder: full-stack / product engineer, shipping web/mobile/desktop apps, TypeScript, LLM APIs in products, AI-assisted development (Claude Code), founding/startup engineer
 
 Job Description:
 {jd_text}"""
@@ -349,6 +364,15 @@ def get_rewrites(tex_content: str, jd_text: str, analysis: dict, word_buffer: in
     # tailor.py runs), and the JD/keywords (unique every single run) come
     # last. This maximizes the shared prefix across repeated runs against
     # the same template, which is what implicit prompt caching keys off.
+    if word_buffer < 0:
+        # Retry after a 2-page compile: every item has to get shorter, and
+        # it must still read as a complete sentence (never cut mid-phrase).
+        shrink_rule = ("5. SHRINK MODE — the resume is over one page. Rewrite EVERY bullet (no nulls) as a "
+                       "complete, shorter sentence within its limit: drop filler words, keep the core "
+                       "achievement and its metric. Never end a bullet mid-phrase.")
+    else:
+        shrink_rule = "5. Return null for bullets that don't need changes"
+
     prompt = f"""You are a resume expert. Inject JD keywords into resume text.
 
 CRITICAL RULES:
@@ -356,7 +380,7 @@ CRITICAL RULES:
 2. Each item MUST stay within its word limit — this is a 1-page resume, overflow = broken
 3. Only swap existing words for JD vocabulary — never invent new experience
 4. Keep all numbers/metrics exactly as-is (35%, 40%, 10,000+)
-5. Return null for bullets that don't need changes
+{shrink_rule}
 
 Return ONLY this JSON structure (no markdown):
 {{
@@ -418,12 +442,25 @@ Job Description:
         if _is_effectively_null(changed_bullets[k]):
             changed_bullets[k] = None
 
-    def trim(text: str, limit: int) -> str:
+    def trim(text: str, limit: int) -> str | None:
+        """
+        Fit text to `limit` words without ending mid-phrase: cut at the last
+        clause boundary (", " / "; ") inside the limit and end with a period.
+        A plain word cut produced broken bullets like "...reducing response
+        time by". Returns None (= keep the original wording) if there is no
+        clean cut point.
+        """
         words = text.split()
-        return " ".join(words[:limit]) if len(words) > limit else text
+        if len(words) <= limit:
+            return text
+        cut = " ".join(words[:limit])
+        pos = max(cut.rfind(", "), cut.rfind("; "))
+        if pos == -1 or len(cut[:pos].split()) < max(4, limit // 2):
+            return None
+        return cut[:pos].rstrip(" ,;") + "."
 
     if new_summary:
-        new_summary = trim(new_summary, max(1, summary_wc + word_buffer))
+        new_summary = trim(new_summary, max(1, summary_wc + word_buffer)) or ""
 
     for k, v in changed_bullets.items():
         if v is None:
@@ -587,6 +624,214 @@ def compile_latex(tex_content: str, output_stem: str) -> tuple[Path, int]:
 
 
 # ══════════════════════════════════════════════════════════════════════
+# STEP 7 — Project library: choose and swap the Projects section
+# ══════════════════════════════════════════════════════════════════════
+_BS = "\\"
+
+
+def load_projects() -> list[dict]:
+    """All projects from templates/projects.yml (see that file's header)."""
+    data = yaml.safe_load(PROJECTS_FILE.read_text(encoding="utf-8")) or {}
+    return data.get("projects", [])
+
+
+def _project_blocks(chunk: str) -> list[str]:
+    r"""Split LaTeX into its \resumeProjectHeading ... \resumeItemListEnd blocks."""
+    head, end = _BS + "resumeProjectHeading", _BS + "resumeItemListEnd"
+    blocks = []
+    for part in chunk.split(head)[1:]:
+        cut = part.find(end)
+        blocks.append((head + (part[: cut + len(end)] if cut != -1 else part)).strip())
+    return blocks
+
+
+def _block_heading(block: str) -> str:
+    return block.split(_BS + "resumeItemListStart")[0]
+
+
+def _block_title(block: str) -> str:
+    m = re.search(r"\\textbf\{([^}]*)\}", _block_heading(block))
+    return _strip_latex(m.group(1)) if m else "Project"
+
+
+def _match_project(block: str, library: list[dict]) -> str | None:
+    heading = _block_heading(block)
+    for p in library:
+        if any(s in heading for s in p.get("match", [])):
+            return p["id"]
+    return None
+
+
+def _projects_span(tex: str) -> tuple[int, int]:
+    r"""(start, end) of the item list inside the first \section{...Projects...}."""
+    sec = re.search(r"\\section\{[^}]*Projects[^}]*\}", tex)
+    if not sec:
+        raise ValueError("Template has no Projects section")
+    start_tok, end_tok = _BS + "resumeSubHeadingListStart", _BS + "resumeSubHeadingListEnd"
+    s = tex.index(start_tok, sec.end()) + len(start_tok)
+    e = tex.index(end_tok, s)
+    return s, e
+
+
+def base_project_info(tex: str, library: list[dict]) -> dict:
+    """
+    What a base template offers:
+      defaults : ids of the projects the template ships with, in its order
+      options  : ids the user can choose from (whole library + template-only
+                 projects), minus projects already shown in another section of
+                 the base (e.g. Publications / Open Source) so nothing repeats
+      blocks   : id -> LaTeX block to use (the template's own wording wins)
+      names    : id -> short label for buttons
+    """
+    s, e = _projects_span(tex)
+    outside = tex[:s] + tex[e:]
+    hidden = {pid for b in _project_blocks(outside) if (pid := _match_project(b, library))}
+
+    blocks = {p["id"]: p["latex"].strip() for p in library}
+    names  = {p["id"]: p.get("name", p["id"]) for p in library}
+    defaults, extra = [], []
+    for i, b in enumerate(_project_blocks(tex[s:e])):
+        pid = _match_project(b, library)
+        if pid is None:                        # a project only this template has
+            pid = f"base-{i}"
+            names[pid] = _block_title(b)
+            extra.append(pid)
+        blocks[pid] = b
+        if pid not in hidden and pid not in defaults:
+            defaults.append(pid)
+
+    options = [p["id"] for p in library if p["id"] not in hidden] + extra
+    return {"defaults": defaults, "options": options, "blocks": blocks, "names": names}
+
+
+def build_projects_tex(tex: str, ids: list[str], blocks: dict) -> str:
+    """Replace the base template's Projects list with `ids`, in that order."""
+    s, e = _projects_span(tex)
+    sep = "\n\n\\vspace{4pt}\n\n" if "\\vspace{4" in tex[s:e] else "\n\n"
+    return tex[:s] + "\n\n" + sep.join(blocks[i] for i in ids) + "\n\n" + tex[e:]
+
+
+def rank_projects(jd_text: str, analysis: dict, base_key: str, info: dict, library: list[dict]) -> dict:
+    """
+    AI ranks every available project for this JD and base. Returns
+      {"ranking": [all option ids, best first], "picks": [ids to pre-select], "reason": str}
+    The number of picks = how many projects the base normally shows (min MIN_PROJECTS).
+    If the model's answer is unusable, falls back to the base's own projects.
+    """
+    print("  🤖 Ranking projects for this JD...")
+    options = info["options"]
+    tags_by_id = {p["id"]: ", ".join(p.get("tags", [])) for p in library}
+    n_picks = max(MIN_PROJECTS, len(info["defaults"]))
+    project_lines = "\n".join(
+        f"- {pid}: {info['names'][pid]} [tags: {tags_by_id.get(pid, '')}] "
+        f"{_strip_latex(info['blocks'][pid])[:300]}"
+        for pid in options
+    )
+
+    prompt = f"""You choose which projects go on a one-page resume for a specific job.
+
+Return ONLY this JSON (no markdown):
+{{
+  "ranking": ["every project id from the list, most relevant to the job first"],
+  "reason": "1 short sentence on why the top {n_picks} fit this job"
+}}
+
+Rules:
+- Use only ids from the list, each exactly once.
+- Rank by how strongly each project proves skills the job asks for.
+- Resume base: "{BASE_LABELS.get(base_key, base_key)}". When two projects are about equally relevant, prefer the one that fits this base.
+- This base normally shows: {", ".join(info["defaults"]) or "none"}.
+
+Projects:
+{project_lines}
+
+JD keywords: {", ".join(analysis.get("keywords", []))}
+
+Job Description:
+{jd_text}"""
+
+    ranking, reason = [], ""
+    try:
+        raw = client.chat.completions.create(
+            model=MODEL,
+            messages=[{"role": "user", "content": prompt}],
+            temperature=0.1,
+        ).choices[0].message.content.strip()
+        raw = re.sub(r"^```(?:json)?\s*", "", raw)
+        raw = re.sub(r"\s*```$", "", raw).strip()
+        data = json.loads(raw)
+        ranking = [i for i in data.get("ranking", []) if i in options]
+        reason = str(data.get("reason", "") or "")
+    except Exception as e:  # bad JSON / API error -> template defaults
+        print(f"  ⚠️  Project ranking failed ({e}); using the base's own projects.")
+
+    ordered = []
+    for i in ranking + info["defaults"] + options:
+        if i not in ordered:
+            ordered.append(i)
+    return {"ranking": ordered, "picks": ordered[:n_picks], "reason": reason}
+
+
+def fit_projects(tex_base: str, ids: list[str], blocks: dict, output_stem: str) -> tuple[list[str], list[str]]:
+    """
+    One-page rule, step 1: compile the untailored resume and drop the
+    lowest-ranked project (last in `ids`) until it fits on one page or only
+    MIN_PROJECTS remain. Returns (kept, dropped).
+    """
+    kept, dropped = list(ids), []
+    while True:
+        _, pages = compile_latex(build_projects_tex(tex_base, kept, blocks), output_stem)
+        if pages <= 1 or len(kept) <= MIN_PROJECTS:
+            return kept, dropped
+        dropped.append(kept.pop())
+        print(f"  ✂️  {pages} pages — dropping lowest-ranked project: {dropped[-1]}")
+
+
+def run_tailor(jd_text: str, analysis: dict, base_key: str, project_ids: list[str] | None,
+               output_stem: str, max_attempts: int = 4) -> tuple[Path, dict]:
+    """
+    Full build for one base + project list (best first):
+      1. swap in the chosen projects, dropping the lowest-ranked until one page
+      2. keyword rewrites; if that overflows, retry with tighter word limits
+    Empty / None project_ids -> the base's own projects.
+    """
+    tpl_path = TEMPLATES / TEMPLATE_MAP[base_key]
+    if not tpl_path.exists():
+        sys.exit(f"  ❌ Template not found: {tpl_path}")
+    tex_base = tpl_path.read_text(encoding="utf-8")
+    info = base_project_info(tex_base, load_projects())
+
+    ids = [i for i in (project_ids or []) if i in info["blocks"]] or info["defaults"]
+    kept, dropped = fit_projects(tex_base, ids, info["blocks"], output_stem)
+    tex_content = build_projects_tex(tex_base, kept, info["blocks"])
+
+    # ── One-page rule, step 2 ──────────────────────────────────────
+    # A rewrite with the same word count can still overflow if the LLM swaps
+    # in longer JD words, so compile, measure the real page count, and retry
+    # with a tighter (eventually negative) word buffer until it fits.
+    word_buffer = 3
+    pdf_path, page_count = None, None
+    for attempt in range(1, max_attempts + 1):
+        print(f"\n  Rewrites (attempt {attempt}/{max_attempts})...")
+        rewrites     = get_rewrites(tex_content, jd_text, analysis, word_buffer=word_buffer)
+        tex_tailored = apply_changes(tex_content, analysis, rewrites)
+        pdf_path, page_count = compile_latex(tex_tailored, output_stem)
+        if page_count <= 1:
+            break
+        if attempt < max_attempts:
+            print(f"  🔁 {page_count} pages — tightening word limits (next buffer: {word_buffer - 4:+d})...")
+            word_buffer -= 4
+        else:
+            print(f"  ⚠️  Still {page_count} pages after {max_attempts} attempts.")
+
+    return pdf_path, {
+        "page_count": page_count,
+        "kept":    [info["names"][i] for i in kept],
+        "dropped": [info["names"][i] for i in dropped],
+    }
+
+
+# ══════════════════════════════════════════════════════════════════════
 # MAIN
 # ══════════════════════════════════════════════════════════════════════
 def main():
@@ -614,49 +859,22 @@ def main():
     print(f"      Headline  : {analysis.get('headline', '')}")
     print(f"      Keywords  : {', '.join(analysis['keywords'][:5])}...")
 
-    print(f"\n[3/5] Loading template: {template_name}")
-    tpl_path = TEMPLATES / template_name
-    if not tpl_path.exists():
-        sys.exit(f"  ❌ Template not found: {tpl_path}")
-    tex_content = tpl_path.read_text(encoding="utf-8")
-    print(f"      Loaded {len(tex_content)} chars")
+    base_key = archetype if archetype in TEMPLATE_MAP else "ML_AI"
+    print(f"\n[3/5] Ranking projects for base: {BASE_LABELS[base_key]}")
+    library = load_projects()
+    info    = base_project_info((TEMPLATES / template_name).read_text(encoding="utf-8"), library)
+    ranked  = rank_projects(jd_text, analysis, base_key, info, library)
+    print(f"      AI picks  : {', '.join(ranked['picks'])}")
 
     today       = date.today().strftime("%Y-%m-%d")
     output_stem = f"cv-ashutosh-{company_slug}-{today}"
 
-    # ── One-page enforcement loop ───────────────────────────────────
-    # The source templates are exactly one page. A rewrite that matches the
-    # original word count can still overflow the page if the LLM swaps in
-    # longer JD-vocabulary words (equal word count, more characters). So
-    # instead of trusting word count alone, we compile, actually measure
-    # the resulting PDF's page count, and if it's >1 we re-run the rewrite
-    # with a tighter (eventually negative) word buffer — forcing bullets
-    # and the summary to get shorter than the original, not just "not
-    # longer" — until it fits on one page or we exhaust retries.
-    MAX_PAGE_ATTEMPTS = 4
-    word_buffer = 3
-    pdf_path = None
-    page_count = None
-
-    for attempt in range(1, MAX_PAGE_ATTEMPTS + 1):
-        print(f"\n[4/5] Getting rewrites (attempt {attempt}/{MAX_PAGE_ATTEMPTS})...")
-        rewrites     = get_rewrites(tex_content, jd_text, analysis, word_buffer=word_buffer)
-        tex_tailored = apply_changes(tex_content, analysis, rewrites)
-
-        print("\n[5/5] Compiling PDF...")
-        pdf_path, page_count = compile_latex(tex_tailored, output_stem)
-
-        if page_count <= 1:
-            break
-
-        if attempt < MAX_PAGE_ATTEMPTS:
-            print(f"  🔁 {page_count} pages — tightening word limits and retrying "
-                  f"(next buffer: {word_buffer - 4:+d})...")
-            word_buffer -= 4  # push below zero to force shrinkage below original length
-        else:
-            print(f"  ⚠️  Still {page_count} pages after {MAX_PAGE_ATTEMPTS} attempts.")
-            print(f"      Automatic shrinking has a limit — the template itself may need "
-                  f"trimming (fewer bullets, smaller margins) for this JD's keyword set.")
+    print("\n[4/5] Fitting projects, rewriting and compiling...")
+    pdf_path, result = run_tailor(jd_text, analysis, base_key, ranked["picks"], output_stem)
+    page_count = result["page_count"]
+    print(f"\n[5/5] Projects  : {', '.join(result['kept'])}")
+    if result["dropped"]:
+        print(f"      Dropped   : {', '.join(result['dropped'])} (to fit one page)")
 
     print("\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━")
     print("  ✅ DONE" if page_count == 1 else "  ⚠️  DONE (with page-count warning)")

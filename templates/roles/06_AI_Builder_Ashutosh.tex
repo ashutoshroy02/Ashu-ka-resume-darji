@@ -1,0 +1,175 @@
+\documentclass[letterpaper,10pt]{article}
+\usepackage{latexsym}
+\usepackage[empty]{fullpage}
+\usepackage{titlesec}
+\usepackage{marvosym}
+\usepackage[usenames,dvipsnames]{color}
+\usepackage{verbatim}
+\usepackage{enumitem}
+\usepackage[hidelinks]{hyperref}
+\usepackage{fancyhdr}
+\usepackage[english]{babel}
+\usepackage{tabularx}
+\usepackage{xcolor}
+\usepackage{charter}
+\usepackage{fontawesome5}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyfoot{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+\usepackage[left=0.4in,top=0.35in,right=0.4in,bottom=0.35in]{geometry}
+\urlstyle{same}
+\raggedbottom
+\raggedright
+\setlength{\tabcolsep}{0in}
+
+\definecolor{greenTheme}{RGB}{20, 80, 50}
+\definecolor{lightGray}{RGB}{80, 80, 80}
+
+\titleformat{\section}{\vspace{-6pt}\scshape\raggedright\large\color{greenTheme}\bfseries}{}{0em}{}[\color{greenTheme}\titlerule \vspace{-6pt}]
+
+\newcommand{\resumeItem}[1]{\item\small{{#1 \vspace{-2pt}}}}
+\renewcommand\labelitemi{\color{greenTheme}\tiny$\bullet$}
+\newcommand{\resumeSubheading}[4]{
+  \vspace{-1pt}\item
+    \begin{tabular*}{0.97\textwidth}[t]{l@{\extracolsep{\fill}}r}
+      \textbf{#1} & \color{greenTheme}\textbf{#2} \\
+      \textit{\small#3} & \textit{\small\color{lightGray} #4} \\
+    \end{tabular*}\vspace{-6pt}
+}
+\newcommand{\resumeProjectHeading}[2]{
+    \item
+    \begin{tabular*}{0.97\textwidth}{l@{\extracolsep{\fill}}r}
+      \small#1 & \small\color{lightGray}#2 \\
+    \end{tabular*}\vspace{-6pt}
+}
+\newcommand{\resumeSubHeadingListStart}{\begin{itemize}[leftmargin=0.15in, label={}]}
+\newcommand{\resumeSubHeadingListEnd}{\end{itemize}}
+\newcommand{\resumeItemListStart}{\begin{itemize}}
+\newcommand{\resumeItemListEnd}{\end{itemize}\vspace{-5pt}}
+
+\begin{document}
+
+%----------HEADER----------
+\begin{center}
+    {\Huge \scshape \color{greenTheme} Ashutosh Roy} \\[3pt]
+   {\Large \textbf{AI Engineer $|$ AI-First Builder}} \\[3pt]
+     \small
+    \href{tel:+919810599837}{\faPhone\ +91-9810599837}  \hspace{3pt}$|$\hspace{3pt}
+    \href{mailto:ashu2003roy@gmail.com}{\faEnvelope\ ashu2003roy@gmail.com} \hspace{3pt}$|$\hspace{3pt}
+    \href{https://mitovoid.netlify.app}{\faGlobe\ mitovoid.netlify.app} \hspace{3pt}$|$\hspace{3pt}
+    \href{https://github.com/ashutoshroy02}{\faGithub\ ashutoshroy02} \hspace{3pt}$|$\hspace{3pt}
+    \href{https://github.com/Mitovoid-AI}{\faGithub\ Mitovoid-AI} \hspace{3pt}$|$\hspace{3pt}
+    \faMapMarker\ Gurugram
+\end{center}
+\vspace{-10pt}
+
+%-----------SUMMARY-----------
+\section{Summary}
+\vspace{1pt}
+\small{
+AI Engineer with \textbf{1+ year of experience} who builds and ships software through an \textbf{AI-first workflow centred on Claude Code} (skills, subagents, MCP, plan-then-implement). Currently an \textbf{AI Backend Engineer at GenerativX}, building a \textbf{RAG pipeline} for an ed-tech chat assistant. Have shipped \textbf{7+ live products} across web, Android and Windows, covering frontend, backend, LLM APIs, payments, CI/CD and \textbf{Vercel} deployment. Former Research Intern at \textbf{IIT Delhi}; published at \textbf{IEEE RECCAP 2026}.
+}
+\vspace{-6pt}
+
+ %-----------EXPERIENCE-----------
+\section{Experience}
+\resumeSubHeadingListStart
+
+\resumeSubheading
+{AI Backend Engineer}{Aug 2026 -- Present}
+{GenerativX}{Gurugram, India (Hybrid)}
+\resumeItemListStart
+    \resumeItem{Developing a production \textbf{RAG pipeline} for an ed-tech AI assistant, enabling grounded question answering over \textbf{NCERT textbooks}.}
+    \resumeItem{Built PDF ingestion and extraction pipelines for text, hierarchical sections, figures, and tables, structuring textbook content into chapter-section trees for optimized chunking and retrieval.}
+    \resumeItem{Designed an intent-based query routing layer that classifies student queries and selects the appropriate retrieval strategy before generating grounded responses using \textbf{GPT-4.1}.}
+\resumeItemListEnd
+
+ \resumeSubheading
+{Research Intern}{Jan 2025 -- Jun 2025}
+{Indian Institute of Technology (IIT) Delhi}{New Delhi, India}
+\resumeItemListStart
+    \resumeItem{Built a multimodal OCR and document processing pipeline for \textbf{296 archaeological documents (63,208 pages)} using \textbf{Surya, OpenCV, and Qwen2.5-VL-7B}.}
+    \resumeItem{Developed multimodal hybrid search using \textbf{MiniLM, CLIP, TAPAS, BM25 (Apache Solr)}, and \textbf{Reciprocal Rank Fusion (RRF)}, achieving \textbf{0.754 MRR} in retrieval evaluation.}
+    \resumeItem{Co-authored \textbf{SARCH: Multimodal Search for Archaeological Archives}. \href{https://arxiv.org/abs/2511.05667}{\textit{arXiv:2511.05667}}}
+\resumeItemListEnd
+
+\resumeSubheading
+{AI/ML Engineer Intern}{Oct 2024 -- Nov 2024}
+{MitoVoid AI}{Remote}
+\resumeItemListStart
+    \resumeItem{Fine-tuned \textbf{Mistral and LLaMA} models and developed GenAI/RAG-based healthcare workflows, including a chatbot that reduced patient query resolution time by \textbf{40\%}.}
+\resumeItemListEnd
+
+\resumeSubHeadingListEnd
+
+%-----------PROJECTS-----------
+\section{Personal Projects (Shipped with Claude Code)}
+\resumeSubHeadingListStart
+
+\resumeProjectHeading
+{\href{https://sayloai.vercel.app/}{\textbf{Saylo -- AI Voice-to-Text}}
+$|$ \emph{Kotlin, Groq Speech + LLM APIs, Windows \& Android}}{Oct 2026}
+\resumeItemListStart
+\resumeItem{Hold-to-talk dictation (Windows tray hotkey, Android floating bubble) that removes fillers, applies spoken corrections and types clean text at the cursor in about 1.5\,s. Audio goes straight to Groq with a locally stored user key.}
+\resumeItemListEnd
+
+\resumeProjectHeading
+{\href{https://latelysave.vercel.app/}{\textbf{Lately -- AI Reel Saver}}
+$|$ \emph{TypeScript, Speech-to-Text, LLM Extraction, Android}}{Oct 2026}
+\resumeItemListStart
+\resumeItem{Share an Instagram reel to the app: it transcribes the audio, extracts places, prices and steps into searchable cards with directions links, and includes account deletion and privacy flows.}
+\resumeItemListEnd
+
+\resumeProjectHeading
+{\href{https://oneclickoptimizer.vercel.app/}{\textbf{OneClick Optimizer -- Windows PC Optimizer}}
+$|$ \emph{Rust, Polar Payments, GitHub Releases}}{Aug 2026}
+\resumeItemListStart
+\resumeItem{Commercial native Windows app (1.2\,MB, no admin rights) with a 2\,s scan, health score and reversible fixes with undo. \textbf{Polar} handles licence payments; also has a dev-junk cleaner, Autopilot and in-app updates.}
+\resumeItemListEnd
+
+\resumeProjectHeading
+{\href{https://velocityblocks.vercel.app/}{\textbf{Velocity Blocks}} \& \href{https://hordehighway.vercel.app/}{\textbf{Horde Highway}} -- 3D Games
+$|$ \emph{TypeScript, three.js, cannon-es, Godot 4}}{July 2026}
+\resumeItemListStart
+\resumeItem{Time-attack racer with 24 tracks, 100\,Hz physics, ghost replays and a track editor, shipped to web, Android and Windows. Also built a squad-runner shooter in three.js and ported it to native Godot 4 for Android.}
+\resumeItemListEnd
+
+\resumeProjectHeading
+{\href{https://castlecascade.vercel.app/}{\textbf{Castle Cascade}} \& \href{https://jutebags.github.io/Tag-Team-Ludo/}{\textbf{Tag Team Ludo}}
+$|$ \emph{JavaScript, HTML5, Android APK}}{ Dec 2025}
+\resumeItemListStart
+\resumeItem{Match-3 puzzle game with 1,500 levels, boosters and ads, plus a Ludo variant with a pair-move rule and strategic bots. Both ship as web and Android builds.}
+\resumeItemListEnd
+
+\resumeSubHeadingListEnd
+
+%-----------TECHNICAL SKILLS-----------
+\section{Technical Skills}
+\begin{itemize}[leftmargin=0.15in, label={}, topsep=1pt]
+  \small{\item{
+    \textbf{AI-Assisted Dev}{: Claude Code (skills, subagents, MCP, hooks), prompt engineering, OpenAI GPT, Groq, Claude API} \\
+    \textbf{AI/ML}{: LLMs, RAG, PDF Parsing \& Extraction, NLP, LangChain, Fine-Tuning (QLoRA/LoRA), Hugging Face, PyTorch} \\
+    \textbf{Backend \& Frontend}{: Python, FastAPI, TypeScript, JavaScript, HTML5/CSS, three.js} \\
+    \textbf{Mobile \& Desktop}{: Kotlin (Android), Rust (Windows), Godot 4, Capacitor} \\
+    \textbf{Data \& Search}{: FAISS, Pinecone, Apache Solr, MySQL, SQL} \\
+    \textbf{DevOps \& Integrations}{: Git, GitHub Actions (CI/CD, signed releases), Docker, Vercel, Netlify, Polar, Linux}
+  }}
+\end{itemize}
+\vspace{-10pt}
+
+%-----------ACHIEVEMENTS-----------
+\section{Achievements}
+\resumeItemListStart
+\resumeItem{Published \textbf{2 research papers} (\textbf{IEEE RECCAP 2026}; IIT Delhi). Won \textbf{2 AI/ML Hackathons}; solved \textbf{150+} LeetCode problems.}
+\resumeItemListEnd
+
+%-----------EDUCATION-----------
+\section{Education}
+\resumeSubHeadingListStart
+\resumeSubheading{Chhattisgarh Swami Vivekananda Technical University (CSVTU)}{2022 -- 2026}{B.Tech (Hons) in Computer Science and Engineering (Artificial Intelligence)}{Bhilai, Chhattisgarh}
+\resumeSubheading{St. Columbus School}{2020 -- 2021}{Higher Secondary (Class XII - Science PCMB) - 87\%}{Faridabad, Haryana}
+\resumeSubHeadingListEnd
+
+\end{document}
