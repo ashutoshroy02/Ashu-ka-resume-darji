@@ -1,0 +1,329 @@
+# Project library for the resume tailor.
+# Each entry is one project that can be dropped into any base template's Projects section.
+#   id     : stable key (used by the Telegram picker and the AI ranker)
+#   name   : short label shown on the Telegram button
+#   tags   : what the project shows off; the AI ranker matches these against the JD
+#   match  : substrings that identify this project inside a template's \resumeProjectHeading
+#            (if a base template already has its own wording of the project, that wording is used)
+#   latex  : the block used when the base template does NOT already contain the project
+# To add a project: append an entry. No code changes needed.
+
+projects:
+- id: exam-helper
+  name: Exam-Helper RAG
+  tags:
+  - rag
+  - llm
+  - langchain
+  - faiss
+  - pinecone
+  - python
+  - streamlit
+  - retrieval
+  match:
+  - Exam-Helper
+  latex: |
+    \resumeProjectHeading
+    {\href{https://github.com/ashutoshroy02/Exam-Helper}
+    {\textbf{Exam-Helper RAG System}}
+    $|$ \emph{Python, LLaMA 3, FAISS, Pinecone, LangChain, Streamlit}}{Dec 2024 -- Apr 2025}
+    \resumeItemListStart
+    \resumeItem{Built a \textbf{RAG-powered} question answering system using LLaMA 3 with support for PDFs, images, and YouTube transcripts.}
+    \resumeItem{Implemented \textbf{FAISS} and \textbf{Pinecone} retrieval, reducing LLM hallucinations, improving answer accuracy, and enabling \textbf{sub-second} semantic search.}
+    \resumeItemListEnd
+- id: medical-chatbot
+  name: Medical Chatbot (Fine-Tuning)
+  tags:
+  - llm
+  - fine-tuning
+  - qlora
+  - mistral
+  - ocr
+  - healthcare
+  - nlp
+  match:
+  - BeagleLake
+  latex: |
+    \resumeProjectHeading
+    {\href{https://huggingface.co/fhai50032/BeagleLake-7B}
+    {\textbf{Medical Chatbot (LLM Fine-Tuning)}}
+    $|$ \emph{Python, Mistral 7B, QLoRA, Tesseract OCR}}{Mar 2024 -- Apr 2024}
+    \resumeItemListStart
+    \resumeItem{Fine-tuned \textbf{Mistral 7B} using \textbf{QLoRA}, reducing GPU memory usage by \textbf{75\%} while maintaining model performance.}
+    \resumeItem{Built an OCR pipeline to process \textbf{1,000+} clinical reports, improving data extraction for downstream LLM inference.}
+    \resumeItemListEnd
+- id: defect-detection
+  name: Industrial Defect Detection
+  tags:
+  - computer-vision
+  - yolov8
+  - pytorch
+  - opencv
+  - cuda
+  - detection
+  match:
+  - Industrial-Defect-Detection
+  latex: |
+    \resumeProjectHeading
+    {\href{https://github.com/ashutoshroy02/Industrial-Defect-Detection-System}
+    {\textbf{Industrial Defect Detection System}}
+    $|$ \emph{YOLOv8, PyTorch, OpenCV, CUDA, Python}}{Feb 2025 -- Apr 2025}
+    \resumeItemListStart
+    \resumeItem{Built a real-time \textbf{YOLOv8} defect detection system for automated quality inspection, reducing manual inspection effort.}
+    \resumeItem{Detected \textbf{4} defect types (scratches, cracks, dents, missing components) with GPU-accelerated inference for low-latency deployment.}
+    \resumeItemListEnd
+- id: speech-emotion
+  name: Speech Emotion & Stress (IEEE)
+  tags:
+  - speech
+  - audio
+  - wav2vec2
+  - deep-learning
+  - research
+  - pytorch
+  - publication
+  match:
+  - EchoEmotion
+  latex: |
+    \resumeProjectHeading
+    {\href{https://github.com/ashutoshroy02/EchoEmotion}
+    {\textbf{Speech Emotion \& Stress Detection}}
+    $|$ \emph{Python, PyTorch, Wav2Vec2, BiLSTM, Hugging Face} $|$
+    \textbf{\emph{RECCAP 2026}}}{Jan 2026 -- May 2026}
+    \resumeItemListStart
+    \resumeItem{Built a deep learning model for speech emotion and stress detection using \textbf{3} public datasets with data cleaning, feature engineering, and preprocessing.}
+    \resumeItem{Achieved \textbf{85.9\% accuracy}, \textbf{0.856 F1}, and \textbf{0.1268 RMSE}; improved prediction performance and research accepted at \textbf{RECCAP 2026 (IEEE)}.}
+    \resumeItemListEnd
+- id: netflix-analysis
+  name: Netflix Data Analysis
+  tags:
+  - data-analysis
+  - eda
+  - pandas
+  - numpy
+  - visualization
+  - sql
+  match:
+  - Netflix-Data-Analysis
+  latex: |
+    \resumeProjectHeading
+    {\href{https://github.com/ashutoshroy02/Netflix-Data-Analysis-Advanced}
+    {\textbf{Netflix Data Analysis}}
+    $|$ \emph{Python, Pandas, NumPy, Matplotlib, Seaborn, Jupyter}}{Jun 2026}
+    \resumeItemListStart
+    \resumeItem{Enhanced an open-source project by cleaning and analyzing data from \textbf{8,000+} Netflix titles using Python, Pandas, and NumPy.}
+    \resumeItem{Built visualizations that identified trends in genres, ratings, countries, and release years, helping generate business insights and support data-driven decisions.}
+    \resumeItemListEnd
+- id: url-shortener
+  name: URL Shortener
+  tags:
+  - backend
+  - fastapi
+  - postgresql
+  - redis
+  - docker
+  - rest-api
+  - system-design
+  match:
+  - Chota-link
+  latex: |
+    \resumeProjectHeading
+    {\href{https://github.com/ashutoshroy02/Chota-link}
+    {\textbf{URL Shortener}}
+    $|$ \emph{Python - FastAPI - PostgreSQL - Redis - Docker}}{2026}
+    \resumeItemListStart
+    \resumeItem{Built a scalable URL shortener with REST APIs, custom short links, and analytics using FastAPI and PostgreSQL.}
+    \resumeItem{Integrated Redis caching to reduce response time by \textbf{40\%} and improve system performance.}
+    \resumeItemListEnd
+- id: interviewprep
+  name: InterviewPrep Platform
+  tags:
+  - full-stack
+  - web
+  - astro
+  - javascript
+  - open-source
+  - seo
+  match:
+  - InterviewPrep
+  - interview-prep-site
+  latex: |
+    \resumeProjectHeading
+    {\href{https://github.com/ashutoshroy02/InterviewPrep}
+    {\textbf{InterviewPrep Platform}}
+    $|$ \emph{Python - FastAPI - Astro Engine - SQLite - Git}}{2025}
+    \resumeItemListStart
+    \resumeItem{Built a full-stack interview preparation platform with coding questions, quizzes, mock interviews, and progress tracking.}
+    \resumeItem{Designed backend APIs to improve performance and deliver a smooth user experience.}
+    \resumeItemListEnd
+- id: skills-for-agents
+  name: Skills for Agents (SIP)
+  tags:
+  - agents
+  - multi-agent
+  - mcp
+  - langgraph
+  - prompt-engineering
+  - open-source
+  match:
+  - skills-for-agents
+  latex: |
+    \resumeProjectHeading
+    {\href{https://github.com/ashutoshroy02/skills-for-agents}
+    {\textbf{Skills for Agents Framework}}
+    $|$ \emph{Python - LangGraph - MCP - AI Agents - Open Source}}{Apr 2026 -- May 2026}
+    \resumeItemListStart
+    \resumeItem{Built an open-source framework for reusable AI agent skills, enabling multi-agent workflows with shared memory, tool calling, and modular task execution.}
+    \resumeItem{Designed the \textbf{Skills Interoperability Protocol (SIP)}, reducing prompt duplication by \textbf{60\%} and improving agent scalability through reusable skill modules.}
+    \resumeItemListEnd
+- id: shopping-agent
+  name: Shopping Assistant Agent
+  tags:
+  - agents
+  - multi-agent
+  - langgraph
+  - mcp
+  - tool-calling
+  - fastapi
+  - claude
+  match:
+  - Shopping Assistant Agent
+  latex: |
+    \resumeProjectHeading
+    {\href{https://github.com/ashutoshroy02}
+    {\textbf{Shopping Assistant Agent}}
+    $|$ \emph{Python - LangGraph - MCP - Claude 3.5 - FastAPI}}{Feb 2026 -- May 2026}
+    \resumeItemListStart
+    \resumeItem{Built a multi-agent shopping assistant using LangGraph to automate product search, comparison, recommendations, and review summarization.}
+    \resumeItem{Developed MCP servers for secure tool calling with product APIs and databases, reducing response time by \textbf{35\%} and improving recommendation quality.}
+    \resumeItemListEnd
+- id: archaeo-search
+  name: Archaeological Search Engine
+  tags:
+  - search
+  - ocr
+  - solr
+  - faiss
+  - fastapi
+  - multimodal
+  - research
+  match:
+  - Archaeological Full-Stack Search Engine
+  latex: |
+    \resumeProjectHeading
+    {\href{https://github.com/ashutoshroy02/TIE}{\textbf{Archaeological Full-Stack Search Engine}}
+    $|$ \emph{Python, Surya OCR, Apache Solr, FAISS, FastAPI, C++, NLP}}{Jan 2025 -- Jun 2025}
+    \resumeItemListStart
+    \resumeItem{Built an end-to-end search engine for archaeological archives at IIT Delhi, processing scanned manuscripts, books, maps, and historical records.}
+    \resumeItem{Implemented metadata extraction and semantic indexing using Apache Solr and FAISS, enabling sub-second keyword and vector-based retrieval.}
+    \resumeItemListEnd
+- id: bulkymail
+  name: BulkyMail
+  tags:
+  - automation
+  - python
+  - streamlit
+  - email
+  match:
+  - BulkyMail
+  latex: |
+    \resumeProjectHeading
+    {\href{https://github.com/ashutoshroy02/BulkyMail}{\textbf{BulkyMail — Automated Bulk Email Campaign Tool}}
+    $|$ \emph{Python, Streamlit, SMTP/API}}{Dec 2024}
+    \resumeItemListStart
+    \resumeItem{Built a Streamlit web app for automated, personalized bulk email campaigns; enabled users to send \textbf{100+ personalized emails in minutes} with dynamic templating (name, role, company).}
+    \resumeItem{Contributed to successful internship conversions for multiple users by improving outreach response rates through personalized messaging at scale.}
+    \resumeItemListEnd
+- id: saylo
+  name: Saylo (Voice-to-Text)
+  tags:
+  - kotlin
+  - android
+  - windows
+  - speech-to-text
+  - llm-api
+  - groq
+  - product
+  match:
+  - sayloai
+  latex: |
+    \resumeProjectHeading
+    {\href{https://sayloai.vercel.app/}{\textbf{Saylo -- AI Voice-to-Text}}
+    $|$ \emph{Kotlin, Groq Speech + LLM APIs, Windows \& Android}}{Oct 2026}
+    \resumeItemListStart
+    \resumeItem{Hold-to-talk dictation (Windows tray hotkey, Android floating bubble) that removes fillers, applies spoken corrections and types clean text at the cursor in about 1.5\,s. Audio goes straight to Groq with a locally stored user key.}
+    \resumeItemListEnd
+- id: lately
+  name: Lately (AI Reel Saver)
+  tags:
+  - typescript
+  - android
+  - speech-to-text
+  - llm-extraction
+  - product
+  - privacy
+  match:
+  - latelysave
+  latex: |
+    \resumeProjectHeading
+    {\href{https://latelysave.vercel.app/}{\textbf{Lately -- AI Reel Saver}}
+    $|$ \emph{TypeScript, Speech-to-Text, LLM Extraction, Android}}{Oct 2026}
+    \resumeItemListStart
+    \resumeItem{Share an Instagram reel to the app: it transcribes the audio, extracts places, prices and steps into searchable cards with directions links, and includes account deletion and privacy flows.}
+    \resumeItemListEnd
+- id: oneclick
+  name: OneClick Optimizer (Rust)
+  tags:
+  - rust
+  - windows
+  - desktop
+  - payments
+  - polar
+  - ci-cd
+  - product
+  match:
+  - oneclickoptimizer
+  latex: |
+    \resumeProjectHeading
+    {\href{https://oneclickoptimizer.vercel.app/}{\textbf{OneClick Optimizer -- Windows PC Optimizer}}
+    $|$ \emph{Rust, Polar Payments, GitHub Releases}}{Aug 2026}
+    \resumeItemListStart
+    \resumeItem{Commercial native Windows app (1.2\,MB, no admin rights) with a 2\,s scan, health score and reversible fixes with undo. \textbf{Polar} handles licence payments; also has a dev-junk cleaner, Autopilot and in-app updates.}
+    \resumeItemListEnd
+- id: 3d-games
+  name: Velocity Blocks & Horde Highway
+  tags:
+  - typescript
+  - three.js
+  - game-dev
+  - physics
+  - godot
+  - android
+  - web
+  match:
+  - velocityblocks
+  latex: |
+    \resumeProjectHeading
+    {\href{https://velocityblocks.vercel.app/}{\textbf{Velocity Blocks}} \& \href{https://hordehighway.vercel.app/}{\textbf{Horde Highway}} -- 3D Games
+    $|$ \emph{TypeScript, three.js, cannon-es, Godot 4}}{July 2026}
+    \resumeItemListStart
+    \resumeItem{Time-attack racer with 24 tracks, 100\,Hz physics, ghost replays and a track editor, shipped to web, Android and Windows. Also built a squad-runner shooter in three.js and ported it to native Godot 4 for Android.}
+    \resumeItemListEnd
+- id: castle-ludo
+  name: Castle Cascade & Tag Team Ludo
+  tags:
+  - javascript
+  - html5
+  - game-dev
+  - android
+  - web
+  - ads
+  match:
+  - castlecascade
+  latex: |
+    \resumeProjectHeading
+    {\href{https://castlecascade.vercel.app/}{\textbf{Castle Cascade}} \& \href{https://jutebags.github.io/Tag-Team-Ludo/}{\textbf{Tag Team Ludo}}
+    $|$ \emph{JavaScript, HTML5, Android APK}}{ Dec 2025}
+    \resumeItemListStart
+    \resumeItem{Match-3 puzzle game with 1,500 levels, boosters and ads, plus a Ludo variant with a pair-move rule and strategic bots. Both ship as web and Android builds.}
+    \resumeItemListEnd
