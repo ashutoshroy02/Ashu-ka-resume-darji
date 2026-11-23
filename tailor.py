@@ -4,6 +4,7 @@ tailor.py — Resume tailoring via keyword injection into existing .tex template
 """
 
 import argparse
+import contextlib
 import json
 import os
 import re
@@ -573,7 +574,10 @@ def _count_pdf_pages(pdf_path: Path) -> int:
 # ══════════════════════════════════════════════════════════════════════
 # STEP 6 — Compile
 # ══════════════════════════════════════════════════════════════════════
-def compile_latex(tex_content: str, output_stem: str) -> tuple[Path, int]:
+_LATEX_ENGINE = None  # detected on the first compile, then reused
+
+
+def compile_latex(tex_content: str, output_stem: str, passes: int = 2) -> tuple[Path, int]:
     tex_path = OUTPUT_DIR / f"{output_stem}.tex"
     pdf_path = OUTPUT_DIR / f"{output_stem}.pdf"
 
@@ -588,8 +592,9 @@ def compile_latex(tex_content: str, output_stem: str) -> tuple[Path, int]:
     if sys.platform == "win32":
         _subprocess_kwargs["creationflags"] = subprocess.CREATE_NO_WINDOW
 
-    engine = None
-    for candidate in ["tectonic", "pdflatex"]:
+    global _LATEX_ENGINE
+    engine = _LATEX_ENGINE
+    for candidate in [] if engine else ["tectonic", "pdflatex"]:
         try:
             subprocess.run([candidate, "--version"], capture_output=True, check=True, **_subprocess_kwargs)
             engine = candidate
@@ -599,14 +604,15 @@ def compile_latex(tex_content: str, output_stem: str) -> tuple[Path, int]:
 
     if not engine:
         sys.exit("  ❌ No LaTeX engine found. Install pdflatex (MiKTeX) or tectonic.")
+    _LATEX_ENGINE = engine
 
     print(f"  ⚙️  Compiling with {engine}...")
     try:
         if engine == "pdflatex":
             args = ["pdflatex", "-interaction=nonstopmode",
                     f"-output-directory={OUTPUT_DIR}", str(tex_path)]
-            r1 = subprocess.run(args, capture_output=True, timeout=120, **_subprocess_kwargs)
-            r2 = subprocess.run(args, capture_output=True, timeout=120, **_subprocess_kwargs)
+            for _ in range(passes):  # 1 pass is enough when only the page count matters
+                subprocess.run(args, capture_output=True, timeout=120, **_subprocess_kwargs)
         else:
             r = subprocess.run(["tectonic", "--outdir", str(OUTPUT_DIR), str(tex_path)],
                            capture_output=True, timeout=120, check=True, **_subprocess_kwargs)
@@ -772,17 +778,17 @@ Job Description:
     return {"ranking": ordered, "picks": ordered[:n_picks], "reason": reason}
 
 
-def fit_projects(tex_base: str, ids: list[str], blocks: dict, output_stem: str) -> tuple[list[str], list[str]]:
+def fit_projects(tex_base: str, ids: list[str], blocks: dict, output_stem: str) -> tuple[list[str], list[str], int]:
     """
     One-page rule, step 1: compile the untailored resume and drop the
     lowest-ranked project (last in `ids`) until it fits on one page or only
-    MIN_PROJECTS remain. Returns (kept, dropped).
+    MIN_PROJECTS remain. Returns (kept, dropped, pages of the last compile).
     """
     kept, dropped = list(ids), []
     while True:
-        _, pages = compile_latex(build_projects_tex(tex_base, kept, blocks), output_stem)
+        _, pages = compile_latex(build_projects_tex(tex_base, kept, blocks), output_stem, passes=1)
         if pages <= 1 or len(kept) <= MIN_PROJECTS:
-            return kept, dropped
+            return kept, dropped, pages
         dropped.append(kept.pop())
         print(f"  ✂️  {pages} pages — dropping lowest-ranked project: {dropped[-1]}")
 
@@ -802,44 +808,90 @@ def run_tailor(jd_text: str, analysis: dict, base_key: str, project_ids: list[st
     info = base_project_info(tex_base, load_projects())
 
     ids = [i for i in (project_ids or []) if i in info["blocks"]] or info["defaults"]
-    kept, dropped = fit_projects(tex_base, ids, info["blocks"], output_stem)
+    kept, dropped, fit_pages = fit_projects(tex_base, ids, info["blocks"], output_stem)
     tex_content = build_projects_tex(tex_base, kept, info["blocks"])
 
     # ── One-page rule, step 2 ──────────────────────────────────────
     # A rewrite with the same word count can still overflow if the LLM swaps
     # in longer JD words, so compile, measure the real page count, and retry
     # with a tighter (eventually negative) word buffer until it fits.
-    word_buffer = 3
+    buffers = [3 - 4 * i for i in range(max_attempts)]   # +3, -1, -5, -9
+    if fit_pages > 1 and len(buffers) > 1:
+        # Already over one page with the original wording, so the +3 round
+        # (bullets may grow) can't fit: skip it and start shrinking.
+        buffers = buffers[1:]
     pdf_path, page_count = None, None
-    for attempt in range(1, max_attempts + 1):
-        print(f"\n  Rewrites (attempt {attempt}/{max_attempts})...")
+    for attempt, word_buffer in enumerate(buffers, 1):
+        print(f"\n  Rewrites (attempt {attempt}/{len(buffers)})...")
         rewrites     = get_rewrites(tex_content, jd_text, analysis, word_buffer=word_buffer)
         tex_tailored = apply_changes(tex_content, analysis, rewrites)
         pdf_path, page_count = compile_latex(tex_tailored, output_stem)
         if page_count <= 1:
             break
-        if attempt < max_attempts:
-            print(f"  🔁 {page_count} pages — tightening word limits (next buffer: {word_buffer - 4:+d})...")
-            word_buffer -= 4
+        if attempt < len(buffers):
+            print(f"  🔁 {page_count} pages — tightening word limits (next buffer: {buffers[attempt]:+d})...")
         else:
-            print(f"  ⚠️  Still {page_count} pages after {max_attempts} attempts.")
+            print(f"  ⚠️  Still {page_count} pages after {len(buffers)} attempts.")
 
     return pdf_path, {
         "page_count": page_count,
         "kept":    [info["names"][i] for i in kept],
         "dropped": [info["names"][i] for i in dropped],
+        "kept_ids":    kept,
+        "dropped_ids": dropped,
     }
 
 
 # ══════════════════════════════════════════════════════════════════════
 # MAIN
 # ══════════════════════════════════════════════════════════════════════
+def catalog() -> dict:
+    """Bases and project ids for --list (no LLM call)."""
+    library = load_projects()
+    bases = []
+    for key, fname in TEMPLATE_MAP.items():
+        info = base_project_info((TEMPLATES / fname).read_text(encoding="utf-8"), library)
+        bases.append({"key": key, "label": BASE_LABELS[key], "template": fname,
+                      "default_projects": info["defaults"]})
+    projects = [{"id": p["id"], "name": p.get("name", p["id"]), "tags": p.get("tags", [])}
+                for p in library]
+    return {"bases": bases, "projects": projects}
+
+
 def main():
     ap = argparse.ArgumentParser(description="Tailor resume via keyword injection")
-    ap.add_argument("--jd",      required=True)
-    ap.add_argument("--company", default=None)
+    ap.add_argument("--jd",       help="JD as a URL, a file path, or plain text")
+    ap.add_argument("--company",  default=None)
+    ap.add_argument("--base",     choices=list(TEMPLATE_MAP), help="base resume (default: the AI's pick)")
+    ap.add_argument("--projects", help="comma-separated project ids, best first (default: the AI's picks)")
+    ap.add_argument("--list",     action="store_true", help="print the bases and project ids as JSON and exit")
+    ap.add_argument("--json",     action="store_true",
+                    help="no UI: progress goes to stderr, one JSON result to stdout, the PDF is not opened")
     args = ap.parse_args()
 
+    if args.list:
+        print(json.dumps(catalog(), indent=2))
+        return
+    if not args.jd:
+        ap.error("--jd is required (or use --list)")
+    if not args.json:
+        build(args)
+        return
+
+    real_stdout, code = sys.stdout, 0
+    try:
+        with contextlib.redirect_stdout(sys.stderr):
+            out = {"ok": True, **build(args)}
+    except SystemExit as e:                       # tailor's own failures call sys.exit("...")
+        out, code = {"ok": False, "error": str(e.code).strip()}, 1
+    except Exception as e:
+        out, code = {"ok": False, "error": f"{type(e).__name__}: {e}"}, 1
+    print(json.dumps(out, indent=2), file=real_stdout)
+    sys.exit(code)
+
+
+def build(args) -> dict:
+    """The CLI build. Prints progress; returns the result dict that --json prints."""
     print("\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━")
     print("  career-ops tailor.py")
     print("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n")
@@ -853,24 +905,35 @@ def main():
     print("\n[2/5] Analyzing JD...")
     analysis      = analyze_jd(jd_text)
     archetype     = analysis["role_archetype"]
-    template_name = TEMPLATE_MAP.get(archetype, TEMPLATE_MAP["ML_AI"])
+    ai_base       = archetype if archetype in TEMPLATE_MAP else "ML_AI"
+    base_key      = args.base or ai_base
+    template_name = TEMPLATE_MAP[base_key]
     print(f"      Archetype : {archetype}")
     print(f"      Template  : {template_name}")
     print(f"      Headline  : {analysis.get('headline', '')}")
     print(f"      Keywords  : {', '.join(analysis['keywords'][:5])}...")
 
-    base_key = archetype if archetype in TEMPLATE_MAP else "ML_AI"
-    print(f"\n[3/5] Ranking projects for base: {BASE_LABELS[base_key]}")
     library = load_projects()
     info    = base_project_info((TEMPLATES / template_name).read_text(encoding="utf-8"), library)
-    ranked  = rank_projects(jd_text, analysis, base_key, info, library)
-    print(f"      AI picks  : {', '.join(ranked['picks'])}")
+    if args.projects:
+        wanted      = [i.strip() for i in args.projects.split(",") if i.strip()]
+        project_ids = [i for i in wanted if i in info["blocks"]]
+        ignored     = [i for i in wanted if i not in info["blocks"]]
+        reason      = ""
+        print(f"\n[3/5] Using your projects for base: {BASE_LABELS[base_key]}")
+        if ignored:
+            print(f"      Unknown ids ignored: {', '.join(ignored)}")
+    else:
+        print(f"\n[3/5] Ranking projects for base: {BASE_LABELS[base_key]}")
+        ranked      = rank_projects(jd_text, analysis, base_key, info, library)
+        project_ids, ignored, reason = ranked["picks"], [], ranked["reason"]
+        print(f"      AI picks  : {', '.join(ranked['picks'])}")
 
     today       = date.today().strftime("%Y-%m-%d")
     output_stem = f"cv-ashutosh-{company_slug}-{today}"
 
     print("\n[4/5] Fitting projects, rewriting and compiling...")
-    pdf_path, result = run_tailor(jd_text, analysis, base_key, ranked["picks"], output_stem)
+    pdf_path, result = run_tailor(jd_text, analysis, base_key, project_ids, output_stem)
     page_count = result["page_count"]
     print(f"\n[5/5] Projects  : {', '.join(result['kept'])}")
     if result["dropped"]:
@@ -885,8 +948,26 @@ def main():
     print(f"  PDF      : {pdf_path}")
     print("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n")
 
-    if sys.platform == "win32":
+    if sys.platform == "win32" and not args.json:
         os.startfile(str(pdf_path))
+
+    return {
+        "pdf":               str(pdf_path),
+        "tex":               str(pdf_path.with_suffix(".tex")),
+        "page_count":        page_count,
+        "company":           company,
+        "base":              base_key,
+        "base_label":        BASE_LABELS[base_key],
+        "ai_suggested_base": ai_base,
+        "archetype_reason":  analysis.get("archetype_reason", ""),
+        "headline":          analysis.get("headline", ""),
+        "keywords":          analysis.get("keywords", []),
+        "projects_kept":     result["kept_ids"],
+        "projects_dropped":  result["dropped_ids"],
+        "projects_ignored":  ignored,
+        "project_reason":    reason,
+        "model":             MODEL,
+    }
 
 
 if __name__ == "__main__":

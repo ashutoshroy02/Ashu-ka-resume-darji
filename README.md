@@ -163,6 +163,8 @@ The API has a built-in one-page retry loop — if the compiled PDF overflows to 
 
 Send your private bot a JD URL or pasted JD text. It runs the full pipeline and sends the PDF back in the same chat. No server needed — runs on long-polling from your laptop.
 
+After the JD is read you pick one of the 6 base resumes (the AI's pick is marked ⭐), then tick the projects to include. Tap **⚡ Just build it** instead to let the AI pick the base and the projects and build straight away.
+
 ```bash
 pip install python-telegram-bot --upgrade
 python telegram_bot.py
@@ -191,7 +193,16 @@ python tailor.py --jd jds/my-job.txt --company "Acme"
 
 # With verbose debug logging
 python debug_tailor.py --jd "..."
+
+# No UI (for scripts and Claude Code): progress on stderr, one JSON result on stdout
+python tailor.py --jd jds/my-job.md --json
+python tailor.py --jd jds/my-job.md --json --base AI_Agent --projects shopping-agent,exam-helper
+python tailor.py --list    # base keys and project ids, as JSON (no LLM call)
 ```
+
+### Claude Code skill
+
+`.claude/skills/resume-tailor/SKILL.md` teaches Claude Code to build a resume from a JD URL or pasted text with the `--json` mode above. Copy that folder to `~/.claude/skills/` to use it from any folder.
 
 Output goes to `user_data/output/cv-{name}-{company}-{date}.pdf`.
 
