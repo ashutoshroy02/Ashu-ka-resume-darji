@@ -6,6 +6,8 @@
 #   match  : substrings that identify this project inside a template's \resumeProjectHeading
 #            (if a base template already has its own wording of the project, that wording is used)
 #   latex  : the block used when the base template does NOT already contain the project
+#   hide_if: optional; if any of these strings appears outside the base's Projects section
+#            (e.g. the same work listed under Experience), the project isn't offered
 # To add a project: append an entry. No code changes needed.
 
 projects:
@@ -209,6 +211,8 @@ projects:
   - research
   match:
   - Archaeological Full-Stack Search Engine
+  hide_if:
+  - Indian Institute of Technology (IIT) Delhi
   latex: |
     \resumeProjectHeading
     {\href{https://github.com/ashutoshroy02/TIE}{\textbf{Archaeological Full-Stack Search Engine}}

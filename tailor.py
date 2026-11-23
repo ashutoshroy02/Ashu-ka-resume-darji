@@ -57,6 +57,7 @@ TEMPLATE_MAP = {
     "CV_Researcher":  "04_CV_Researcher_Ashutosh.tex",
     "AI_Agent":       "05_AI_Agent_Ashutosh.tex",
     "AI_Builder":     "06_AI_Builder_Ashutosh.tex",
+    "AI_ML_Engineer": "07_AI_ML_Engineer_Ashutosh.tex",
 }
 
 # Human-readable names for the base templates (Telegram buttons, logs).
@@ -67,6 +68,7 @@ BASE_LABELS = {
     "CV_Researcher":  "CV / Researcher",
     "AI_Agent":       "AI Agent Engineer",
     "AI_Builder":     "AI-First Builder (Full-Stack)",
+    "AI_ML_Engineer": "AI/ML Engineer (new, with metrics)",
 }
 
 PROJECTS_FILE = ROOT / "templates" / "projects.yml"
@@ -237,14 +239,15 @@ def analyze_jd(jd_text: str) -> dict:
 
 Return ONLY this JSON (no markdown, no explanation):
 {{
-  "role_archetype": "one of: ML_AI | Data_Scientist | Python_Dev | CV_Researcher | AI_Agent | AI_Builder",
+  "role_archetype": "one of: AI_ML_Engineer | ML_AI | Data_Scientist | Python_Dev | CV_Researcher | AI_Agent | AI_Builder",
   "keywords": ["15-20 exact keyword phrases from the JD"],
   "headline": "tailored job title line, max 8 words",
   "archetype_reason": "1 sentence why"
 }}
 
 Archetype guide:
-- ML_AI: LLM, RAG, fine-tuning, MLOps, speech/audio AI
+- AI_ML_Engineer: AI Engineer, ML Engineer, AI/ML Engineer, LLM Engineer, GenAI Engineer roles: LLMs, RAG, fine-tuning, model evaluation, MLOps, model serving. Prefer this over ML_AI whenever the title is one of these.
+- ML_AI: other ML roles: speech/audio AI, applied ML that isn't mainly LLM work
 - Data_Scientist: data analysis, EDA, SQL, statistics, Power BI, Tableau
 - Python_Dev: backend, FastAPI, REST API, system design, SWE
 - CV_Researcher: computer vision, OCR, research, multimodal, publications focus
@@ -692,6 +695,10 @@ def base_project_info(tex: str, library: list[dict]) -> dict:
     s, e = _projects_span(tex)
     outside = tex[:s] + tex[e:]
     hidden = {pid for b in _project_blocks(outside) if (pid := _match_project(b, library))}
+    own = {pid for b in _project_blocks(tex[s:e]) if (pid := _match_project(b, library))}
+    hidden |= {p["id"] for p in library                  # same work already shown elsewhere,
+               if p["id"] not in own                      # unless the base lists it itself
+               and any(x in outside for x in p.get("hide_if", []))}
 
     blocks = {p["id"]: p["latex"].strip() for p in library}
     names  = {p["id"]: p.get("name", p["id"]) for p in library}

@@ -17,7 +17,7 @@ Built on top of the open-source [career-ops](https://github.com/santifer/career-
 | Telegram bot | `telegram_bot.py` | Send a JD to your private Telegram bot, get a PDF back |
 | Docker | `dockerfile` + `requirements.txt` | Containerised deployment with tectonic + Playwright; ready for Render |
 | One-click launcher | `launch_app.bat` | Double-click to start the Streamlit app on Windows |
-| LaTeX templates | `templates/roles/*.tex` | 5 role-specific 1-page templates (Charter font, green headers) |
+| LaTeX templates | `templates/roles/*.tex` | 7 role-specific base resumes (Charter font, green headers); `07_AI_ML_Engineer` is the metrics-first AI/ML one |
 | Personal CV | `cv.md` | My canonical CV in markdown — tailor reads this at runtime |
 | Profile config | `config/profile.yml` | Target roles, location policy, narrative, compensation |
 | User data layer | `user_data/` | Gitignored folder for all personal output (PDFs, reports, JDs) |

@@ -2,7 +2,7 @@
 name: resume-tailor
 description: >
   Builds Ashutosh's one-page tailored resume PDF for a job, with no UI: runs the local
-  Resume-Darji tailor (6 LaTeX base resumes + a project library + an OpenRouter LLM) and
+  Resume-Darji tailor (7 LaTeX base resumes + a project library + an OpenRouter LLM) and
   returns the PDF path as JSON. Use when the user says "make/build/tailor my resume for this
   job", "resume for <job URL>", pastes a job description and wants a resume, or asks which
   base resume or projects fit a JD. Input: a JD URL, a JD file, or pasted JD text.
@@ -50,7 +50,7 @@ rewrites bullets around the JD's keywords, fits one page, and compiles the PDF.
    Set-Location "Z:\TO DO\codes\projects\saas\career_ops\career-ops-cli"; & "C:\Program Files\Python314\python.exe" tailor.py --jd "<url-or-file>" --json 2>$null
    ```
 
-   Optional flags: `--base ML_AI|Data_Scientist|Python_Dev|CV_Researcher|AI_Agent|AI_Builder`,
+   Optional flags: `--base AI_ML_Engineer|ML_AI|Data_Scientist|Python_Dev|CV_Researcher|AI_Agent|AI_Builder`,
    `--projects id1,id2,id3` (best first; the last ones get dropped if the page overflows),
    `--company "Name"`. To see progress when debugging, drop the `2>/dev/null` / `2>$null`.
 4. **Read the JSON on stdout** and report to the user: the PDF path, base, projects kept and
