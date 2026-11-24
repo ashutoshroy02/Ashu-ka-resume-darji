@@ -6,6 +6,8 @@
 #   match  : substrings that identify this project inside a template's \resumeProjectHeading
 #            (if a base template already has its own wording of the project, that wording is used)
 #   latex  : the block used when the base template does NOT already contain the project
+#   hide_if: optional; if any of these strings appears outside the base's Projects section
+#            (e.g. the same work listed under Experience), the project isn't offered
 # To add a project: append an entry. No code changes needed.
 
 projects:
@@ -32,25 +34,27 @@ projects:
     \resumeItem{Implemented \textbf{FAISS} and \textbf{Pinecone} retrieval, reducing LLM hallucinations, improving answer accuracy, and enabling \textbf{sub-second} semantic search.}
     \resumeItemListEnd
 - id: medical-chatbot
-  name: Medical Chatbot (Fine-Tuning)
+  name: Chronic Compounder (Medical LLM)
   tags:
   - llm
   - fine-tuning
-  - qlora
+  - lora
+  - peft
   - mistral
-  - ocr
   - healthcare
   - nlp
+  - streamlit
+  - speech-to-text
   match:
+  - Chronic Compounder
   - BeagleLake
   latex: |
     \resumeProjectHeading
-    {\href{https://huggingface.co/fhai50032/BeagleLake-7B}
-    {\textbf{Medical Chatbot (LLM Fine-Tuning)}}
-    $|$ \emph{Python, Mistral 7B, QLoRA, Tesseract OCR}}{Mar 2024 -- Apr 2024}
+    {\textbf{Chronic Compounder -- Medical Chatbot (LLM Fine-Tuning)}
+    $|$ \emph{Team project; Mistral-7B, LoRA (PEFT), Streamlit}}{Mar 2024 -- Apr 2024}
     \resumeItemListStart
-    \resumeItem{Fine-tuned \textbf{Mistral 7B} using \textbf{QLoRA}, reducing GPU memory usage by \textbf{75\%} while maintaining model performance.}
-    \resumeItem{Built an OCR pipeline to process \textbf{1,000+} clinical reports, improving data extraction for downstream LLM inference.}
+    \resumeItem{Fine-tuned \textbf{Mistral-7B} with \textbf{LoRA} (r=64, $\alpha$=128) on \textbf{200k+} lines of curated and GPT-3.5-synthesized medical text.}
+    \resumeItem{Built a \textbf{Streamlit} chat app with voice input and medical-report upload for plain-language answers.}
     \resumeItemListEnd
 - id: defect-detection
   name: Industrial Defect Detection
@@ -92,7 +96,7 @@ projects:
     \textbf{\emph{RECCAP 2026}}}{Jan 2026 -- May 2026}
     \resumeItemListStart
     \resumeItem{Built a deep learning model for speech emotion and stress detection using \textbf{3} public datasets with data cleaning, feature engineering, and preprocessing.}
-    \resumeItem{Achieved \textbf{85.9\% accuracy}, \textbf{0.856 F1}, and \textbf{0.1268 RMSE}; improved prediction performance and research accepted at \textbf{RECCAP 2026 (IEEE)}.}
+    \resumeItem{Achieved \textbf{85.9\% accuracy}, \textbf{0.856 F1}, and \textbf{0.1268 RMSE}; improved prediction performance and research published at \textbf{IEEE RECCAP 2026}.}
     \resumeItemListEnd
 - id: netflix-analysis
   name: Netflix Data Analysis
@@ -209,6 +213,8 @@ projects:
   - research
   match:
   - Archaeological Full-Stack Search Engine
+  hide_if:
+  - Indian Institute of Technology (IIT) Delhi
   latex: |
     \resumeProjectHeading
     {\href{https://github.com/ashutoshroy02/TIE}{\textbf{Archaeological Full-Stack Search Engine}}
@@ -246,6 +252,7 @@ projects:
   - product
   match:
   - sayloai
+  - Mitovoid-AI/sayvra
   latex: |
     \resumeProjectHeading
     {\href{https://sayloai.vercel.app/}{\textbf{Saylo -- AI Voice-to-Text}}
@@ -264,6 +271,7 @@ projects:
   - privacy
   match:
   - latelysave
+  - Mitovoid-AI/lately
   latex: |
     \resumeProjectHeading
     {\href{https://latelysave.vercel.app/}{\textbf{Lately -- AI Reel Saver}}

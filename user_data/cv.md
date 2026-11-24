@@ -18,19 +18,11 @@ Versatile AI/ML Engineer, Deep Learning Researcher, and Full Stack Developer wit
 - Designed hybrid retrieval pipelines (FAISS/Pinecone dense + Apache Solr sparse), improving semantic + lexical search accuracy by 35% across historical/archaeological archives.
 - Built and deployed scalable FastAPI REST APIs for real-time LLM inference and document retrieval, reducing latency by 35% and supporting 1,000+ daily search requests with sub-second multi-modal response.
 - Also delivered the frontend layer (React, Next.js) for the AI-powered archive search platform, improving researcher-facing UX.
-- Co-authored **SARCH: Multimodal Search for Archaeological Archives** with IIT Delhi (Prof. Maya Ramanath) — submitted for peer review. [arxiv.org/abs/2511.05667](https://arxiv.org/abs/2511.05667)
+- Co-authored **SARCH: Multimodal Search for Archaeological Archives** with IIT Delhi (Prof. Maya Ramanath) — published at MMGenSR@CIKM 2025. [arxiv.org/abs/2511.05667](https://arxiv.org/abs/2511.05667)
 
-**AI/ML Engineer Intern** | MitoVoid AI, Remote | *Oct 2024 – Nov 2024*
-- Fine-tuned transformer-based models (Mistral 7B / LLaMA) via QLoRA (4-bit quantization) for healthcare, building conversational AI agents for medical record summarization and symptom-based analysis.
-- Built end-to-end Python ML pipelines (ingestion → preprocessing → inference → deployment) with OCR modules to extract structured text from medical reports.
-- Integrated autonomous tool-calling and deployed a FastAPI chatbot backend, cutting patient query resolution time by ~40% through optimized intent routing.
-- Also built the product's healthcare-facing frontend (React, Next.js, TypeScript, Tailwind CSS) — reusable UI components, authentication, and third-party/API integrations — and deployed via Git, Docker, and Vercel.
-- Optimized inference latency by 30% through batch processing and model quantization.
-
-**Software Engineer Intern** | LeanTactics Solutions Pvt. Ltd., Remote | *Nov 2024 – Dec 2024*
-- Engineered and deployed high-performance backend services (Python, FastAPI) enabling scalable AI-driven applications with consistent low-latency responses.
-- Integrated ML model inference outputs into production backend systems, optimizing data flow between inference layers and the application.
-- Profiled API performance bottlenecks using data-driven approaches, achieving a 25–35% reduction in response latency under production load.
+**AI/ML Engineer** | MitoVoid AI, Remote | *Oct 2024 – Nov 2024*
+- Fine-tuned a 7B Mistral-based open model with QLoRA on 200k+ lines of medical text and added RAG over medical documents and OCR-extracted patient reports for a client's healthcare chatbot.
+- Served it via FastAPI with batching and quantization; built the React/Next.js frontend.
 
 ---
 
@@ -85,9 +77,9 @@ Versatile AI/ML Engineer, Deep Learning Researcher, and Full Stack Developer wit
 - Implemented image augmentation pipelines for robustness under varying factory lighting/camera conditions, with GPU-accelerated low-latency inference.
 - *(Repo: [Industrial-Defect-Detection-System](https://github.com/ashutoshroy02/Industrial-Defect-Detection-System))*
 
-**[Medical Chatbot & LLM Fine-Tuning](https://github.com/ashutoshroy02/Medical-chatbot)** | Mistral 7B, QLoRA, Transformers, Tesseract OCR, Python | *Mar 2024 – Apr 2024*
-- Fine-tuned Mistral 7B using QLoRA (4-bit quantization) for healthcare-focused conversational AI, reducing GPU memory usage by ~75% while maintaining performance.
-- Built an OCR + OpenCV preprocessing pipeline to extract structured data from 1,000+ unstructured medical reports and prescriptions.
+**Chronic Compounder – Medical Chatbot (LLM Fine-Tuning)** | Team project; Mistral-7B, LoRA (PEFT), Streamlit | *Mar 2024 – Apr 2024*
+- Fine-tuned Mistral-7B with LoRA (r=64, α=128, attention + MLP layers) on 200k+ lines of curated and GPT-3.5-synthesized medical text.
+- Built a Streamlit chat app with voice input and medical-report upload for plain-language answers.
 
 **[Music Identification App (BeatBubble)](https://github.com/ashutoshroy02/Beat-Bubble)** | Streamlit, Python, Flutter, Firebase, ACRCloud API | *Jun 2024 – Dec 2024*
 - Built a cross-platform, real-time audio recognition pipeline (microphone capture → feature extraction → ACRCloud fingerprinting → metadata retrieval).

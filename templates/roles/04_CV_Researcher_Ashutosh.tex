@@ -54,7 +54,7 @@
 %----------HEADER----------
 \begin{center}
     {\Huge \scshape \color{greenTheme} Ashutosh Roy} \\[5pt]
-    {\large \textit{AI/ML Researcher $\cdot$ NLP \& Multimodal Systems $\cdot$ Published at IEEE RECCAP 2026 \& IIT Delhi}} \\[5pt]
+    {\large \textit{AI/ML Researcher $\cdot$ NLP \& Multimodal Systems $\cdot$ Published at IEEE RECCAP 2026 \& MMGenSR@CIKM 2025}} \\[5pt]
       \small
     \href{tel:+919810599837}{\faPhone\ +91-9810599837}  \hspace{4pt}$|$\hspace{4pt}
     \href{mailto:ashu2003roy@gmail.com}{\faEnvelope\ ashu2003roy@gmail.com} \hspace{4pt}$|$\hspace{4pt}
@@ -67,38 +67,41 @@
 %-----------SUMMARY-----------
 \section{Summary}
 \vspace{2pt}
-\small{AI/ML researcher and engineer with \textbf{2 published papers} (RECCAP 2026, IIT Palakkad; co-authored with IIT Delhi). Hands-on experience building large-scale NLP, multimodal AI, RAG, and speech processing systems. Skilled in transformer fine-tuning, hybrid retrieval pipelines, and end-to-end ML system deployment. Proficient in \textbf{Python, C++}, PyTorch, TensorFlow, and LangChain. Open-source contributor with production projects serving real users. Seeking to contribute to Google's research agenda on real-world, large-scale AI problems.
+\small{AI/ML researcher and engineer with \textbf{2 published papers} (IEEE RECCAP 2026; MMGenSR@CIKM 2025, with IIT Delhi). Hands-on experience building large-scale NLP, multimodal AI, RAG, and speech processing systems. Skilled in transformer fine-tuning, hybrid retrieval pipelines, and end-to-end ML system deployment. Proficient in \textbf{Python, C++}, PyTorch, TensorFlow, and LangChain. Open-source contributor with production projects serving real users.
 }
+\vspace{-4pt}
+
+%-----------RESEARCH INTERESTS-----------
+\section{Research Interests}
+\vspace{2pt}
+\small{Multimodal retrieval and document understanding $\cdot$ Retrieval-augmented generation and its evaluation $\cdot$ Speech and affective computing $\cdot$ Parameter-efficient fine-tuning of LLMs}
 \vspace{-4pt}
 
 %-----------EXPERIENCE-----------
 \section{Experience}
 \resumeSubHeadingListStart
 
-\resumeSubheading{AI Backend Engineer}{Aug 2026 -- Present}{GenerativX}{Gurugram, India (Hybrid)}
+\resumeSubheading{Founding AI Backend Engineer}{Aug 2026 -- Present}{GenerativX}{Gurugram, India (Hybrid)}
 \resumeItemListStart
-\resumeItem{Developing a production \textbf{RAG pipeline} for an ed-tech AI assistant, enabling grounded question answering over \textbf{NCERT textbooks}.}
-\resumeItem{Built PDF ingestion and extraction pipelines for text, hierarchical sections, figures, and tables, structuring textbook content into chapter-section trees for optimized chunking and retrieval.}
-\resumeItem{Designed an intent-based query routing layer that classifies student queries and selects the appropriate retrieval strategy before generating grounded responses using \textbf{GPT-4.1}.}
+\resumeItem{Built an NCERT RAG chat pipeline with an intent router (\textbf{15} intents, \textbf{6} retrieval routes, \textbf{97\%} intent accuracy on a 60-question eval set).}
+\resumeItem{Cut answer cost \textbf{82\%} (A/B-tested): \textbf{GPT-4.1-mini} by default, \textbf{GPT-4.1} only for named-item queries via intent routing.}
+\resumeItem{Built \textbf{Docling} + \textbf{GPT-4.1-mini Vision} PDF ingestion turning NCERT text, figures and tables into chapter-section trees; Hit@5 \textbf{95\%} and MRR \textbf{0.86} on a 192-question retrieval test.}
 \resumeItemListEnd
 
 \vspace{4pt}
 
   \resumeSubheading{Research Intern}{Jan 2025 -- Jun 2025}{Indian Institute of Technology (IIT) Delhi}{New Delhi, India}
   \resumeItemListStart
-    \resumeItem{Built an OCR-powered document understanding pipeline for archaeological datasets; benchmarked Tesseract, Marker, and Gemini OCR — selecting optimal strategy per document class to improve extraction accuracy.}
-    \resumeItem{Designed hybrid retrieval (dense: FAISS/Pinecone + sparse: Apache Solr) for high-precision semantic + lexical document search over thousands of historical records.}
-    
-    \resumeItem{Deployed scalable \textbf{FastAPI} services for real-time LLM-based querying; integrated with frontend for sub-second retrieval responses.}
-    \resumeItem{Co-authored \textbf{SARCH: Multimodal Search for Archaeological Archives} with IIT Delhi collaborators — submitted for peer review. \href{https://arxiv.org/abs/2511.05667}{\textit{arxiv.org/abs/2511.05667}}}
+    \resumeItem{Built a multimodal ingestion pipeline for \textbf{296} scanned archaeological documents (\textbf{63,208} pages): Surya layout and OCR, OpenCV cleanup, and \textbf{Qwen2.5-VL-7B} to extract \textbf{1,824} tables.}
+    \resumeItem{Classified \textbf{22,349} extracted images into 4 types with zero-shot \textbf{CLIP}, and indexed text, images and tables with \textbf{MiniLM}, \textbf{CLIP} and \textbf{TAPAS} embeddings (Apache Solr + pgvector).}
+    \resumeItem{Compared BM25, embedding and hybrid (RRF) search on a 30-query benchmark written with an archaeologist: embedding search reached \textbf{0.754 MRR} vs \textbf{0.508} for BM25.}
+    \resumeItem{Co-authored \textbf{SARCH: Multimodal Search for Archaeological Archives} (MMGenSR@CIKM 2025). \href{https://arxiv.org/abs/2511.05667}{\textit{arXiv:2511.05667}}}
   \resumeItemListEnd
 
-  \resumeSubheading{AI/ML Engineer Intern}{Oct 2024 -- Nov 2024}{MitoVoid AI}{Remote}
+  \resumeSubheading{AI/ML Engineer}{Oct 2024 -- Nov 2024}{MitoVoid AI}{Remote}
   \resumeItemListStart
-    \resumeItem{Fine-tuned transformer-based NLP models (Mistral/LLaMA variants) for healthcare applications — medical record summarization and symptom-driven conversational AI.}
-    \resumeItem{Reduced patient query resolution time by \textbf{\textasciitilde40\%} by deploying an AI chatbot for telemedicine with optimized intent understanding and response generation.}
-    \resumeItem{Implemented GenAI-powered NLP workflows using LLMs and retrieval-augmented pipelines for intelligent healthcare automation and conversational AI systems.}
-    \resumeItem{Built end-to-end ML pipelines: data preprocessing $\rightarrow$ model inference $\rightarrow$ API deployment for real-time healthcare applications.}
+    \resumeItem{Fine-tuned a 7B Mistral-based open model with \textbf{QLoRA} on \textbf{200k+} lines of medical text and added \textbf{RAG} over medical documents and OCR-extracted patient reports for a client's healthcare chatbot.}
+    \resumeItem{Served it via \textbf{FastAPI} with batching and quantization; built the \textbf{React}/\textbf{Next.js} frontend.}
   \resumeItemListEnd
 
 
@@ -109,19 +112,17 @@
 \resumeSubHeadingListStart
 
   \resumeProjectHeading
-  {\href{https://arxiv.org/abs/2511.05667}{\textbf{SARCH: Multimodal Search for Archaeological Archives}}
-  $|$ \emph{Co-authored with IIT Delhi (Prof. Maya Ramanath)}}{2025}
+  {\href{https://doi.org/10.1109/RECCAP69368.2026.11723852}{\textbf{Multitask Speech Emotion and Stress Detection Using a Hybrid Wav2Vec2--BiLSTM Model}}
+  $|$ \href{https://github.com/ashutoshroy02/EchoEmotion}{\emph{code}}}{2026}
   \resumeItemListStart
-    \resumeItem{Proposed a multimodal retrieval system combining OCR (Surya), image classification, and hybrid search (FAISS + Apache Solr) for large-scale scanned archaeological archives.}
-    \resumeItem{Benchmarked multiple OCR engines (Tesseract, Marker, Gemini OCR) across diverse historical document layouts; achieved significant gains in extraction accuracy.}
+    \resumeItem{S. Sahu, \textbf{A. Roy}, T. Verma. \emph{2026 IEEE International Conference on Recent Advances in Electronics, Communication, Computing, Automation and Power (RECCAP)}, Palakkad, India, pp.~1--6. DOI: \href{https://doi.org/10.1109/RECCAP69368.2026.11723852}{10.1109/RECCAP69368.2026.11723852}}
+    \resumeItem{Self-supervised Wav2Vec2 + BiLSTM multitask model for 5-class emotion classification and continuous stress regression on RAVDESS, TESS and SAVEE: \textbf{85.9\%} accuracy, \textbf{0.856} F1, \textbf{0.1268} RMSE.}
   \resumeItemListEnd
 
   \resumeProjectHeading
-  {\href{https://github.com/ashutoshroy02/EchoEmotion}{\textbf{Multitask Speech Emotion \& Stress Detection (Wav2Vec2--BiLSTM)}}
-  $|$ \emph{\textbf{Accepted — RECCAP 2026, IIT Palakkad (IEEE)}}}{2026}
+  {\href{https://arxiv.org/abs/2511.05667}{\textbf{SARCH: Multimodal Search for Archaeological Archives}}}{2025}
   \resumeItemListStart
-    \resumeItem{Proposed a self-supervised Wav2Vec2 + BiLSTM multitask architecture for simultaneous 5-class emotion classification and continuous stress regression; achieved \textbf{85.9\% accuracy}, \textbf{0.856 F1}, RMSE \textbf{0.1268}.}
-    \resumeItem{Evaluated across 3 corpora (RAVDESS, TESS, SAVEE) with unified preprocessing pipeline (VAD, silence removal, log-Mel spectrograms) and data augmentation.}
+    \resumeItem{N. Sinha, B. Khanijo, S. Singh, P. Mahant, \textbf{A. Roy}, S. S. Bhadouria, A. Jain, M. Ramanath. \emph{International Workshop on Multimodal Generative Search and Recommendation (MMGenSR@CIKM 2025)}. \href{https://arxiv.org/abs/2511.05667}{arXiv:2511.05667}}
   \resumeItemListEnd
 
 \resumeSubHeadingListEnd
@@ -132,41 +133,16 @@
 \resumeSubHeadingListStart
 
   \resumeProjectHeading
-  {\href{https://github.com/ashutoshroy02/TIE}{\textbf{Archaeological Full-Stack Search Engine}}
-  $|$ \emph{Python, Surya OCR, Apache Solr, FAISS, FastAPI, C++, NLP}}{Jan 2025 -- Jun 2025}
-  \resumeItemListStart
-    \resumeItem{Built an end-to-end search engine for archaeological archives at IIT Delhi, processing scanned manuscripts, books, maps, and historical records.}
-    \resumeItem{Developed OCR and document understanding pipelines using Surya OCR to convert complex multi-layout documents into structured Markdown and JSON formats.}
-    \resumeItem{Implemented metadata extraction and semantic indexing using Apache Solr and FAISS, enabling sub-second keyword and vector-based retrieval.}
-    \resumeItem{Designed multimodal search workflows supporting text and image retrieval across large archaeological collections.}
-    \resumeItem{Deployed the system using FastAPI for real-time search and document exploration.}
-  \resumeItemListEnd
-
-  \resumeProjectHeading
   {\href{https://github.com/ashutoshroy02/Industrial-Defect-Detection-System}
   {\textbf{Industrial Defect Detection and Quality Inspection System}}
   $|$ \emph{YOLOv8, PyTorch, OpenCV, CUDA, Python}}{Feb 2025 -- Apr 2025}
   \resumeItemListStart
     \resumeItem{Developed a real-time computer vision system for automated quality inspection in manufacturing environments using YOLOv8.}
     \resumeItem{Collected and annotated industrial datasets containing defects such as scratches, dents, cracks, missing components, and surface anomalies.}
-    \resumeItem{Fine-tuned YOLOv8 object detection models on custom datasets, achieving high detection accuracy while maintaining low-latency inference.}
+    \resumeItem{Fine-tuned YOLOv8 object detection models on custom datasets for low-latency inference.}
     \resumeItem{Implemented image augmentation and preprocessing pipelines to improve robustness under varying factory lighting and camera conditions.}
     \resumeItem{Built automated defect reporting, visualization, and analytics modules to support production-line quality monitoring.}
   \resumeItemListEnd
-
-
-\resumeProjectHeading
-{\href{https://github.com/ashutoshroy02/EchoEmotion}
-{\textbf{Speech Emotion \& Stress Detection}}
-$|$ \emph{PyTorch, Wav2Vec2, BiLSTM, Hugging Face, Python}}{\textbf{RECCAP 2026}}
-\resumeItemListStart
-\resumeItem{Developed a multi-task deep learning model using \textbf{Wav2Vec2} and \textbf{BiLSTM} for simultaneous speech emotion classification and stress prediction.}
-\resumeItem{Preprocessed and combined \textbf{RAVDESS, TESS, and SAVEE} datasets with feature engineering, silence removal, and data augmentation to improve model performance.}
-\resumeItem{Achieved \textbf{85.9\% accuracy}, \textbf{0.856 F1-score}, and \textbf{0.1268 RMSE} through hyperparameter tuning and comprehensive model evaluation.}
-\resumeItem{Evaluated the model using confusion matrix, precision, recall, F1-score, and RMSE, outperforming baseline models on emotion recognition tasks.}
-\resumeItem{Research accepted at \textbf{RECCAP 2026 (IEEE)}, demonstrating improved speech emotion and stress detection for healthcare applications.}
-\resumeItemListEnd
-
 
 
   \resumeProjectHeading
@@ -176,51 +152,47 @@ $|$ \emph{PyTorch, Wav2Vec2, BiLSTM, Hugging Face, Python}}{\textbf{RECCAP 2026}
     \resumeItem{Built a Retrieval-Augmented Generation (RAG) system powered by LLaMA 3 for contextual question answering over custom knowledge bases.}
     \resumeItem{Implemented hybrid retrieval pipelines using FAISS and Pinecone for efficient semantic search and context retrieval.}
     \resumeItem{Developed multimodal ingestion pipelines supporting PDFs, images, and YouTube transcripts.}
-    \resumeItem{Reduced hallucinations and improved answer relevance through optimized chunking, embedding, and retrieval strategies.}
+    \resumeItem{Tuned chunking, embedding and retrieval strategies to keep answers grounded in the source documents.}
     \resumeItem{Deployed an interactive Streamlit application for end-user document querying and knowledge discovery.}
   \resumeItemListEnd
 
   \resumeProjectHeading
-  {\href{https://huggingface.co/fhai50032/BeagleLake-7B}{\textbf{Medical Chatbot and LLM Fine-Tuning}}
-  $|$ \emph{Mistral 7B, QLoRA, Transformers, Tesseract OCR, Python}}{Mar 2024 -- Apr 2024}
+  {\textbf{Chronic Compounder -- Medical Chatbot (LLM Fine-Tuning)}
+  $|$ \emph{Team project; Mistral-7B, LoRA (PEFT), Streamlit}}{Mar 2024 -- Apr 2024}
   \resumeItemListStart
-    \resumeItem{Fine-tuned Mistral 7B using QLoRA with 4-bit quantization for healthcare-focused conversational AI applications.}
-    \resumeItem{Built OCR pipelines for extracting structured information from unstructured medical reports and prescriptions.}
-    \resumeItem{Implemented efficient parameter-efficient fine-tuning techniques, significantly reducing GPU memory requirements.}
-    \resumeItem{Developed inference pipelines for medical record summarization, question answering, and symptom-based assistance.}
-    \resumeItem{Evaluated model performance using domain-specific benchmarks and qualitative human assessment.}
+    \resumeItem{Fine-tuned \textbf{Mistral-7B} with \textbf{LoRA} (r=64, $\alpha$=128, attention + MLP layers) on \textbf{200k+} lines of curated and GPT-3.5-synthesized medical text.}
+    \resumeItem{Built a \textbf{Streamlit} chat app with voice input and medical-report upload for plain-language answers.}
   \resumeItemListEnd
 
 \resumeSubHeadingListEnd
 \vspace{-4pt}
 
 %-----------OPEN SOURCE-----------
-\section{Open Source Contributions}
+\section{Open-Source Projects}
 \resumeSubHeadingListStart
 
   \resumeProjectHeading
-  {\href{https://github.com/ashutoshroy02/interview-prep-site}{\textbf{InterviewPrep — Open-Source AI/ML Interview Platform}}
-  $|$ \emph{Astro, JavaScript, HTML/CSS, SEO}}{May 2026 -- Jun 2026}
+  {\href{https://github.com/Mitovoid-AI/lately}{\textbf{Lately — Find Saved Reels by What You Remember}}
+  $|$ \emph{FastAPI, Postgres + pgvector, Groq, Expo}}{Aug 2026 -- Nov 2026}
   \resumeItemListStart
-    \resumeItem{Developed and open-sourced a comprehensive interview prep platform with \textbf{700+ curated questions} spanning Python, ML, Deep Learning, NLP, LLMs, RAG, Computer Vision, SQL, and HR.}
-    \resumeItem{Features company-specific tracks (FAANG, OpenAI, NVIDIA, Indian IT), a 12-week structured roadmap, interactive flashcards, and role-specific mock interview simulations.}
-    \resumeItem{Fully responsive static site with light/dark mode, optimized schema markup, and \textbf{95+ Lighthouse performance score}; designed for large-scale community use.}
+    \resumeItem{Built an enrichment pipeline that fetches a shared reel, transcribes its audio, has an LLM write a searchable card, and embeds it.}
+    \resumeItem{Implemented hybrid retrieval over the cards (\textbf{pgvector} embeddings + \textbf{pg\_trgm} trigram matching), with an evaluation script for search quality.}
+  \resumeItemListEnd
+
+  \resumeProjectHeading
+  {\href{https://github.com/Mitovoid-AI/sayvra}{\textbf{Sayvra (formerly Saylo) — AI Dictation}}
+  $|$ \emph{Python, Kotlin, Groq Whisper + LLM, Windows \& Android}}{Oct 2026 -- Nov 2026}
+  \resumeItemListStart
+    \resumeItem{Built a speech pipeline (Whisper speech-to-text $\rightarrow$ LLM cleanup) that drops fillers, keeps only the final version of spoken self-corrections and formats spoken lists.}
+    \resumeItem{Ships on Windows (hold-to-talk hotkey) and Android (floating bubble and keyboard); includes a benchmark script for comparing cleanup models.}
   \resumeItemListEnd
 
   \resumeProjectHeading
   {\href{https://github.com/ashutoshroy02/skills-for-agents}{\textbf{Skills-for-Agents — Composable Instruction Sets for Multi-Task AI Agents}}
   $|$ \emph{Python, LLM Agents, SIP Protocol}}{May 2026}
   \resumeItemListStart
-    \resumeItem{Built a production-ready ecosystem of modular, conflict-free instruction sets for multi-task LLM agents; each skill owns exactly one domain (voice, density, craft, process, or content).}
-    \resumeItem{Designed a custom \textbf{Skills Interoperability Protocol (SIP)} to completely prevent instruction conflicts during concurrent multi-agent execution, enabling scalable and reliable agent workflows.}
-  \resumeItemListEnd
-
-  \resumeProjectHeading
-  {\href{https://github.com/ashutoshroy02/BulkyMail}{\textbf{BulkyMail — Automated Bulk Email Campaign Tool}}
-  $|$ \emph{Python, Streamlit, SMTP/API}}{Dec 2024}
-  \resumeItemListStart
-    \resumeItem{Built a Streamlit web app for automated, personalized bulk email campaigns; enabled users to send \textbf{100+ personalized emails in minutes} with dynamic templating (name, role, company).}
-    \resumeItem{Contributed to successful internship conversions for multiple users by improving outreach response rates through personalized messaging at scale.}
+    \resumeItem{Built an ecosystem of modular instruction sets for multi-task LLM agents; each skill owns exactly one domain (voice, density, craft, process, or content).}
+    \resumeItem{Designed a custom \textbf{Skills Interoperability Protocol (SIP)} to prevent instruction conflicts during concurrent multi-agent execution.}
   \resumeItemListEnd
 
 \resumeSubHeadingListEnd

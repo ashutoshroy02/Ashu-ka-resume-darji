@@ -1,0 +1,174 @@
+\documentclass[letterpaper,10pt]{article}
+\usepackage{latexsym}
+\usepackage[empty]{fullpage}
+\usepackage{titlesec}
+\usepackage{marvosym}
+\usepackage[usenames,dvipsnames]{color}
+\usepackage{verbatim}
+\usepackage{enumitem}
+\usepackage[hidelinks]{hyperref}
+\usepackage{fancyhdr}
+\usepackage[english]{babel}
+\usepackage{tabularx}
+\usepackage{xcolor}
+\usepackage{charter}
+\usepackage{fontawesome5}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyfoot{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+\usepackage[left=0.4in,top=0.38in,right=0.4in,bottom=0.38in]{geometry}
+\urlstyle{same}
+\raggedbottom
+\raggedright
+\setlength{\tabcolsep}{0in}
+
+\definecolor{greenTheme}{RGB}{20, 80, 50}
+\definecolor{lightGray}{RGB}{80, 80, 80}
+
+\titleformat{\section}{\vspace{-5pt}\scshape\raggedright\large\color{greenTheme}\bfseries}{}{0em}{}[\color{greenTheme}\titlerule \vspace{-5pt}]
+
+\newcommand{\resumeItem}[1]{\item\small{{#1 \vspace{-2pt}}}}
+\renewcommand\labelitemi{\color{greenTheme}\tiny$\bullet$}
+\newcommand{\resumeSubheading}[4]{
+  \vspace{-1pt}\item
+    \begin{tabular*}{0.97\textwidth}[t]{l@{\extracolsep{\fill}}r}
+      \textbf{#1} & \color{greenTheme}\textbf{#2} \\
+      \textit{\small#3} & \textit{\small\color{lightGray} #4} \\
+    \end{tabular*}\vspace{-6pt}
+}
+\newcommand{\resumeProjectHeading}[2]{
+    \item
+    \begin{tabular*}{0.97\textwidth}{l@{\extracolsep{\fill}}r}
+      \small#1 & \small\color{lightGray}#2 \\
+    \end{tabular*}\vspace{-6pt}
+}
+\newcommand{\resumeSubHeadingListStart}{\begin{itemize}[leftmargin=0.15in, label={}]}
+\newcommand{\resumeSubHeadingListEnd}{\end{itemize}}
+\newcommand{\resumeItemListStart}{\begin{itemize}}
+\newcommand{\resumeItemListEnd}{\end{itemize}\vspace{-5pt}}
+
+% AI/ML Engineer base: every number below comes from the owner's own
+% resumes or templates/projects.yml. Don't add metrics that aren't real.
+
+\begin{document}
+
+%----------HEADER----------
+\begin{center}
+    {\Huge \scshape \color{greenTheme} Ashutosh Roy} \\[4pt]
+   {\Large \textbf{AI/ML Engineer $|$ LLMs, RAG, Fine-Tuning, Multimodal Search}} \\[4pt]
+     \small
+    \href{tel:+919810599837}{\faPhone\ +91-9810599837}  \hspace{4pt}$|$\hspace{4pt}
+    \href{mailto:ashu2003roy@gmail.com}{\faEnvelope\ ashu2003roy@gmail.com} \hspace{4pt}$|$\hspace{4pt}
+    \href{https://mitovoid.netlify.app}{\faGlobe\ mitovoid.netlify.app} \hspace{4pt}$|$\hspace{4pt}
+    \href{https://github.com/ashutoshroy02}{\faGithub\ ashutoshroy02} \hspace{4pt}$|$\hspace{4pt}
+    \faMapMarker\ Gurugram, Haryana
+\end{center}
+\vspace{-8pt}
+
+%-----------SUMMARY-----------
+\section{Summary}
+\vspace{2pt}
+\small{
+AI/ML Engineer with \textbf{1+ year} of experience building \textbf{LLM}, \textbf{RAG}, \textbf{fine-tuning} and \textbf{multimodal retrieval} systems. Currently building a grounded ed-tech AI assistant at \textbf{GenerativX}. At \textbf{IIT Delhi}, built multimodal search over \textbf{63,208 pages} reaching \textbf{0.754 MRR} (co-authored paper at MMGenSR@CIKM 2025); at MitoVoid AI, fine-tuned and shipped a client's healthcare chatbot. Published at \textbf{IEEE RECCAP 2026}.
+}
+\vspace{-4pt}
+
+%-----------EXPERIENCE-----------
+\section{Experience}
+\resumeSubHeadingListStart
+
+\resumeSubheading{Founding AI Backend Engineer}{Aug 2026 -- Present}{GenerativX}{Gurugram, India (Hybrid)}
+\resumeItemListStart
+\resumeItem{Built an NCERT RAG chat pipeline with an intent router (\textbf{15} intents, \textbf{6} retrieval routes, \textbf{97\%} intent accuracy on a 60-question eval set); also designed its UI/UX in Figma and helped set up CI/CD.}
+\resumeItem{Cut answer cost \textbf{82\%} (A/B-tested): \textbf{GPT-4.1-mini} by default, \textbf{GPT-4.1} only for named-item queries via intent routing.}
+\resumeItem{Built \textbf{Docling} + \textbf{GPT-4.1-mini Vision} PDF ingestion turning NCERT text, figures and tables into chapter-section trees; Hit@5 \textbf{95\%} and MRR \textbf{0.86} on a 192-question retrieval test.}
+\resumeItem{Merged \textbf{17} PRs (FastAPI, Pinecone, OpenAI), including an AI Library with LlamaParse ingestion, admin review and \textbf{16} endpoints.}
+\resumeItemListEnd
+
+\vspace{4pt}
+
+\resumeSubheading{Research Intern}{Jan 2025 -- Jun 2025}{Indian Institute of Technology (IIT) Delhi}{New Delhi, India}
+\resumeItemListStart
+\resumeItem{Built OCR ingestion for \textbf{296} archaeological documents (\textbf{63,208} pages) with Surya, OpenCV and \textbf{Qwen2.5-VL-7B} for tables.}
+\resumeItem{Classified \textbf{22,349} images with zero-shot \textbf{CLIP}; indexed text, images and tables with MiniLM, CLIP and TAPAS embeddings.}
+\resumeItem{Compared BM25, embedding and hybrid (RRF) search on 30 expert queries: embedding search hit \textbf{0.754 MRR} vs \textbf{0.508} for BM25.}
+\resumeItem{Co-authored \textbf{SARCH: Multimodal Search for Archaeological Archives} (MMGenSR@CIKM 2025). \href{https://arxiv.org/abs/2511.05667}{\textit{arXiv:2511.05667}}}
+\resumeItemListEnd
+
+\vspace{4pt}
+
+\resumeSubheading{AI/ML Engineer}{Oct 2024 -- Nov 2024}{MitoVoid AI}{Remote}
+\resumeItemListStart
+\resumeItem{Fine-tuned a 7B Mistral-based open model with \textbf{QLoRA} on \textbf{200k+} lines of medical text and added \textbf{RAG} over medical documents and OCR-extracted patient reports for a client's healthcare chatbot.}
+\resumeItem{Served it via \textbf{FastAPI} with batching and quantization; built the \textbf{React}/\textbf{Next.js} frontend.}
+\resumeItemListEnd
+
+\resumeSubHeadingListEnd
+
+%-----------PROJECTS-----------
+\section{Projects}
+\resumeSubHeadingListStart
+
+\resumeProjectHeading
+{\href{https://github.com/ashutoshroy02/EchoEmotion}
+{\textbf{Speech Emotion \& Stress Detection}}
+$|$ \emph{Python, PyTorch, Wav2Vec2, BiLSTM, Hugging Face} $|$
+\textbf{\emph{RECCAP 2026}}}{Jan 2026 -- May 2026}
+\resumeItemListStart
+\resumeItem{Built a deep learning model for speech emotion and stress detection using \textbf{3} public datasets with data cleaning, feature engineering, and preprocessing.}
+\resumeItem{Achieved \textbf{85.9\% accuracy}, \textbf{0.856 F1}, and \textbf{0.1268 RMSE}; improved prediction performance and research published at \textbf{IEEE RECCAP 2026}.}
+\resumeItemListEnd
+
+\vspace{4pt}
+
+\resumeProjectHeading
+{\textbf{Chronic Compounder -- Medical Chatbot (LLM Fine-Tuning)}
+$|$ \emph{Team project; Mistral-7B, LoRA (PEFT), Streamlit}}{Mar 2024 -- Apr 2024}
+\resumeItemListStart
+\resumeItem{Fine-tuned \textbf{Mistral-7B} with \textbf{LoRA} (r=64, $\alpha$=128) on \textbf{200k+} lines of curated and GPT-3.5-synthesized medical text.}
+\resumeItem{Built a \textbf{Streamlit} chat app with voice input and medical-report upload for plain-language answers.}
+\resumeItemListEnd
+
+\vspace{4pt}
+
+\resumeProjectHeading
+{\href{https://github.com/ashutoshroy02/Exam-Helper}
+{\textbf{Exam-Helper RAG System}}
+$|$ \emph{Python, LLaMA 3, FAISS, Pinecone, LangChain, Streamlit}}{Dec 2024 -- Apr 2025}
+\resumeItemListStart
+\resumeItem{Built a \textbf{RAG-powered} question answering system using LLaMA 3 with support for PDFs, images, and YouTube transcripts.}
+\resumeItem{Implemented \textbf{FAISS} and \textbf{Pinecone} retrieval, reducing LLM hallucinations, improving answer accuracy, and enabling \textbf{sub-second} semantic search.}
+\resumeItemListEnd
+
+\resumeSubHeadingListEnd
+
+%-----------TECHNICAL SKILLS-----------
+\section{Technical Skills}
+\begin{itemize}[leftmargin=0.15in, label={}]
+  \small{\item{
+    \textbf{LLMs \& GenAI}{: RAG, Fine-Tuning (QLoRA/LoRA), Prompt Engineering, AI Agents (LangGraph, MCP, Tool Calling, Multi-Agent), LangChain, Hugging Face Transformers, OpenAI GPT, Claude} \\
+    \textbf{ML \& Deep Learning}{: PyTorch, TensorFlow, Scikit-learn, NLP, Speech (Wav2Vec2), Computer Vision (OpenCV, YOLOv8), Multimodal (CLIP, Qwen2.5-VL)} \\
+    \textbf{Retrieval \& Data}{: FAISS, Pinecone, Apache Solr (BM25), Hybrid Search (RRF), Evaluation (MRR, F1), Pandas, NumPy, SQL} \\
+    \textbf{Serving \& Tools}{: FastAPI, Docker, Git, Linux, Streamlit, Google Colab} \\
+    \textbf{Languages}{: Python, C++, SQL}
+  }}
+\end{itemize}
+\vspace{-8pt}
+
+%-----------ACHIEVEMENTS-----------
+\section{Achievements}
+\resumeItemListStart
+\resumeItem{Published \textbf{2 research papers}: \textbf{IEEE RECCAP 2026} and \textbf{SARCH} (MMGenSR@CIKM 2025, with IIT Delhi).}
+\resumeItem{Won \textbf{2 AI/ML hackathons}; solved \textbf{150+} DSA problems on LeetCode.}
+\resumeItemListEnd
+\vspace{-4pt}
+
+%-----------EDUCATION-----------
+\section{Education}
+\resumeSubHeadingListStart
+\resumeSubheading{Chhattisgarh Swami Vivekananda Technical University (CSVTU)}{2022 -- 2026}{B.Tech (Hons) in Computer Science and Engineering (Artificial Intelligence)}{Bhilai, Chhattisgarh}
+\resumeSubHeadingListEnd
+
+\end{document}

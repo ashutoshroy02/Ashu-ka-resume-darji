@@ -49,10 +49,10 @@ When tailoring a CV for a JD, **ALWAYS** start by copying the closest matching `
 
 | JD matches... | Use this base template |
 |---|---|
-| ML Engineer, AI Engineer, LLM, RAG, NLP | `01_ML_AI_Engineer_Ashutosh.tex` |
-| Data Scientist, Data Analyst, Analytics | `02_Data_Scientist_Ashutosh.tex` |
-| Python Developer, Backend, SDE | `03_Python_Developer_Ashutosh.tex` |
-| Computer Vision, OCR, Researcher | `04_CV_Researcher_Ashutosh.tex` |
-| AI Agent, Agentic AI, LangGraph, MCP | `05_AI_Agent_Ashutosh.tex` |
+| AI / ML / LLM / GenAI / AI Agent / AI backend roles (default) | `07_AI_ML_Engineer_Ashutosh.tex` |
+| Full-stack, product, founding engineer | `06_AI_Builder_Ashutosh.tex` |
+| Research roles, publications, CV / multimodal research (2 pages) | `04_CV_Researcher_Ashutosh.tex` |
+
+Older bases (01 ML/AI, 02 Data Scientist, 03 Python/Backend, 05 AI Agent) are in `templates/roles/archive/`.
 
 **Workflow**: Copy template → change headline → rewrite summary with JD keywords → swap/reorder projects → adjust skills → compile.

@@ -2,9 +2,11 @@
 telegram_bot.py — runs locally on your laptop, no server/hosting needed.
 
 Send it a job posting URL or pasted JD text, then:
-  1. it suggests a base resume (⭐) — tap one of the 6 bases
+  1. it suggests a base resume (⭐) — tap one of the 6 bases, or ⚡ to let
+     the AI pick the base and projects and build straight away
   2. it ranks your projects for that JD and pre-ticks the best ones —
-     tap to add/remove, then 🚀 Build (or 🤖 Skip to keep the AI picks)
+     tap to add/remove, then 🚀 Build (or 🤖 Skip to keep the AI picks).
+     Projects for the ⭐ base are ranked in the background while you choose.
   3. it runs tailor.run_tailor (swap projects -> fit one page -> keyword
      rewrite with one-page retry -> compile) and sends the PDF back.
 Projects come from templates/projects.yml.
@@ -98,8 +100,24 @@ def _rank_sync(s: dict) -> dict:
     return {"info": info, **ranked}
 
 
+def _ai_base(s: dict) -> str:
+    rec = s["analysis"].get("role_archetype")
+    return rec if rec in tailor.TEMPLATE_MAP else tailor.DEFAULT_BASE
+
+
+async def _rank(s: dict) -> dict:
+    """Ranking for s["base"]: the background pre-rank if it was for this base, else a fresh call."""
+    task = s.pop("prerank", None)
+    if task and s["base"] == _ai_base(s):
+        try:
+            return await task
+        except Exception as e:
+            print(f"  ⚠️  Background ranking failed ({e}); ranking again.")
+    return await asyncio.to_thread(_rank_sync, s)
+
+
 def _build_sync(s: dict) -> tuple[Path, dict]:
-    # "01_ML_AI_Engineer_Ashutosh.tex" -> "ML_AI_Engineer_Ashutosh-2026-11-23"
+    # "07_AI_ML_Engineer_Ashutosh.tex" -> "AI_ML_Engineer_Ashutosh-2026-11-23"
     role_title  = re.sub(r"^\d+_", "", Path(tailor.TEMPLATE_MAP[s["base"]]).stem)
     output_stem = f"{role_title}-{date.today():%Y-%m-%d}"
     ids = [i for i in s["ranking"] if i in s["selected"]]  # best-ranked first
@@ -109,10 +127,13 @@ def _build_sync(s: dict) -> tuple[Path, dict]:
 # ── Keyboards ──────────────────────────────────────────────────────────
 def _base_keyboard(s: dict) -> InlineKeyboardMarkup:
     rec = s["analysis"].get("role_archetype")
-    return InlineKeyboardMarkup([
-        [InlineKeyboardButton(("⭐ " if key == rec else "") + label, callback_data=f"b|{s['sid']}|{key}")]
-        for key, label in tailor.BASE_LABELS.items()
-    ])
+    return InlineKeyboardMarkup(
+        [[InlineKeyboardButton("⚡ Just build it (AI picks base + projects)", callback_data=f"a|{s['sid']}")]]
+        + [
+            [InlineKeyboardButton(("⭐ " if key == rec else "") + label, callback_data=f"b|{s['sid']}|{key}")]
+            for key, label in tailor.BASE_LABELS.items()
+        ]
+    )
 
 
 def _project_keyboard(s: dict) -> InlineKeyboardMarkup:
@@ -159,11 +180,16 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
     # A new JD replaces any previous session.
     s = {"sid": next(_session_ids), **prep}
     context.user_data["session"] = s
+    # Rank projects for the AI's base while the buttons are on screen, so
+    # tapping ⭐ or ⚡ doesn't wait for that LLM call.
+    s["prerank"] = asyncio.create_task(asyncio.to_thread(_rank_sync, {**s, "base": _ai_base(s)}))
+    s["prerank"].add_done_callback(lambda t: t.cancelled() or t.exception())  # no "never retrieved" warning
     a = prep["analysis"]
     rec = tailor.BASE_LABELS.get(a.get("role_archetype"), "—")
     reason = f"💡 {a['archetype_reason']}\n" if a.get("archetype_reason") else ""
     await status.edit_text(
-        f"📄 {prep['company']}\n⭐ AI suggests: {rec}\n{reason}\nChoose the base resume:",
+        f"📄 {prep['company']}\n⭐ AI suggests: {rec}\n{reason}\n"
+        "Choose the base resume, or ⚡ to let the AI pick everything:",
         reply_markup=_base_keyboard(s),
     )
 
@@ -189,7 +215,7 @@ async def handle_button(update: Update, context: ContextTypes.DEFAULT_TYPE):
         s["busy"] = True
         await q.edit_message_text(f"📄 Base: {tailor.BASE_LABELS[s['base']]}\n🤖 Ranking your projects for this JD…")
         try:
-            s.update(await asyncio.to_thread(_rank_sync, s))
+            s.update(await _rank(s))
         except Exception as e:
             await q.edit_message_text(f"❌ Could not rank projects: {e}")
             return
@@ -197,6 +223,21 @@ async def handle_button(update: Update, context: ContextTypes.DEFAULT_TYPE):
             s["busy"] = False
         s["selected"] = set(s["picks"])
         await q.edit_message_text(_project_text(s), reply_markup=_project_keyboard(s))
+
+    elif kind == "a":                                 # ⚡ AI picks base + projects, build now
+        await q.answer()
+        s["base"] = _ai_base(s)
+        s["busy"] = True
+        await q.edit_message_text(f"⚡ Base: {tailor.BASE_LABELS[s['base']]}\n🤖 Picking your projects…")
+        try:
+            s.update(await _rank(s))
+        except Exception as e:
+            await q.edit_message_text(f"❌ Could not rank projects: {e}")
+            return
+        finally:
+            s["busy"] = False
+        s["selected"] = set(s["picks"])
+        await _build_and_send(q, context, s)
 
     elif kind == "p" and "ranking" in s:              # toggle one project
         pid = s["ranking"][int(rest[0])]
@@ -208,37 +249,43 @@ async def handle_button(update: Update, context: ContextTypes.DEFAULT_TYPE):
         await q.answer()
         if kind == "s" or not s["selected"]:
             s["selected"] = set(s["picks"])
-        chosen = [s["info"]["names"][i] for i in s["ranking"] if i in s["selected"]]
-        s["busy"] = True
-        await q.edit_message_text(
-            f"🛠 Building: {tailor.BASE_LABELS[s['base']]}\n"
-            f"📂 Projects: {', '.join(chosen)}\n⏳ This can take ~30-90s…"
-        )
-        try:
-            pdf_path, info = await asyncio.to_thread(_build_sync, s)
-        except SystemExit as e:
-            await q.edit_message_text(f"❌ Failed: {e}")
-            return
-        except Exception as e:
-            await q.edit_message_text(f"❌ Unexpected error: {e}")
-            return
-        finally:
-            s["busy"] = False
-
-        pages = info["page_count"]
-        caption = (
-            f"✅ {s['company']} · {tailor.BASE_LABELS[s['base']]} · "
-            f"{pages} page{'s' if pages != 1 else ''} · {len(s['analysis']['keywords'])} keywords\n"
-            f"📂 {', '.join(info['kept'])}"
-        )
-        if info["dropped"]:
-            caption += f"\n✂️ Dropped to fit one page: {', '.join(info['dropped'])}"
-        await q.delete_message()
-        with open(pdf_path, "rb") as f:
-            await context.bot.send_document(chat_id=q.message.chat_id, document=f,
-                                            filename=pdf_path.name, caption=caption)
+        await _build_and_send(q, context, s)
     else:
         await q.answer()
+
+
+async def _build_and_send(q, context: ContextTypes.DEFAULT_TYPE, s: dict):
+    """Build the PDF for s["base"] + s["selected"] and send it back in place of the button message."""
+    chosen = [s["info"]["names"][i] for i in s["ranking"] if i in s["selected"]]
+    s["busy"] = True
+    await q.edit_message_text(
+        f"🛠 Building: {tailor.BASE_LABELS[s['base']]}\n"
+        f"📂 Projects: {', '.join(chosen)}\n⏳ This can take ~30-90s…"
+    )
+    try:
+        pdf_path, info = await asyncio.to_thread(_build_sync, s)
+    except SystemExit as e:
+        await q.edit_message_text(f"❌ Failed: {e}")
+        return
+    except Exception as e:
+        await q.edit_message_text(f"❌ Unexpected error: {e}")
+        return
+    finally:
+        s["busy"] = False
+
+    pages = info["page_count"]
+    caption = (
+        f"✅ {s['company']} · {tailor.BASE_LABELS[s['base']]} · "
+        f"{pages} page{'s' if pages != 1 else ''} · {len(s['analysis']['keywords'])} keywords\n"
+        f"📂 {', '.join(info['kept'])}"
+    )
+    if info["dropped"]:
+        limit = tailor.PAGE_LIMIT.get(s["base"], 1)
+        caption += f"\n✂️ Dropped to fit {limit} page{'s' if limit != 1 else ''}: {', '.join(info['dropped'])}"
+    await q.delete_message()
+    with open(pdf_path, "rb") as f:
+        await context.bot.send_document(chat_id=q.message.chat_id, document=f,
+                                        filename=pdf_path.name, caption=caption)
 
 
 def main():
