@@ -7,7 +7,7 @@ AI/ML Engineer | Deep Learning Researcher | AI Agents & GenAI | Full Stack Devel
 ---
 
 ## SUMMARY
-Versatile AI/ML Engineer, Deep Learning Researcher, and Full Stack Developer with 1+ year of hands-on experience building scalable AI systems, autonomous AI agents, RAG pipelines, and production-ready web applications. Published researcher (RECCAP 2026, IIT Palakkad — first author; co-author, IIT Delhi) with expertise in fine-tuning LLMs (QLoRA/LoRA), hybrid retrieval systems, speech/affective computing, and multi-agent orchestration (LangGraph, MCP). Proficient in Python, PyTorch, FastAPI, React/Next.js, and LangChain — focused on shipping low-latency, production-grade AI and full-stack products end-to-end.
+Versatile AI/ML Engineer, Deep Learning Researcher, and Full Stack Developer with 1+ year of hands-on experience building scalable AI systems, autonomous AI agents, RAG pipelines, and production-ready web applications. Published researcher (IEEE RECCAP 2026, IIT Palakkad; MMGenSR@CIKM 2025, with IIT Delhi) with expertise in fine-tuning LLMs (QLoRA/LoRA), hybrid retrieval systems, speech/affective computing, and multi-agent orchestration (LangGraph, MCP). Proficient in Python, PyTorch, FastAPI, React/Next.js, and LangChain — focused on shipping low-latency, production-grade AI and full-stack products end-to-end.
 
 ---
 
@@ -28,7 +28,7 @@ Versatile AI/ML Engineer, Deep Learning Researcher, and Full Stack Developer wit
 
 ## PUBLICATIONS & RESEARCH
 
-**Multitask Speech Emotion & Stress Detection (Wav2Vec2–BiLSTM)** — *First author* | Accepted, RECCAP 2026, IIT Palakkad (IEEE) | *2026*
+**Multitask Speech Emotion & Stress Detection (Wav2Vec2–BiLSTM)** — *Second author* | Published, [IEEE RECCAP 2026](https://ieeexplore.ieee.org/document/11723852), IIT Palakkad | *2026*
 - Proposed a self-supervised Wav2Vec2 + BiLSTM multitask architecture for simultaneous 5-class emotion classification and continuous stress regression.
 - Evaluated across 3 corpora (RAVDESS, TESS, SAVEE) with a unified preprocessing pipeline (VAD, silence removal, log-Mel spectrograms) and data augmentation.
 - Achieved **85.9% accuracy, 0.856 F1-score, 0.1268 RMSE**, outperforming baseline models.
@@ -56,7 +56,7 @@ Versatile AI/ML Engineer, Deep Learning Researcher, and Full Stack Developer wit
 
 **[Speech Emotion & Stress Detection](https://github.com/ashutoshroy02/EchoEmotion)** | PyTorch, Wav2Vec2, BiLSTM, Hugging Face, Python | *Jan 2026 – May 2026* — RECCAP 2026
 - Built a self-supervised Wav2Vec2 + BiLSTM multitask architecture across 3 corpora (RAVDESS, TESS, SAVEE) for simultaneous emotion classification and stress regression.
-- Achieved 85.9% accuracy, 0.856 F1-score, 0.1268 RMSE through unified preprocessing and hyperparameter tuning; research accepted at RECCAP 2026 (IEEE).
+- Achieved 85.9% accuracy, 0.856 F1-score, 0.1268 RMSE through unified preprocessing and hyperparameter tuning; research published at IEEE RECCAP 2026.
 - *(Core ML training repo: [emotion-stress-ml](https://github.com/ashutoshroy02/emotion-stress-ml))*
 
 **[Exam-Helper Agentic RAG System](https://github.com/ashutoshroy02/Exam-Helper)** | Python, LLaMA 3, LangGraph, LangChain, FAISS, Pinecone, FastAPI, Streamlit | *Dec 2024 – Apr 2025*
@@ -102,7 +102,7 @@ Versatile AI/ML Engineer, Deep Learning Researcher, and Full Stack Developer wit
 
 - **AI/ML & Research:** LLMs, GenAI, RAG, AI Agents (LangGraph, MCP, Agentic AI), Transformer Fine-Tuning (QLoRA/LoRA), Self-Supervised Learning, Deep Learning, NLP, Multimodal AI, Speech/Audio Processing, Computer Vision (YOLOv8, OpenCV, OCR), Dense Retrieval, Prompt Engineering, Function/Tool Calling
 - **Frontend:** React.js, Next.js, Astro, TypeScript, JavaScript (ES6+), HTML5, CSS3, Tailwind CSS, Responsive Design
-- **Backend & APIs:** Python, FastAPI, Node.js, Express.js, REST API Design, Authentication (JWT/OAuth), Streamlit
+- **Backend & APIs:** Python, FastAPI, Node.js, Express.js, REST API Design, Authentication (JWT/OAuth), Streamlit, System Design (HLD, LLD)
 - **Libraries & Frameworks:** PyTorch, TensorFlow, Hugging Face Transformers, LangChain, LangGraph, Scikit-learn, Pandas, NumPy, OpenCV
 - **Databases & Vector Stores:** FAISS, Pinecone, Apache Solr, PostgreSQL, MySQL, MongoDB, Firebase, Supabase, Redis
 - **Data Science:** EDA, Statistical Analysis, Feature Engineering, Regression, Classification, Clustering, Time Series, Power BI, Tableau
@@ -112,8 +112,8 @@ Versatile AI/ML Engineer, Deep Learning Researcher, and Full Stack Developer wit
 ---
 
 ## ACHIEVEMENTS
-- Published 2 research papers — first-author acceptance at RECCAP 2026 (IEEE) and co-authored work with IIT Delhi.
-- Solved 150+ DSA problems on LeetCode, strengthening data structures and algorithms fundamentals.
+- Published 2 research papers: [IEEE RECCAP 2026](https://ieeexplore.ieee.org/document/11723852) (second author) and [SARCH](https://arxiv.org/abs/2511.05667) (MMGenSR@CIKM 2025, with IIT Delhi).
+- Solved 150+ DSA problems on [LeetCode](https://leetcode.com/u/ashutoshroy02/), strengthening data structures and algorithms fundamentals.
 - Won 2 AI/ML Hackathons, building functional AI solutions under time constraints.
 - Active open-source contributor across AI/ML projects on GitHub and Hugging Face.
 - Certifications in Machine Learning, Deep Learning, Generative AI, NLP, and Python.
