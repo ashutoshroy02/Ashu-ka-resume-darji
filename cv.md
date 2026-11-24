@@ -27,11 +27,6 @@ Versatile AI/ML Engineer, Deep Learning Researcher, and Full Stack Developer wit
 - Also built the product's healthcare-facing frontend (React, Next.js, TypeScript, Tailwind CSS) — reusable UI components, authentication, and third-party/API integrations — and deployed via Git, Docker, and Vercel.
 - Optimized inference latency by 30% through batch processing and model quantization.
 
-**Software Engineer Intern** | LeanTactics Solutions Pvt. Ltd., Remote | *Nov 2024 – Dec 2024*
-- Engineered and deployed high-performance backend services (Python, FastAPI) enabling scalable AI-driven applications with consistent low-latency responses.
-- Integrated ML model inference outputs into production backend systems, optimizing data flow between inference layers and the application.
-- Profiled API performance bottlenecks using data-driven approaches, achieving a 25–35% reduction in response latency under production load.
-
 ---
 
 ## PUBLICATIONS & RESEARCH
