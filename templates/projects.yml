@@ -94,7 +94,7 @@ projects:
     \textbf{\emph{RECCAP 2026}}}{Jan 2026 -- May 2026}
     \resumeItemListStart
     \resumeItem{Built a deep learning model for speech emotion and stress detection using \textbf{3} public datasets with data cleaning, feature engineering, and preprocessing.}
-    \resumeItem{Achieved \textbf{85.9\% accuracy}, \textbf{0.856 F1}, and \textbf{0.1268 RMSE}; improved prediction performance and research accepted at \textbf{RECCAP 2026 (IEEE)}.}
+    \resumeItem{Achieved \textbf{85.9\% accuracy}, \textbf{0.856 F1}, and \textbf{0.1268 RMSE}; improved prediction performance and research published at \textbf{IEEE RECCAP 2026}.}
     \resumeItemListEnd
 - id: netflix-analysis
   name: Netflix Data Analysis
