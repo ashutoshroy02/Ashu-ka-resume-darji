@@ -62,6 +62,10 @@ DEFAULT_BASE = "AI_ML_Engineer"   # used when the JD analysis returns an unknown
 # Page target per base (default 1). The research CV is 2 pages by design.
 PAGE_LIMIT = {"CV_Researcher": 2}
 
+# Bases whose project picks are fixed by the owner: always pre-select the base's own
+# Projects section (AI/ML Engineer also serves SDE/backend roles). No ranking LLM call.
+FIXED_PICK_BASES = {"AI_ML_Engineer"}
+
 # Human-readable names for the base templates (Telegram buttons, logs).
 BASE_LABELS = {
     "AI_ML_Engineer": "AI/ML Engineer",
@@ -724,7 +728,13 @@ def rank_projects(jd_text: str, analysis: dict, base_key: str, info: dict, libra
       {"ranking": [all option ids, best first], "picks": [ids to pre-select], "reason": str}
     The number of picks = how many projects the base normally shows (min MIN_PROJECTS).
     If the model's answer is unusable, falls back to the base's own projects.
+    Bases in FIXED_PICK_BASES skip the model and always pick their own projects.
     """
+    if base_key in FIXED_PICK_BASES:
+        picks = list(info["defaults"])
+        print(f"  📌 Fixed projects for {BASE_LABELS.get(base_key, base_key)}: {', '.join(picks)}")
+        return {"ranking": picks + [i for i in info["options"] if i not in picks],
+                "picks": picks, "reason": "Your fixed projects for AI/ML and SDE roles."}
     print("  🤖 Ranking projects for this JD...")
     options = info["options"]
     tags_by_id = {p["id"]: ", ".join(p.get("tags", [])) for p in library}
