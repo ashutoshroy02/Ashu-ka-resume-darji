@@ -39,15 +39,22 @@ OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 
 # ─── Load env ──────────────────────────────────────────────────────────
 load_dotenv(ROOT / ".env")
-OPENROUTER_API_KEY = os.getenv("OPENROUTER_API_KEY")
-if not OPENROUTER_API_KEY:
-    sys.exit("❌  OPENROUTER_API_KEY not set in .env")
+# LLM provider: OpenRouter by default. Any OpenAI-compatible API works through the
+# LLM_* settings in .env (e.g. Groq: LLM_BASE_URL=https://api.groq.com/openai/v1).
+LLM_BASE_URL = os.getenv("LLM_BASE_URL") or "https://openrouter.ai/api/v1"
+LLM_API_KEY  = os.getenv("LLM_API_KEY") or os.getenv("OPENROUTER_API_KEY")
+if not LLM_API_KEY:
+    sys.exit("❌  No LLM key: set LLM_API_KEY (or OPENROUTER_API_KEY) in .env")
 
 client = OpenAI(
-    api_key=OPENROUTER_API_KEY,
-    base_url="https://openrouter.ai/api/v1",
+    api_key=LLM_API_KEY,
+    base_url=LLM_BASE_URL,
+    max_retries=5,   # free tiers rate-limit often; the SDK waits and retries
 )
-MODEL = os.getenv("OPENROUTER_MODEL", "google/gemini-2.5-flash-lite")
+MODEL = os.getenv("LLM_MODEL") or os.getenv("OPENROUTER_MODEL", "google/gemini-2.5-flash-lite")
+# Extra provider-specific request fields as JSON, e.g. {"reasoning_effort": "none"}
+# turns off Qwen's thinking on Groq.
+LLM_EXTRA_BODY = json.loads(os.getenv("LLM_EXTRA_BODY") or "{}")
 
 # ─── Template map ──────────────────────────────────────────────────────
 # Older bases (01 ML_AI, 02 Data_Scientist, 03 Python_Dev, 05 AI_Agent) are
@@ -188,7 +195,7 @@ Return ONLY the extracted job description text (or the JD_NOT_FOUND line)."""
 
     raw = client.chat.completions.create(
         model=MODEL,
-        messages=[{"role": "user", "content": prompt}],
+        messages=[{"role": "user", "content": prompt}], extra_body=LLM_EXTRA_BODY,
         temperature=0.0,
     ).choices[0].message.content.strip()
 
@@ -257,7 +264,7 @@ Job Description:
 
     raw = client.chat.completions.create(
         model=MODEL,
-        messages=[{"role": "user", "content": prompt}],
+        messages=[{"role": "user", "content": prompt}], extra_body=LLM_EXTRA_BODY,
         temperature=0.2,
     ).choices[0].message.content.strip()
 
@@ -407,7 +414,7 @@ Job Description:
 
     raw = client.chat.completions.create(
         model=MODEL,
-        messages=[{"role": "user", "content": prompt}],
+        messages=[{"role": "user", "content": prompt}], extra_body=LLM_EXTRA_BODY,
         temperature=0.2,
     ).choices[0].message.content.strip()
 
@@ -771,7 +778,7 @@ Job Description:
     try:
         raw = client.chat.completions.create(
             model=MODEL,
-            messages=[{"role": "user", "content": prompt}],
+            messages=[{"role": "user", "content": prompt}], extra_body=LLM_EXTRA_BODY,
             temperature=0.1,
         ).choices[0].message.content.strip()
         raw = re.sub(r"^```(?:json)?\s*", "", raw)

@@ -113,6 +113,8 @@ cp .env.example .env
 |----------|----------|-------------|
 | `OPENROUTER_API_KEY` | Yes | Powers the tailor pipeline. Free key at [openrouter.ai](https://openrouter.ai). Default model: `google/gemini-2.5-flash-lite` |
 | `OPENROUTER_MODEL` | No | Override the model. Defaults to `google/gemini-2.5-flash-lite` |
+| `LLM_BASE_URL`, `LLM_API_KEY`, `LLM_MODEL` | No | Use another OpenAI-compatible provider instead of OpenRouter, e.g. Groq's free tier: `https://api.groq.com/openai/v1`, your Groq key, `qwen/qwen3.8-27b` |
+| `LLM_EXTRA_BODY` | No | Extra request fields as JSON. For Qwen on Groq use `{"reasoning_effort": "none"}` (thinking off, so answers fit Groq's free token limits) |
 | `GEMINI_API_KEY` | No | For the original `gemini-eval.mjs` script. Free key at [aistudio.google.com](https://aistudio.google.com/apikey) |
 | `TAILOR_API_KEY` | For API | Any secret string. Required to call the `/tailor` FastAPI endpoint |
 | `TELEGRAM_BOT_TOKEN` | For bot | From @BotFather on Telegram |
