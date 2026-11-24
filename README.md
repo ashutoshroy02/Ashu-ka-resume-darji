@@ -100,7 +100,7 @@ PDFs go to `user_data/output/`.
 
 ## Origin
 
-This started as a fork of [career-ops](https://github.com/santifer/career-ops) (MIT, see `LICENSE`). The career-ops job-search tooling was removed to keep only the tailor and bot; the full fork is preserved at the git tag `before-cleanup`.
+This started from a copy of [career-ops](https://github.com/career-ops-hq/career-ops) (MIT, see `LICENSE`). The career-ops job-search tooling was removed to keep only the tailor and bot; the full original copy is preserved at the git tag `before-cleanup`.
 
 ## About
 
