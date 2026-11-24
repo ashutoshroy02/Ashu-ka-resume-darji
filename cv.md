@@ -78,7 +78,7 @@ Versatile AI/ML Engineer, Deep Learning Researcher, and Full Stack Developer wit
 - *(Repo: [Industrial-Defect-Detection-System](https://github.com/ashutoshroy02/Industrial-Defect-Detection-System))*
 
 **Chronic Compounder – Medical Chatbot (LLM Fine-Tuning)** | Team project; Mistral-7B, LoRA (PEFT), Streamlit | *Mar 2024 – Apr 2024*
-- Fine-tuned Mistral-7B with LoRA (r=64, α=128, attention + MLP layers) on 200k+ lines of curated and GPT-3.5-synthesized medical text.
+- Fine-tuned [Mistral-7B](https://huggingface.co/mistralai/Mistral-7B-v0.1) with LoRA (r=64, α=128, attention + MLP layers) on 200k+ lines of curated and GPT-3.5-synthesized medical text.
 - Built a Streamlit chat app with voice input and medical-report upload for plain-language answers.
 
 **[Music Identification App (BeatBubble)](https://github.com/ashutoshroy02/Beat-Bubble)** | Streamlit, Python, Flutter, Firebase, ACRCloud API | *Jun 2024 – Dec 2024*
