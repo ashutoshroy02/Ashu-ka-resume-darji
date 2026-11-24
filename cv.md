@@ -102,7 +102,7 @@ Versatile AI/ML Engineer, Deep Learning Researcher, and Full Stack Developer wit
 
 - **AI/ML & Research:** LLMs, GenAI, RAG, AI Agents (LangGraph, MCP, Agentic AI), Transformer Fine-Tuning (QLoRA/LoRA), Self-Supervised Learning, Deep Learning, NLP, Multimodal AI, Speech/Audio Processing, Computer Vision (YOLOv8, OpenCV, OCR), Dense Retrieval, Prompt Engineering, Function/Tool Calling
 - **Frontend:** React.js, Next.js, Astro, TypeScript, JavaScript (ES6+), HTML5, CSS3, Tailwind CSS, Responsive Design
-- **Backend & APIs:** Python, FastAPI, Node.js, Express.js, REST API Design, Authentication (JWT/OAuth), Streamlit
+- **Backend & APIs:** Python, FastAPI, Node.js, Express.js, REST API Design, Authentication (JWT/OAuth), Streamlit, System Design (HLD, LLD)
 - **Libraries & Frameworks:** PyTorch, TensorFlow, Hugging Face Transformers, LangChain, LangGraph, Scikit-learn, Pandas, NumPy, OpenCV
 - **Databases & Vector Stores:** FAISS, Pinecone, Apache Solr, PostgreSQL, MySQL, MongoDB, Firebase, Supabase, Redis
 - **Data Science:** EDA, Statistical Analysis, Feature Engineering, Regression, Classification, Clustering, Time Series, Power BI, Tableau
