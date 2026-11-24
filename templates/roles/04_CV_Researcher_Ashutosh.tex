@@ -92,11 +92,10 @@
 
   \resumeSubheading{Research Intern}{Jan 2025 -- Jun 2025}{Indian Institute of Technology (IIT) Delhi}{New Delhi, India}
   \resumeItemListStart
-    \resumeItem{Built an OCR-powered document understanding pipeline for archaeological datasets; benchmarked Tesseract, Marker, and Gemini OCR — selecting optimal strategy per document class to improve extraction accuracy.}
-    \resumeItem{Designed hybrid retrieval (dense: FAISS/Pinecone + sparse: Apache Solr) for high-precision semantic + lexical document search over thousands of historical records.}
-    
-    \resumeItem{Deployed scalable \textbf{FastAPI} services for real-time LLM-based querying; integrated with frontend for sub-second retrieval responses.}
-    \resumeItem{Co-authored \textbf{SARCH: Multimodal Search for Archaeological Archives} with IIT Delhi collaborators — submitted for peer review. \href{https://arxiv.org/abs/2511.05667}{\textit{arxiv.org/abs/2511.05667}}}
+    \resumeItem{Built a multimodal ingestion pipeline for \textbf{296} scanned archaeological documents (\textbf{63,208} pages): Surya layout and OCR, OpenCV cleanup, and \textbf{Qwen2.5-VL-7B} to extract \textbf{1,824} tables.}
+    \resumeItem{Classified \textbf{22,349} extracted images into 4 types with zero-shot \textbf{CLIP}, and indexed text, images and tables with \textbf{MiniLM}, \textbf{CLIP} and \textbf{TAPAS} embeddings (Apache Solr + pgvector).}
+    \resumeItem{Compared BM25, embedding and hybrid (RRF) search on a 30-query benchmark written with an archaeologist: embedding search reached \textbf{0.754 MRR} vs \textbf{0.508} for BM25.}
+    \resumeItem{Co-authored \textbf{SARCH: Multimodal Search for Archaeological Archives} (MMGenSR@CIKM 2025). \href{https://arxiv.org/abs/2511.05667}{\textit{arXiv:2511.05667}}}
   \resumeItemListEnd
 
   \resumeSubheading{AI/ML Engineer Intern}{Oct 2024 -- Nov 2024}{MitoVoid AI}{Remote}
