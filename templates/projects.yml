@@ -250,6 +250,7 @@ projects:
   - product
   match:
   - sayloai
+  - Mitovoid-AI/sayvra
   latex: |
     \resumeProjectHeading
     {\href{https://sayloai.vercel.app/}{\textbf{Saylo -- AI Voice-to-Text}}
@@ -268,6 +269,7 @@ projects:
   - privacy
   match:
   - latelysave
+  - Mitovoid-AI/lately
   latex: |
     \resumeProjectHeading
     {\href{https://latelysave.vercel.app/}{\textbf{Lately -- AI Reel Saver}}

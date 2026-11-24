@@ -176,12 +176,19 @@
 \resumeSubHeadingListStart
 
   \resumeProjectHeading
-  {\href{https://github.com/ashutoshroy02/interview-prep-site}{\textbf{InterviewPrep — Open-Source AI/ML Interview Platform}}
-  $|$ \emph{Astro, JavaScript, HTML/CSS, SEO}}{May 2026 -- Jun 2026}
+  {\href{https://github.com/Mitovoid-AI/lately}{\textbf{Lately — Find Saved Reels by What You Remember}}
+  $|$ \emph{FastAPI, Postgres + pgvector, Groq, Expo}}{Aug 2026 -- Nov 2026}
   \resumeItemListStart
-    \resumeItem{Developed and open-sourced a comprehensive interview prep platform with \textbf{700+ curated questions} spanning Python, ML, Deep Learning, NLP, LLMs, RAG, Computer Vision, SQL, and HR.}
-    \resumeItem{Features company-specific tracks (FAANG, OpenAI, NVIDIA, Indian IT), a 12-week structured roadmap, interactive flashcards, and role-specific mock interview simulations.}
-    \resumeItem{Fully responsive static site with light/dark mode, optimized schema markup, and \textbf{95+ Lighthouse performance score}.}
+    \resumeItem{Built an enrichment pipeline that fetches a shared reel, transcribes its audio, has an LLM write a searchable card, and embeds it.}
+    \resumeItem{Implemented hybrid retrieval over the cards (\textbf{pgvector} embeddings + \textbf{pg\_trgm} trigram matching), with an evaluation script for search quality.}
+  \resumeItemListEnd
+
+  \resumeProjectHeading
+  {\href{https://github.com/Mitovoid-AI/sayvra}{\textbf{Sayvra (formerly Saylo) — AI Dictation}}
+  $|$ \emph{Python, Kotlin, Groq Whisper + LLM, Windows \& Android}}{Oct 2026 -- Nov 2026}
+  \resumeItemListStart
+    \resumeItem{Built a speech pipeline (Whisper speech-to-text $\rightarrow$ LLM cleanup) that drops fillers, keeps only the final version of spoken self-corrections and formats spoken lists.}
+    \resumeItem{Ships on Windows (hold-to-talk hotkey) and Android (floating bubble and keyboard); includes a benchmark script for comparing cleanup models.}
   \resumeItemListEnd
 
   \resumeProjectHeading
