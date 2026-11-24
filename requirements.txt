@@ -1,8 +1,7 @@
-fastapi
-uvicorn[standard]
 python-dotenv
 requests
 beautifulsoup4
 playwright
 openai
 pyyaml
+python-telegram-bot

@@ -1,324 +1,109 @@
-# Career-Ops — AI Resume Tailor
+# Resume-Darji: AI Resume Tailor
 
-Tired of rewriting your resume for every job? Paste a JD or URL → get a keyword-injected, ATS-optimized, 1-page PDF in seconds. Free. Local. No subscriptions.
-
-Built on top of the open-source [career-ops](https://github.com/santifer/career-ops) CLI, with a Python tailoring pipeline, a Streamlit web UI, a FastAPI backend, a Telegram bot, Docker support for cloud deployment, and a one-click Windows launcher added on top.
+Send a job description (URL or text) and get back a tailored, ATS-friendly LaTeX resume PDF. It runs locally through a Telegram bot, a CLI, or Claude Code. Your data stays on your machine; only the JD and resume text go to the LLM provider you choose.
 
 ---
 
-## What I Built on Top of career-ops
-
-| Addition | File | Description |
-|----------|------|-------------|
-| Resume Tailor CLI | `tailor.py` | Fetch JD → detect archetype → inject keywords via LLM → compile PDF |
-| Debug version | `debug_tailor.py` | Same pipeline with verbose step-by-step logging |
-| Streamlit Web UI | `app.py` | Browser UI: paste JD, see live logs, download PDF |
-| FastAPI backend | `main.py` | REST API wrapping the tailor pipeline — for headless / cloud use |
-| Telegram bot | `telegram_bot.py` | Send a JD to your private Telegram bot, get a PDF back |
-| Docker | `dockerfile` + `requirements.txt` | Containerised deployment with tectonic + Playwright; ready for Render |
-| One-click launcher | `launch_app.bat` | Double-click to start the Streamlit app on Windows |
-| LaTeX templates | `templates/roles/*.tex` | 3 base resumes: AI/ML Engineer (default), AI-First Builder, Research CV (2 pages); older ones in `archive/` |
-| Personal CV | `cv.md` | My canonical CV in markdown — tailor reads this at runtime |
-| Profile config | `config/profile.yml` | Target roles, location policy, narrative, compensation |
-| User data layer | `user_data/` | Gitignored folder for all personal output (PDFs, reports, JDs) |
-
----
-
-## How the Tailor Pipeline Works
+## How it works
 
 ```
-JD (URL or text)
+JD (URL, file or text)
       │
       ▼
-Fetch & extract    →  Playwright renders JS SPAs; LLM strips nav/footer noise
+Fetch & extract    →  Playwright renders JS job pages; the LLM strips nav/footer noise
       │
       ▼
-Archetype detect   →  AI_ML_Engineer / AI_Builder / CV_Researcher
+Pick a base        →  the LLM picks one of 3 base resumes (AI/ML Engineer, AI-First Builder, Research CV)
       │
       ▼
-Template select    →  picks closest .tex from templates/roles/
+Pick projects      →  from 16 projects in templates/projects.yml (fixed for AI/ML, AI-ranked for the others)
       │
       ▼
-LLM keyword inject →  Gemini rewrites summary + bullets, word-count bounded
+Fit the page       →  drop the last project until the untailored resume fits its page target
       │
       ▼
-LaTeX compile      →  pdflatex / tectonic → 1-page PDF (auto-retry if overflow)
+Keyword rewrite    →  the LLM rewrites the summary and bullets for the JD, word-count bounded
+      │
+      ▼
+Compile            →  pdflatex → PDF; tighten word limits and retry if it overflows
 ```
 
-Every entry point — CLI, Streamlit, FastAPI, Telegram — runs this same pipeline.
+The bot, the CLI and the Claude Code skill all run this same pipeline in `tailor.py`.
 
----
-
-## Role Templates
-
-Three LaTeX base resumes, one per archetype. The tailor auto-selects the best match; the project picker swaps in any of the 16 projects from `templates/projects.yml`:
+## Base resumes
 
 | Template | Best for | Pages |
 |----------|----------|-------|
-| `07_AI_ML_Engineer_Ashutosh.tex` | Default: AI / ML / LLM / GenAI / agent / AI-backend roles | 1 |
+| `07_AI_ML_Engineer_Ashutosh.tex` | Default: AI / ML / LLM / agent / backend / SDE roles | 1 |
 | `06_AI_Builder_Ashutosh.tex` | Full-stack / product / founding engineer roles | 1 |
-| `04_CV_Researcher_Ashutosh.tex` | Research roles, publications, CV / multimodal research | 2 |
+| `04_CV_Researcher_Ashutosh.tex` | Research roles, publications | 2 |
 
-The older bases (01 ML/AI, 02 Data Scientist, 03 Python/Backend, 05 AI Agent) are kept in `templates/roles/archive/`. Charter font, green headers, ATS-optimized (`\pdfgentounicode=1`). The page target per base is `PAGE_LIMIT` in `tailor.py`.
+- The AI/ML base always pre-picks its own projects (Saylo, Exam-Helper, Chronic Compounder); see `FIXED_PICK_BASES` in `tailor.py`.
+- Page targets per base: `PAGE_LIMIT` in `tailor.py`.
+- Older bases (ML/AI, Data Scientist, Python/Backend, AI Agent) are in `templates/roles/archive/`.
 
----
+## Setup (Windows)
 
-## Quick Start (New User)
+1. Python 3.14 and the packages: `pip install -r requirements.txt`, then `playwright install chromium`
+2. MiKTeX (`pdflatex` on PATH): https://miktex.org/download
+3. Copy `.env.example` to `.env` and fill it in:
+   - an LLM key: `OPENROUTER_API_KEY`, or the `LLM_*` settings (e.g. Groq's free tier)
+   - `TELEGRAM_BOT_TOKEN` (from @BotFather) and `TELEGRAM_ALLOWED_USER_ID` (from @userinfobot)
 
-This repo has my CV, my templates, and my profile out of the box. Replace those three things and everything else just works.
+### LLM provider
 
-```bash
-# 1. Clone
-git clone https://github.com/ashutoshroy02/career-ops-cli.git
-cd career-ops-cli
+| Setting | Meaning |
+|---|---|
+| `OPENROUTER_API_KEY`, `OPENROUTER_MODEL` | Default provider. Model default: `google/gemini-2.5-flash-lite` |
+| `LLM_BASE_URL`, `LLM_API_KEY`, `LLM_MODEL` | Any OpenAI-compatible API instead, e.g. Groq: `https://api.groq.com/openai/v1`, `qwen/qwen3.8-27b` |
+| `LLM_EXTRA_BODY` | Extra request fields as JSON. Qwen on Groq: `{"reasoning_effort": "none"}` (thinking off) |
 
-# 2. Install Python deps
-pip install -r requirements.txt
-playwright install chromium
-
-# 3. Install Node deps (for the broader career-ops CLI features)
-npm install
-
-# 4. Set your env variables
-cp .env.example .env
-# Edit .env and fill in:
-#   OPENROUTER_API_KEY   — get a free key at https://openrouter.ai
-#   GEMINI_API_KEY       — get a free key at https://aistudio.google.com/apikey
-#   TAILOR_API_KEY       — any secret string, protects the /tailor endpoint
-#   TELEGRAM_BOT_TOKEN   — from @BotFather on Telegram (optional, for bot)
-#   TELEGRAM_ALLOWED_USER_ID — your numeric Telegram user ID (optional, for bot)
-
-# 5. Add your data
-#    - Replace cv.md with your CV in markdown
-#    - Edit config/profile.yml with your name, roles, location
-#    - Update the name/contact header in each templates/roles/*.tex
-
-# 6. Install LaTeX (Windows)
-#    Download MiKTeX: https://miktex.org/download
-#    It auto-installs missing packages on first compile
-
-# 7. Launch — pick any interface:
-#    Streamlit UI:   streamlit run app.py
-#    Windows:        double-click launch_app.bat
-#    FastAPI server: uvicorn main:app --reload
-#    Telegram bot:   python telegram_bot.py
-#    CLI:            python tailor.py --jd "https://..." --company "Acme"
-```
-
----
-
-## Environment Variables
-
-| Variable | Required | Description |
-|----------|----------|-------------|
-| `OPENROUTER_API_KEY` | Yes | Powers the tailor pipeline. Free key at [openrouter.ai](https://openrouter.ai). Default model: `google/gemini-2.5-flash-lite` |
-| `OPENROUTER_MODEL` | No | Override the model. Defaults to `google/gemini-2.5-flash-lite` |
-| `LLM_BASE_URL`, `LLM_API_KEY`, `LLM_MODEL` | No | Use another OpenAI-compatible provider instead of OpenRouter, e.g. Groq's free tier: `https://api.groq.com/openai/v1`, your Groq key, `qwen/qwen3.8-27b` |
-| `LLM_EXTRA_BODY` | No | Extra request fields as JSON. For Qwen on Groq use `{"reasoning_effort": "none"}` (thinking off, so answers fit Groq's free token limits) |
-| `GEMINI_API_KEY` | No | For the original `gemini-eval.mjs` script. Free key at [aistudio.google.com](https://aistudio.google.com/apikey) |
-| `TAILOR_API_KEY` | For API | Any secret string. Required to call the `/tailor` FastAPI endpoint |
-| `TELEGRAM_BOT_TOKEN` | For bot | From @BotFather on Telegram |
-| `TELEGRAM_ALLOWED_USER_ID` | For bot | Your numeric Telegram user ID. Comma-separate multiple IDs |
-
----
-
-## Streamlit Web App
+## Telegram bot
 
 ```bash
-streamlit run app.py
-# or on Windows: double-click launch_app.bat
+python telegram_bot.py          # with a console
+pythonw run_bot_hidden.py       # hidden, logs to logs/bot.log and logs/stdout.log
 ```
 
-Open `http://localhost:8501`. Paste a JD (text or URL), optionally enter the company name, hit **Generate Tailored PDF**. Live pipeline logs stream in real time. Download or preview the PDF inline when done.
-
----
-
-## FastAPI Backend
-
-```bash
-uvicorn main:app --reload
-```
-
-The API runs on `http://localhost:8000`. Every request to `/tailor` must include `X-API-Key`.
-
-```bash
-# Health check
-curl http://localhost:8000/health
-
-# Tailor a resume
-curl -X POST http://localhost:8000/tailor \
-  -H "X-API-Key: your_secret" \
-  -H "Content-Type: application/json" \
-  -d '{"jd": "https://company.com/job/ai-engineer", "company": "Acme"}' \
-  --output tailored-resume.pdf
-```
-
-Response headers: `X-Page-Count`, `X-Archetype`, `X-Company`.
-
-The API has a built-in one-page retry loop — if the compiled PDF overflows to 2 pages, it tightens the word budget and re-runs up to 4 times.
-
----
-
-## Telegram Bot
-
-Send your private bot a JD URL or pasted JD text. It runs the full pipeline and sends the PDF back in the same chat. No server needed — runs on long-polling from your laptop.
-
-After the JD is read you pick one of the 3 base resumes (the AI's pick is marked ⭐), then tick the projects to include. Tap **⚡ Just build it** instead to let the AI pick the base and the projects and build straight away.
-
-The AI/ML Engineer base (also used for SDE/backend roles) always pre-picks Exam-Helper, Chronic Compounder and Saylo, its own Projects section, without asking the AI (`FIXED_PICK_BASES` in `tailor.py`). You can still tick other projects.
-
-```bash
-pip install python-telegram-bot --upgrade
-python telegram_bot.py
-```
-
-Setup:
-1. Message @BotFather on Telegram → `/newbot` → copy the token → set `TELEGRAM_BOT_TOKEN` in `.env`
-2. Message @userinfobot to get your numeric user ID → set `TELEGRAM_ALLOWED_USER_ID` in `.env`
-3. Run `python telegram_bot.py` and leave it running
-
-Access is locked to `TELEGRAM_ALLOWED_USER_ID` — anyone else messaging the bot is silently ignored.
-
----
+Send the bot a JD URL or text. Pick a base (the AI's pick is marked ⭐), tick projects, then 🚀 Build. Or tap **⚡ Just build it** to let the AI pick everything. Only `TELEGRAM_ALLOWED_USER_ID` can use it; everyone else is ignored. Restart the bot after changing `.py` files or `.env`. Template and project edits apply on the next build.
 
 ## CLI
 
 ```bash
-# From a URL
-python tailor.py --jd "https://company.com/job/senior-ml-engineer" --company "Acme"
+python tailor.py --jd "https://company.com/jobs/123"          # URL
+python tailor.py --jd jds/005-vapi-agent-engineer.md            # file (name = company)
+python tailor.py --jd jds/my-job.md --company "Acme"
 
-# From plain text
-python tailor.py --jd "We are hiring a Senior AI Engineer..."
-
-# From a saved file
-python tailor.py --jd jds/my-job.txt --company "Acme"
-
-# With verbose debug logging
-python debug_tailor.py --jd "..."
-
-# No UI (for scripts and Claude Code): progress on stderr, one JSON result on stdout
+# No UI (scripts / Claude Code): progress on stderr, one JSON result on stdout
 python tailor.py --jd jds/my-job.md --json
-python tailor.py --jd jds/my-job.md --json --base AI_ML_Engineer --projects shopping-agent,exam-helper
-python tailor.py --list    # base keys and project ids, as JSON (no LLM call)
+python tailor.py --jd jds/my-job.md --json --base AI_ML_Engineer --projects saylo,exam-helper
+python tailor.py --list       # base keys and project ids as JSON (no LLM call)
 ```
 
-### Claude Code skill
+PDFs go to `user_data/output/`.
 
-`.claude/skills/resume-tailor/SKILL.md` teaches Claude Code to build a resume from a JD URL or pasted text with the `--json` mode above. Copy that folder to `~/.claude/skills/` to use it from any folder.
+## Claude Code skill
 
-Output goes to `user_data/output/cv-{name}-{company}-{date}.pdf`.
+`.claude/skills/resume-tailor/SKILL.md` teaches Claude Code to build a resume from a JD URL or pasted text with the `--json` mode. Copy the folder to `~/.claude/skills/` to use it from any folder.
 
----
+## Files
 
-## Docker / Deploy to Cloud
+| Path | What it is |
+|---|---|
+| `tailor.py` | The pipeline and the CLI |
+| `telegram_bot.py` | Telegram bot (long polling, no server) |
+| `run_bot_hidden.py` | Hidden launcher with log files |
+| `templates/roles/*.tex` | Base resumes |
+| `templates/projects.yml` | Project library (add a project = add an entry) |
+| `jds/` | Sample JDs for test builds |
+| `AGENTS.md` | Notes for coding agents working on this repo |
 
-The `dockerfile` builds a self-contained image with tectonic (LaTeX) and Playwright/Chromium baked in. Auto-resolves the latest tectonic release at build time.
+## Origin
 
-```bash
-# Build
-docker build -t career-ops-tailor .
-
-# Run locally
-docker run -p 8000:8000 \
-  -e OPENROUTER_API_KEY=your_key \
-  -e TAILOR_API_KEY=your_secret \
-  -e PORT=8000 \
-  career-ops-tailor
-```
-
-**Deploy to Render:**
-1. Push this repo to GitHub
-2. New Web Service → connect repo → Docker runtime
-3. Set env vars: `OPENROUTER_API_KEY`, `TAILOR_API_KEY`
-4. Render sets `PORT` automatically — the `dockerfile` CMD uses it
-
----
-
-## Adapting This for Your Own CV
-
-1. Replace `cv.md` with your CV in markdown (Summary, Experience, Projects, Skills, Education)
-2. Edit `config/profile.yml` — your name, email, target roles, location policy
-3. Update the name/contact header at the top of each `.tex` file in `templates/roles/`
-4. Optionally rename the template files and update `TEMPLATE_MAP` in `tailor.py` and `debug_tailor.py`
-
-~15 minutes of setup for free tailored resumes from then on.
-
----
-
-## Project Structure
-
-```
-career-ops-cli/
-├── app.py                        # Streamlit web UI
-├── main.py                       # FastAPI backend (REST API)
-├── tailor.py                     # Resume tailor pipeline
-├── debug_tailor.py               # Tailor with verbose debug logging
-├── telegram_bot.py               # Telegram bot (long-polling, local)
-├── dockerfile                    # Docker image (tectonic + Playwright)
-├── requirements.txt              # Python dependencies
-├── launch_app.bat                # One-click Windows launcher (Streamlit)
-├── .env.example                  # Env variable template — copy to .env
-├── cv.md                         # My CV — replace with yours
-├── config/
-│   ├── profile.yml               # My profile config — replace with yours
-│   └── profile.example.yml       # Template to start from
-├── templates/
-│   ├── roles/                    # 5 role-specific LaTeX templates
-│   └── cv-template.html          # HTML template (original career-ops)
-├── user_data/                    # Personal output (gitignored)
-│   ├── output/                   # Generated PDFs
-│   ├── reports/                  # Evaluation reports
-│   └── jds/                      # Saved job descriptions
-├── modes/                        # 14 original career-ops skill modes
-├── batch/                        # Batch processing scripts
-├── dashboard/                    # Go TUI pipeline viewer
-├── data/                         # Application tracker (gitignored)
-├── AGENTS.md                     # Agent instructions (all CLIs)
-└── CLAUDE.md                     # Claude Code wrapper
-```
-
----
-
-## Tech Stack
-
-- Tailor pipeline: Python, OpenRouter API (Gemini 2.5 Flash Lite — free tier)
-- Web UI: Streamlit
-- REST API: FastAPI + Uvicorn
-- Telegram bot: python-telegram-bot (long-polling)
-- Containerisation: Docker (tectonic + Playwright/Chromium)
-- JD scraping: Playwright (JS SPAs) + BeautifulSoup fallback
-- PDF: tectonic (Docker/Linux) or pdflatex/MiKTeX (Windows local)
-- Original CLI: Claude Code / Gemini CLI with custom skill modes
-- Dashboard: Go + Bubble Tea + Lipgloss
-
----
-
-## Original career-ops CLI Features
-
-All original features still work via Claude Code or Gemini CLI:
-
-```bash
-claude                              # open Claude Code in this directory
-/career-ops "paste JD here"         # full auto-pipeline
-/career-ops scan                    # scan 45+ company portals for new listings
-/career-ops pdf                     # generate ATS-optimized CV
-/career-ops tracker                 # view application status
-/career-ops batch                   # batch evaluate multiple offers
-```
-
----
+This started as a fork of [career-ops](https://github.com/santifer/career-ops) (MIT, see `LICENSE`). The career-ops job-search tooling was removed to keep only the tailor and bot; the full fork is preserved at the git tag `before-cleanup`.
 
 ## About
 
-I'm Ashutosh Roy — AI/ML Engineer and published researcher based in Gurugram. I built this because I was tired of manually rewriting my resume for every application.
+Ashutosh Roy, AI/ML Engineer. Portfolio: [mitovoid.netlify.app](https://mitovoid.netlify.app/) · GitHub: [ashutoshroy02](https://github.com/ashutoshroy02)
 
-Portfolio → [mitovoid.netlify.app](https://mitovoid.netlify.app/)  
-GitHub → [github.com/ashutoshroy02](https://github.com/ashutoshroy02)
-
----
-
-## Disclaimer
-
-Local, open-source tool — not a hosted service. Your CV and personal data stay on your machine and go directly to the AI provider you choose. The system never auto-submits applications. Always review AI-generated content before sending. See [LEGAL_DISCLAIMER.md](LEGAL_DISCLAIMER.md) for full details.
-
-MIT License. "career-ops" trademark governed by [TRADEMARK.md](TRADEMARK.md).
+Always review generated resumes before sending; the tool never submits applications.
