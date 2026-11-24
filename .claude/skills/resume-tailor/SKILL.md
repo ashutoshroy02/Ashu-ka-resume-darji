@@ -2,7 +2,7 @@
 name: resume-tailor
 description: >
   Builds Ashutosh's one-page tailored resume PDF for a job, with no UI: runs the local
-  Resume-Darji tailor (3 LaTeX base resumes + a project library + an OpenRouter LLM) and
+  Resume-Darji tailor (3 LaTeX base resumes + a project library + an LLM via OpenRouter or Groq) and
   returns the PDF path as JSON. Use when the user says "make/build/tailor my resume for this
   job", "resume for <job URL>", pastes a job description and wants a resume, or asks which
   base resume or projects fit a JD. Input: a JD URL, a JD file, or pasted JD text.
@@ -22,7 +22,7 @@ rewrites bullets around the JD's keywords, fits one page, and compiles the PDF.
   loaded from inside a clone of the repo, use that clone's root instead.
 - **Python:** `C:\Program Files\Python314\python.exe`. Its packages are in user
   site-packages, so don't add `-I`.
-- **Needs:** `.env` in the repo root with `OPENROUTER_API_KEY` (see `.env.example`), and
+- **Needs:** `.env` in the repo root with an LLM key: `OPENROUTER_API_KEY`, or the `LLM_*` settings for Groq (see `.env.example`), and
   MiKTeX `pdflatex` on PATH. Never print or copy `.env` values.
 - **Output:** `user_data/output/cv-ashutosh-<company>-<date>.pdf` (plus `.tex`). A second run
   for the same company on the same day overwrites it.
