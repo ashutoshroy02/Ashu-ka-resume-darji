@@ -84,7 +84,7 @@ def tailor_resume(req: TailorRequest, x_api_key: Optional[str] = Header(default=
         raise HTTPException(status_code=502, detail=f"JD analysis failed: {e}")
 
     archetype     = analysis["role_archetype"]
-    template_name = tailor.TEMPLATE_MAP.get(archetype, tailor.TEMPLATE_MAP["ML_AI"])
+    template_name = tailor.TEMPLATE_MAP.get(archetype, tailor.TEMPLATE_MAP[tailor.DEFAULT_BASE])
 
     tpl_path = tailor.TEMPLATES / template_name
     if not tpl_path.exists():

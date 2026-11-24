@@ -50,25 +50,23 @@ client = OpenAI(
 MODEL = os.getenv("OPENROUTER_MODEL", "google/gemini-2.5-flash-lite")
 
 # ─── Template map ──────────────────────────────────────────────────────
+# Older bases (01 ML_AI, 02 Data_Scientist, 03 Python_Dev, 05 AI_Agent) are
+# in templates/roles/archive/; AI_ML_Engineer plus the project picker covers them.
 TEMPLATE_MAP = {
-    "ML_AI":          "01_ML_AI_Engineer_Ashutosh.tex",
-    "Data_Scientist": "02_Data_Scientist_Ashutosh.tex",
-    "Python_Dev":     "03_Python_Developer_Ashutosh.tex",
-    "CV_Researcher":  "04_CV_Researcher_Ashutosh.tex",
-    "AI_Agent":       "05_AI_Agent_Ashutosh.tex",
-    "AI_Builder":     "06_AI_Builder_Ashutosh.tex",
     "AI_ML_Engineer": "07_AI_ML_Engineer_Ashutosh.tex",
+    "AI_Builder":     "06_AI_Builder_Ashutosh.tex",
+    "CV_Researcher":  "04_CV_Researcher_Ashutosh.tex",
 }
+DEFAULT_BASE = "AI_ML_Engineer"   # used when the JD analysis returns an unknown archetype
+
+# Page target per base (default 1). The research CV is 2 pages by design.
+PAGE_LIMIT = {"CV_Researcher": 2}
 
 # Human-readable names for the base templates (Telegram buttons, logs).
 BASE_LABELS = {
-    "ML_AI":          "ML / AI Engineer",
-    "Data_Scientist": "Data Scientist",
-    "Python_Dev":     "Python / Backend Dev",
-    "CV_Researcher":  "CV / Researcher",
-    "AI_Agent":       "AI Agent Engineer",
+    "AI_ML_Engineer": "AI/ML Engineer",
     "AI_Builder":     "AI-First Builder (Full-Stack)",
-    "AI_ML_Engineer": "AI/ML Engineer (new, with metrics)",
+    "CV_Researcher":  "Research CV (2 pages)",
 }
 
 PROJECTS_FILE = ROOT / "templates" / "projects.yml"
@@ -239,20 +237,16 @@ def analyze_jd(jd_text: str) -> dict:
 
 Return ONLY this JSON (no markdown, no explanation):
 {{
-  "role_archetype": "one of: AI_ML_Engineer | ML_AI | Data_Scientist | Python_Dev | CV_Researcher | AI_Agent | AI_Builder",
+  "role_archetype": "one of: AI_ML_Engineer | AI_Builder | CV_Researcher",
   "keywords": ["15-20 exact keyword phrases from the JD"],
   "headline": "tailored job title line, max 8 words",
   "archetype_reason": "1 sentence why"
 }}
 
 Archetype guide:
-- AI_ML_Engineer: AI Engineer, ML Engineer, AI/ML Engineer, LLM Engineer, GenAI Engineer roles: LLMs, RAG, fine-tuning, model evaluation, MLOps, model serving. Prefer this over ML_AI whenever the title is one of these.
-- ML_AI: other ML roles: speech/audio AI, applied ML that isn't mainly LLM work
-- Data_Scientist: data analysis, EDA, SQL, statistics, Power BI, Tableau
-- Python_Dev: backend, FastAPI, REST API, system design, SWE
-- CV_Researcher: computer vision, OCR, research, multimodal, publications focus
-- AI_Agent: agents, LangGraph, MCP, tool calling, multi-agent
+- AI_ML_Engineer: the default. AI / ML / LLM / GenAI / AI agent / AI backend engineer roles, and data or backend roles: LLMs, RAG, fine-tuning, agents (LangGraph, MCP, tool calling), evaluation, MLOps, model serving, APIs.
 - AI_Builder: full-stack / product engineer, shipping web/mobile/desktop apps, TypeScript, LLM APIs in products, AI-assisted development (Claude Code), founding/startup engineer
+- CV_Researcher: research roles: research engineer / scientist / assistant / intern, PhD or lab positions, publications focus, computer vision or multimodal research
 
 Job Description:
 {jd_text}"""
@@ -785,16 +779,17 @@ Job Description:
     return {"ranking": ordered, "picks": ordered[:n_picks], "reason": reason}
 
 
-def fit_projects(tex_base: str, ids: list[str], blocks: dict, output_stem: str) -> tuple[list[str], list[str], int]:
+def fit_projects(tex_base: str, ids: list[str], blocks: dict, output_stem: str,
+                 max_pages: int = 1) -> tuple[list[str], list[str], int]:
     """
-    One-page rule, step 1: compile the untailored resume and drop the
-    lowest-ranked project (last in `ids`) until it fits on one page or only
+    Page rule, step 1: compile the untailored resume and drop the
+    lowest-ranked project (last in `ids`) until it fits in `max_pages` or only
     MIN_PROJECTS remain. Returns (kept, dropped, pages of the last compile).
     """
     kept, dropped = list(ids), []
     while True:
         _, pages = compile_latex(build_projects_tex(tex_base, kept, blocks), output_stem, passes=1)
-        if pages <= 1 or len(kept) <= MIN_PROJECTS:
+        if pages <= max_pages or len(kept) <= MIN_PROJECTS:
             return kept, dropped, pages
         dropped.append(kept.pop())
         print(f"  ✂️  {pages} pages — dropping lowest-ranked project: {dropped[-1]}")
@@ -804,7 +799,8 @@ def run_tailor(jd_text: str, analysis: dict, base_key: str, project_ids: list[st
                output_stem: str, max_attempts: int = 4) -> tuple[Path, dict]:
     """
     Full build for one base + project list (best first):
-      1. swap in the chosen projects, dropping the lowest-ranked until one page
+      1. swap in the chosen projects, dropping the lowest-ranked until it fits
+         the base's page target (1 page; PAGE_LIMIT allows more, e.g. research CV)
       2. keyword rewrites; if that overflows, retry with tighter word limits
     Empty / None project_ids -> the base's own projects.
     """
@@ -815,7 +811,8 @@ def run_tailor(jd_text: str, analysis: dict, base_key: str, project_ids: list[st
     info = base_project_info(tex_base, load_projects())
 
     ids = [i for i in (project_ids or []) if i in info["blocks"]] or info["defaults"]
-    kept, dropped, fit_pages = fit_projects(tex_base, ids, info["blocks"], output_stem)
+    max_pages = PAGE_LIMIT.get(base_key, 1)
+    kept, dropped, fit_pages = fit_projects(tex_base, ids, info["blocks"], output_stem, max_pages)
     tex_content = build_projects_tex(tex_base, kept, info["blocks"])
 
     # ── One-page rule, step 2 ──────────────────────────────────────
@@ -823,8 +820,8 @@ def run_tailor(jd_text: str, analysis: dict, base_key: str, project_ids: list[st
     # in longer JD words, so compile, measure the real page count, and retry
     # with a tighter (eventually negative) word buffer until it fits.
     buffers = [3 - 4 * i for i in range(max_attempts)]   # +3, -1, -5, -9
-    if fit_pages > 1 and len(buffers) > 1:
-        # Already over one page with the original wording, so the +3 round
+    if fit_pages > max_pages and len(buffers) > 1:
+        # Already over the page target with the original wording, so the +3 round
         # (bullets may grow) can't fit: skip it and start shrinking.
         buffers = buffers[1:]
     pdf_path, page_count = None, None
@@ -833,7 +830,7 @@ def run_tailor(jd_text: str, analysis: dict, base_key: str, project_ids: list[st
         rewrites     = get_rewrites(tex_content, jd_text, analysis, word_buffer=word_buffer)
         tex_tailored = apply_changes(tex_content, analysis, rewrites)
         pdf_path, page_count = compile_latex(tex_tailored, output_stem)
-        if page_count <= 1:
+        if page_count <= max_pages:
             break
         if attempt < len(buffers):
             print(f"  🔁 {page_count} pages — tightening word limits (next buffer: {buffers[attempt]:+d})...")
@@ -912,7 +909,7 @@ def build(args) -> dict:
     print("\n[2/5] Analyzing JD...")
     analysis      = analyze_jd(jd_text)
     archetype     = analysis["role_archetype"]
-    ai_base       = archetype if archetype in TEMPLATE_MAP else "ML_AI"
+    ai_base       = archetype if archetype in TEMPLATE_MAP else DEFAULT_BASE
     base_key      = args.base or ai_base
     template_name = TEMPLATE_MAP[base_key]
     print(f"      Archetype : {archetype}")
@@ -947,7 +944,7 @@ def build(args) -> dict:
         print(f"      Dropped   : {', '.join(result['dropped'])} (to fit one page)")
 
     print("\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━")
-    print("  ✅ DONE" if page_count == 1 else "  ⚠️  DONE (with page-count warning)")
+    print("  ✅ DONE" if page_count <= PAGE_LIMIT.get(base_key, 1) else "  ⚠️  DONE (with page-count warning)")
     print(f"  Template : {template_name}")
     print(f"  Archetype: {archetype}")
     print(f"  Keywords : {len(analysis['keywords'])} targeted")
@@ -962,6 +959,7 @@ def build(args) -> dict:
         "pdf":               str(pdf_path),
         "tex":               str(pdf_path.with_suffix(".tex")),
         "page_count":        page_count,
+        "page_limit":        PAGE_LIMIT.get(base_key, 1),
         "company":           company,
         "base":              base_key,
         "base_label":        BASE_LABELS[base_key],

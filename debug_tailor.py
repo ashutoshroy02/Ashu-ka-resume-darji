@@ -62,12 +62,10 @@ client = OpenAI(
 MODEL = os.getenv("OPENROUTER_MODEL", "google/gemini-2.5-flash-lite")
 
 # ─── Template map ──────────────────────────────────────────────────────
-TEMPLATE_MAP = {
-    "ML_AI":          "01_ML_AI_Engineer_Ashutosh.tex",
-    "Data_Scientist": "02_Data_Scientist_Ashutosh.tex",
-    "Python_Dev":     "03_Python_Developer_Ashutosh.tex",
+TEMPLATE_MAP = {  # same bases as tailor.py (older ones are in templates/roles/archive/)
+    "AI_ML_Engineer": "07_AI_ML_Engineer_Ashutosh.tex",
+    "AI_Builder":     "06_AI_Builder_Ashutosh.tex",
     "CV_Researcher":  "04_CV_Researcher_Ashutosh.tex",
-    "AI_Agent":       "05_AI_Agent_Ashutosh.tex",
 }
 
 
@@ -260,18 +258,16 @@ Job Description:
 
 Return ONLY this JSON (no markdown, no explanation):
 {{
-  "role_archetype": "one of: ML_AI | Data_Scientist | Python_Dev | CV_Researcher | AI_Agent",
+  "role_archetype": "one of: AI_ML_Engineer | AI_Builder | CV_Researcher",
   "keywords": ["15-20 exact keyword phrases from the JD"],
   "headline": "tailored job title line, max 8 words",
   "archetype_reason": "1 sentence why"
 }}
 
 Archetype guide:
-- ML_AI: LLM, RAG, fine-tuning, MLOps, speech/audio AI
-- Data_Scientist: data analysis, EDA, SQL, statistics, Power BI, Tableau
-- Python_Dev: backend, FastAPI, REST API, system design, SWE
-- CV_Researcher: computer vision, OCR, research, multimodal, publications focus
-- AI_Agent: agents, LangGraph, MCP, tool calling, multi-agent"""
+- AI_ML_Engineer: the default. AI / ML / LLM / GenAI / AI agent / AI backend engineer roles, and data or backend roles
+- AI_Builder: full-stack / product engineer, shipping apps, LLM APIs in products, founding/startup engineer
+- CV_Researcher: research roles, publications focus, computer vision or multimodal research"""
 
     dbg("analyze_jd() — prompt sent to model", prompt)
 
@@ -678,7 +674,7 @@ def main():
     print("\n[2/5] Analyzing JD...")
     analysis      = analyze_jd(jd_text)
     archetype     = analysis["role_archetype"]
-    template_name = TEMPLATE_MAP.get(archetype, TEMPLATE_MAP["ML_AI"])
+    template_name = TEMPLATE_MAP.get(archetype, TEMPLATE_MAP["AI_ML_Engineer"])
     print(f"      Archetype : {archetype}")
     print(f"      Template  : {template_name}")
     print(f"      Headline  : {analysis.get('headline', '')}")

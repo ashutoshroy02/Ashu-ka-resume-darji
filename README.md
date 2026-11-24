@@ -17,7 +17,7 @@ Built on top of the open-source [career-ops](https://github.com/santifer/career-
 | Telegram bot | `telegram_bot.py` | Send a JD to your private Telegram bot, get a PDF back |
 | Docker | `dockerfile` + `requirements.txt` | Containerised deployment with tectonic + Playwright; ready for Render |
 | One-click launcher | `launch_app.bat` | Double-click to start the Streamlit app on Windows |
-| LaTeX templates | `templates/roles/*.tex` | 7 role-specific base resumes (Charter font, green headers); `07_AI_ML_Engineer` is the metrics-first AI/ML one |
+| LaTeX templates | `templates/roles/*.tex` | 3 base resumes: AI/ML Engineer (default), AI-First Builder, Research CV (2 pages); older ones in `archive/` |
 | Personal CV | `cv.md` | My canonical CV in markdown — tailor reads this at runtime |
 | Profile config | `config/profile.yml` | Target roles, location policy, narrative, compensation |
 | User data layer | `user_data/` | Gitignored folder for all personal output (PDFs, reports, JDs) |
@@ -33,7 +33,7 @@ JD (URL or text)
 Fetch & extract    →  Playwright renders JS SPAs; LLM strips nav/footer noise
       │
       ▼
-Archetype detect   →  ML_AI / Data_Scientist / Python_Dev / CV_Researcher / AI_Agent
+Archetype detect   →  AI_ML_Engineer / AI_Builder / CV_Researcher
       │
       ▼
 Template select    →  picks closest .tex from templates/roles/
@@ -51,17 +51,15 @@ Every entry point — CLI, Streamlit, FastAPI, Telegram — runs this same pipel
 
 ## Role Templates
 
-Five LaTeX templates, one per archetype. The tailor auto-selects the best match:
+Three LaTeX base resumes, one per archetype. The tailor auto-selects the best match; the project picker swaps in any of the 16 projects from `templates/projects.yml`:
 
-| Template | Best for |
-|----------|----------|
-| `01_ML_AI_Engineer_Ashutosh.tex` | ML Engineer, AI Engineer, LLM, RAG, NLP, fine-tuning |
-| `02_Data_Scientist_Ashutosh.tex` | Data Scientist, Data Analyst, EDA, SQL, Power BI |
-| `03_Python_Developer_Ashutosh.tex` | Python Developer, Backend, FastAPI, SDE |
-| `04_CV_Researcher_Ashutosh.tex` | Computer Vision, OCR, Research, multimodal |
-| `05_AI_Agent_Ashutosh.tex` | AI Agents, LangGraph, MCP, tool-calling, multi-agent |
+| Template | Best for | Pages |
+|----------|----------|-------|
+| `07_AI_ML_Engineer_Ashutosh.tex` | Default: AI / ML / LLM / GenAI / agent / AI-backend roles | 1 |
+| `06_AI_Builder_Ashutosh.tex` | Full-stack / product / founding engineer roles | 1 |
+| `04_CV_Researcher_Ashutosh.tex` | Research roles, publications, CV / multimodal research | 2 |
 
-All templates are 1-page, Charter font, green headers, ATS-optimized (`\pdfgentounicode=1`).
+The older bases (01 ML/AI, 02 Data Scientist, 03 Python/Backend, 05 AI Agent) are kept in `templates/roles/archive/`. Charter font, green headers, ATS-optimized (`\pdfgentounicode=1`). The page target per base is `PAGE_LIMIT` in `tailor.py`.
 
 ---
 
@@ -163,7 +161,7 @@ The API has a built-in one-page retry loop — if the compiled PDF overflows to 
 
 Send your private bot a JD URL or pasted JD text. It runs the full pipeline and sends the PDF back in the same chat. No server needed — runs on long-polling from your laptop.
 
-After the JD is read you pick one of the 6 base resumes (the AI's pick is marked ⭐), then tick the projects to include. Tap **⚡ Just build it** instead to let the AI pick the base and the projects and build straight away.
+After the JD is read you pick one of the 3 base resumes (the AI's pick is marked ⭐), then tick the projects to include. Tap **⚡ Just build it** instead to let the AI pick the base and the projects and build straight away.
 
 ```bash
 pip install python-telegram-bot --upgrade
@@ -196,7 +194,7 @@ python debug_tailor.py --jd "..."
 
 # No UI (for scripts and Claude Code): progress on stderr, one JSON result on stdout
 python tailor.py --jd jds/my-job.md --json
-python tailor.py --jd jds/my-job.md --json --base AI_Agent --projects shopping-agent,exam-helper
+python tailor.py --jd jds/my-job.md --json --base AI_ML_Engineer --projects shopping-agent,exam-helper
 python tailor.py --list    # base keys and project ids, as JSON (no LLM call)
 ```
 

@@ -102,7 +102,7 @@ def _rank_sync(s: dict) -> dict:
 
 def _ai_base(s: dict) -> str:
     rec = s["analysis"].get("role_archetype")
-    return rec if rec in tailor.TEMPLATE_MAP else "ML_AI"
+    return rec if rec in tailor.TEMPLATE_MAP else tailor.DEFAULT_BASE
 
 
 async def _rank(s: dict) -> dict:
@@ -117,7 +117,7 @@ async def _rank(s: dict) -> dict:
 
 
 def _build_sync(s: dict) -> tuple[Path, dict]:
-    # "01_ML_AI_Engineer_Ashutosh.tex" -> "ML_AI_Engineer_Ashutosh-2026-11-23"
+    # "07_AI_ML_Engineer_Ashutosh.tex" -> "AI_ML_Engineer_Ashutosh-2026-11-23"
     role_title  = re.sub(r"^\d+_", "", Path(tailor.TEMPLATE_MAP[s["base"]]).stem)
     output_stem = f"{role_title}-{date.today():%Y-%m-%d}"
     ids = [i for i in s["ranking"] if i in s["selected"]]  # best-ranked first
@@ -280,7 +280,8 @@ async def _build_and_send(q, context: ContextTypes.DEFAULT_TYPE, s: dict):
         f"📂 {', '.join(info['kept'])}"
     )
     if info["dropped"]:
-        caption += f"\n✂️ Dropped to fit one page: {', '.join(info['dropped'])}"
+        limit = tailor.PAGE_LIMIT.get(s["base"], 1)
+        caption += f"\n✂️ Dropped to fit {limit} page{'s' if limit != 1 else ''}: {', '.join(info['dropped'])}"
     await q.delete_message()
     with open(pdf_path, "rb") as f:
         await context.bot.send_document(chat_id=q.message.chat_id, document=f,

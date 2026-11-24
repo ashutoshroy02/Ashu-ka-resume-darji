@@ -2,7 +2,7 @@
 name: resume-tailor
 description: >
   Builds Ashutosh's one-page tailored resume PDF for a job, with no UI: runs the local
-  Resume-Darji tailor (7 LaTeX base resumes + a project library + an OpenRouter LLM) and
+  Resume-Darji tailor (3 LaTeX base resumes + a project library + an OpenRouter LLM) and
   returns the PDF path as JSON. Use when the user says "make/build/tailor my resume for this
   job", "resume for <job URL>", pastes a job description and wants a resume, or asks which
   base resume or projects fit a JD. Input: a JD URL, a JD file, or pasted JD text.
@@ -50,7 +50,9 @@ rewrites bullets around the JD's keywords, fits one page, and compiles the PDF.
    Set-Location "Z:\TO DO\codes\projects\saas\career_ops\career-ops-cli"; & "C:\Program Files\Python314\python.exe" tailor.py --jd "<url-or-file>" --json 2>$null
    ```
 
-   Optional flags: `--base AI_ML_Engineer|ML_AI|Data_Scientist|Python_Dev|CV_Researcher|AI_Agent|AI_Builder`,
+   Optional flags: `--base AI_ML_Engineer|AI_Builder|CV_Researcher` (AI/ML Engineer is the
+   default for AI, ML, agent and backend roles; AI_Builder for full-stack/product; CV_Researcher
+   is the 2-page research CV),
    `--projects id1,id2,id3` (best first; the last ones get dropped if the page overflows),
    `--company "Name"`. To see progress when debugging, drop the `2>/dev/null` / `2>$null`.
 4. **Read the JSON on stdout** and report to the user: the PDF path, base, projects kept and
@@ -66,10 +68,11 @@ Success (exit code 0):
   "pdf": "Z:\\...\\user_data\\output\\cv-ashutosh-acme-2026-11-23.pdf",
   "tex": "...same path, .tex",
   "page_count": 1,
+  "page_limit": 1,
   "company": "Acme",
-  "base": "AI_Agent",
-  "base_label": "AI Agent Engineer",
-  "ai_suggested_base": "AI_Agent",
+  "base": "AI_ML_Engineer",
+  "base_label": "AI/ML Engineer",
+  "ai_suggested_base": "AI_ML_Engineer",
   "archetype_reason": "...",
   "headline": "...",
   "keywords": ["..."],
@@ -87,8 +90,8 @@ Failure (exit code 1): `{"ok": false, "error": "..."}`.
 
 - **Don't retry in a loop.** Each run costs a few LLM calls. On a 429 / rate-limit error,
   wait about 60 s and retry once; if it fails again, tell the user.
-- **`page_count` above 1:** say so plainly. The `CV_Researcher` base is known to compile to
-  2 pages.
+- **`page_count` above `page_limit`:** say so plainly. `page_limit` is 1, except 2 for the
+  `CV_Researcher` research CV, which is 2 pages by design.
 - **`projects_ignored` not empty:** those ids don't exist; tell the user and show valid ids
   from `--list`.
 - Don't edit the templates, `templates/projects.yml` or `tailor.py` unless the user asks.
