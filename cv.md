@@ -22,7 +22,7 @@ Versatile AI/ML Engineer, Deep Learning Researcher, and Full Stack Developer wit
 
 **AI/ML Engineer** | MitoVoid AI, Remote | *Oct 2024 – Nov 2024*
 - Fine-tuned a 7B Mistral-based open model with QLoRA on medical data and added RAG over medical documents and OCR-extracted patient reports for a client's healthcare chatbot.
-- Served it via FastAPI with batching and quantization (30% lower inference latency); built the React/Next.js frontend.
+- Served it via FastAPI with batching and quantization; built the React/Next.js frontend.
 
 ---
 
