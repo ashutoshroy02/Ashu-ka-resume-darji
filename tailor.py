@@ -914,7 +914,7 @@ def main():
 def build(args) -> dict:
     """The CLI build. Prints progress; returns the result dict that --json prints."""
     print("\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━")
-    print("  career-ops tailor.py")
+    print("  Resume-Darji tailor.py")
     print("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n")
 
     print("[1/5] Fetching JD...")

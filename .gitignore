@@ -3,6 +3,7 @@ __pycache__/
 *.pyc
 venv/
 .venv/
-user_data/output/*
+user_data/
+logs/
 *.log
 .DS_Store
