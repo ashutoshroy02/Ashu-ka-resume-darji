@@ -71,7 +71,7 @@
 \section{Summary}
 \vspace{2pt}
 \small{
-AI/ML Engineer with \textbf{1+ year} of experience building \textbf{LLM}, \textbf{RAG}, \textbf{fine-tuning} and \textbf{multimodal retrieval} systems. Currently building a grounded ed-tech AI assistant at \textbf{GenerativX}. At \textbf{IIT Delhi}, built multimodal search over \textbf{63,208 pages} reaching \textbf{0.754 MRR} (co-authored paper at MMGenSR@CIKM 2025); at MitoVoid AI, shipped a healthcare chatbot that cut query resolution time by \textbf{40\%}. Published at \textbf{IEEE RECCAP 2026}.
+AI/ML Engineer with \textbf{1+ year} of experience building \textbf{LLM}, \textbf{RAG}, \textbf{fine-tuning} and \textbf{multimodal retrieval} systems. Currently building a grounded ed-tech AI assistant at \textbf{GenerativX}. At \textbf{IIT Delhi}, built multimodal search over \textbf{63,208 pages} reaching \textbf{0.754 MRR} (co-authored paper at MMGenSR@CIKM 2025); at MitoVoid AI, fine-tuned and shipped a client's healthcare chatbot. Published at \textbf{IEEE RECCAP 2026}.
 }
 \vspace{-4pt}
 
@@ -99,11 +99,10 @@ AI/ML Engineer with \textbf{1+ year} of experience building \textbf{LLM}, \textb
 
 \vspace{4pt}
 
-\resumeSubheading{AI/ML Engineer Intern}{Oct 2024 -- Nov 2024}{MitoVoid AI}{Remote}
+\resumeSubheading{AI/ML Engineer (Client Project)}{Oct 2024 -- Nov 2024}{MitoVoid AI}{Remote}
 \resumeItemListStart
-\resumeItem{Fine-tuned \textbf{Mistral} and \textbf{LLaMA} models for medical summarization and healthcare conversational AI.}
-\resumeItem{Shipped a healthcare chatbot with intent routing and RAG that reduced patient query resolution time by \textbf{40\%}.}
-\resumeItem{Built end-to-end ML pipelines from preprocessing to \textbf{FastAPI} deployment for real-time inference.}
+\resumeItem{Fine-tuned a 7B Mistral-based open model with \textbf{QLoRA} on medical data and added \textbf{RAG} over medical documents and OCR-extracted patient reports for a client's healthcare chatbot.}
+\resumeItem{Served it via \textbf{FastAPI} with batching and quantization (\textbf{30\%} lower inference latency); built the \textbf{React}/\textbf{Next.js} frontend.}
 \resumeItemListEnd
 
 \resumeSubHeadingListEnd
@@ -125,12 +124,11 @@ $|$ \emph{Python, PyTorch, Wav2Vec2, BiLSTM, Hugging Face} $|$
 \vspace{4pt}
 
 \resumeProjectHeading
-{\href{https://huggingface.co/fhai50032/BeagleLake-7B}
-{\textbf{Medical Chatbot (LLM Fine-Tuning)}}
-$|$ \emph{Python, Mistral 7B, QLoRA, Tesseract OCR}}{Mar 2024 -- Apr 2024}
+{\textbf{Chronic Compounder -- Medical Chatbot (LLM Fine-Tuning)}
+$|$ \emph{Team project; Mistral-7B, LoRA (PEFT), Streamlit}}{Mar 2024 -- Apr 2024}
 \resumeItemListStart
-\resumeItem{Fine-tuned \textbf{Mistral 7B} using \textbf{QLoRA}, reducing GPU memory usage by \textbf{75\%} while maintaining model performance.}
-\resumeItem{Built an OCR pipeline to process \textbf{1,000+} clinical reports, improving data extraction for downstream LLM inference.}
+\resumeItem{Fine-tuned \textbf{Mistral-7B} with \textbf{LoRA} (r=64, $\alpha$=128) on \textbf{200k+} lines of curated and GPT-3.5-synthesized medical text.}
+\resumeItem{Built a \textbf{Streamlit} chat app with voice input and medical-report upload for plain-language answers.}
 \resumeItemListEnd
 
 \vspace{4pt}

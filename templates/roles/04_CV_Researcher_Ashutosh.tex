@@ -98,12 +98,10 @@
     \resumeItem{Co-authored \textbf{SARCH: Multimodal Search for Archaeological Archives} (MMGenSR@CIKM 2025). \href{https://arxiv.org/abs/2511.05667}{\textit{arXiv:2511.05667}}}
   \resumeItemListEnd
 
-  \resumeSubheading{AI/ML Engineer Intern}{Oct 2024 -- Nov 2024}{MitoVoid AI}{Remote}
+  \resumeSubheading{AI/ML Engineer (Client Project)}{Oct 2024 -- Nov 2024}{MitoVoid AI}{Remote}
   \resumeItemListStart
-    \resumeItem{Fine-tuned transformer-based NLP models (Mistral/LLaMA variants) for healthcare applications — medical record summarization and symptom-driven conversational AI.}
-    \resumeItem{Reduced patient query resolution time by \textbf{\textasciitilde40\%} by deploying an AI chatbot for telemedicine with optimized intent understanding and response generation.}
-    \resumeItem{Implemented GenAI-powered NLP workflows using LLMs and retrieval-augmented pipelines for intelligent healthcare automation and conversational AI systems.}
-    \resumeItem{Built end-to-end ML pipelines: data preprocessing $\rightarrow$ model inference $\rightarrow$ API deployment for real-time healthcare applications.}
+    \resumeItem{Fine-tuned a 7B Mistral-based open model with \textbf{QLoRA} on medical data and added \textbf{RAG} over medical documents and OCR-extracted patient reports for a client's healthcare chatbot.}
+    \resumeItem{Served it via \textbf{FastAPI} with batching and quantization (\textbf{30\%} lower inference latency); built the \textbf{React}/\textbf{Next.js} frontend.}
   \resumeItemListEnd
 
 
@@ -159,13 +157,11 @@
   \resumeItemListEnd
 
   \resumeProjectHeading
-  {\href{https://huggingface.co/fhai50032/BeagleLake-7B}{\textbf{Medical Chatbot and LLM Fine-Tuning}}
-  $|$ \emph{Mistral 7B, QLoRA, Transformers, Tesseract OCR, Python}}{Mar 2024 -- Apr 2024}
+  {\textbf{Chronic Compounder -- Medical Chatbot (LLM Fine-Tuning)}
+  $|$ \emph{Team project; Mistral-7B, LoRA (PEFT), Streamlit}}{Mar 2024 -- Apr 2024}
   \resumeItemListStart
-    \resumeItem{Fine-tuned Mistral 7B using QLoRA with 4-bit quantization for healthcare-focused conversational AI applications.}
-    \resumeItem{Built OCR pipelines for extracting structured information from unstructured medical reports and prescriptions.}
-    \resumeItem{Used parameter-efficient fine-tuning, reducing GPU memory usage by \textbf{75\%}.}
-    \resumeItem{Developed inference pipelines for medical record summarization, question answering, and symptom-based assistance.}
+    \resumeItem{Fine-tuned \textbf{Mistral-7B} with \textbf{LoRA} (r=64, $\alpha$=128, attention + MLP layers) on \textbf{200k+} lines of curated and GPT-3.5-synthesized medical text.}
+    \resumeItem{Built a \textbf{Streamlit} chat app with voice input and medical-report upload for plain-language answers.}
   \resumeItemListEnd
 
 \resumeSubHeadingListEnd

@@ -34,25 +34,27 @@ projects:
     \resumeItem{Implemented \textbf{FAISS} and \textbf{Pinecone} retrieval, reducing LLM hallucinations, improving answer accuracy, and enabling \textbf{sub-second} semantic search.}
     \resumeItemListEnd
 - id: medical-chatbot
-  name: Medical Chatbot (Fine-Tuning)
+  name: Chronic Compounder (Medical LLM)
   tags:
   - llm
   - fine-tuning
-  - qlora
+  - lora
+  - peft
   - mistral
-  - ocr
   - healthcare
   - nlp
+  - streamlit
+  - speech-to-text
   match:
+  - Chronic Compounder
   - BeagleLake
   latex: |
     \resumeProjectHeading
-    {\href{https://huggingface.co/fhai50032/BeagleLake-7B}
-    {\textbf{Medical Chatbot (LLM Fine-Tuning)}}
-    $|$ \emph{Python, Mistral 7B, QLoRA, Tesseract OCR}}{Mar 2024 -- Apr 2024}
+    {\textbf{Chronic Compounder -- Medical Chatbot (LLM Fine-Tuning)}
+    $|$ \emph{Team project; Mistral-7B, LoRA (PEFT), Streamlit}}{Mar 2024 -- Apr 2024}
     \resumeItemListStart
-    \resumeItem{Fine-tuned \textbf{Mistral 7B} using \textbf{QLoRA}, reducing GPU memory usage by \textbf{75\%} while maintaining model performance.}
-    \resumeItem{Built an OCR pipeline to process \textbf{1,000+} clinical reports, improving data extraction for downstream LLM inference.}
+    \resumeItem{Fine-tuned \textbf{Mistral-7B} with \textbf{LoRA} (r=64, $\alpha$=128) on \textbf{200k+} lines of curated and GPT-3.5-synthesized medical text.}
+    \resumeItem{Built a \textbf{Streamlit} chat app with voice input and medical-report upload for plain-language answers.}
     \resumeItemListEnd
 - id: defect-detection
   name: Industrial Defect Detection
