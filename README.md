@@ -163,6 +163,8 @@ Send your private bot a JD URL or pasted JD text. It runs the full pipeline and 
 
 After the JD is read you pick one of the 3 base resumes (the AI's pick is marked ⭐), then tick the projects to include. Tap **⚡ Just build it** instead to let the AI pick the base and the projects and build straight away.
 
+The AI/ML Engineer base (also used for SDE/backend roles) always pre-picks Exam-Helper, Chronic Compounder and Saylo, its own Projects section, without asking the AI (`FIXED_PICK_BASES` in `tailor.py`). You can still tick other projects.
+
 ```bash
 pip install python-telegram-bot --upgrade
 python telegram_bot.py
