@@ -21,7 +21,7 @@ Versatile AI/ML Engineer, Deep Learning Researcher, and Full Stack Developer wit
 - Co-authored **SARCH: Multimodal Search for Archaeological Archives** with IIT Delhi (Prof. Maya Ramanath) — published at MMGenSR@CIKM 2025. [arxiv.org/abs/2511.05667](https://arxiv.org/abs/2511.05667)
 
 **AI/ML Engineer** | MitoVoid AI, Remote | *Oct 2024 – Nov 2024*
-- Fine-tuned a 7B Mistral-based open model with QLoRA on medical data and added RAG over medical documents and OCR-extracted patient reports for a client's healthcare chatbot.
+- Fine-tuned a 7B Mistral-based open model with QLoRA on 200k+ lines of medical text and added RAG over medical documents and OCR-extracted patient reports for a client's healthcare chatbot.
 - Served it via FastAPI with batching and quantization; built the React/Next.js frontend.
 
 ---
