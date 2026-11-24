@@ -21,7 +21,7 @@ Versatile AI/ML Engineer, Deep Learning Researcher, and Full Stack Developer wit
 - Co-authored **SARCH: Multimodal Search for Archaeological Archives** with IIT Delhi (Prof. Maya Ramanath) — published at MMGenSR@CIKM 2025. [arxiv.org/abs/2511.05667](https://arxiv.org/abs/2511.05667)
 
 **AI/ML Engineer** | MitoVoid AI, Remote | *Oct 2024 – Nov 2024*
-- Fine-tuned a 7B Mistral-based open model with QLoRA on [medical text](https://huggingface.co/datasets/fhai50032/MedAlign) and added RAG over medical documents and OCR-extracted patient reports for a client's healthcare chatbot.
+- Fine-tuned a 7B Mistral-based open model with QLoRA on [2,904 medical Q&A examples](https://huggingface.co/datasets/fhai50032/MedAlign) and added RAG over medical documents and OCR-extracted patient reports for a client's healthcare chatbot.
 - Served it via FastAPI with batching and quantization; built the React/Next.js frontend.
 
 ---
@@ -78,7 +78,7 @@ Versatile AI/ML Engineer, Deep Learning Researcher, and Full Stack Developer wit
 - *(Repo: [Industrial-Defect-Detection-System](https://github.com/ashutoshroy02/Industrial-Defect-Detection-System))*
 
 **Chronic Compounder – Medical Chatbot (LLM Fine-Tuning)** | Team project; Mistral-7B, LoRA (PEFT), Streamlit | *Mar 2024 – Apr 2024*
-- Fine-tuned [Mistral-7B](https://huggingface.co/mistralai/Mistral-7B-v0.1) with LoRA (r=64, α=128, attention + MLP layers) on 200k+ lines of curated and GPT-3.5-synthesized medical text.
+- Fine-tuned [Mistral-7B](https://huggingface.co/mistralai/Mistral-7B-v0.1) with LoRA (r=64, α=128, attention + MLP layers) on [2,904 medical Q&A examples](https://huggingface.co/datasets/fhai50032/MedAlign).
 - Built a Streamlit chat app with voice input and medical-report upload for plain-language answers.
 
 **[Music Identification App (BeatBubble)](https://github.com/ashutoshroy02/Beat-Bubble)** | Streamlit, Python, Flutter, Firebase, ACRCloud API | *Jun 2024 – Dec 2024*
